@@ -1,0 +1,160 @@
+.expense-summary-container {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expense-summary-container h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.total-expenses {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.total-label {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.total-amount {
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.category-item {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.category-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.category-name {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+}
+
+.category-amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: #e74c3c;
+}
+
+.category-percentage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.percentage-bar {
+  flex: 1;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.percentage-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.percentage-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  min-width: 45px;
+  text-align: right;
+}
+
+.no-categories {
+  text-align: center;
+  padding: 48px 24px;
+  color: #888;
+}
+
+.no-categories p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Category Colors */
+.color-primary {
+  background-color: #3498db;
+}
+
+.color-secondary {
+  background-color: #95a5a6;
+}
+
+.color-success {
+  background-color: #2ecc71;
+}
+
+.color-warning {
+  background-color: #f39c12;
+}
+
+.color-danger {
+  background-color: #e74c3c;
+}
+
+.color-info {
+  background-color: #1abc9c;
+}
+
+.color-purple {
+  background-color: #9b59b6;
+}
+
+.color-orange {
+  background-color: #e67e22;
+}
+
+@media (max-width: 768px) {
+  .total-expenses {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .total-amount {
+    font-size: 24px;
+  }
+}
+
