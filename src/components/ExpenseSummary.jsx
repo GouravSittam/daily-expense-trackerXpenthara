@@ -1,4 +1,4 @@
-import { formatCurrency } from '../utils/constants';
+import { formatCurrency, getCategoryColor } from '../utils/constants';
 
 /**
  * Component for displaying expense summary by category
@@ -21,30 +21,12 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
     return (amount / totalExpenses) * 100;
   };
 
-  /**
-   * Gets color classes for category based on index
-   * @param {number} index - Index in array
-   * @returns {string} Tailwind color classes
-   */
-  const getCategoryColor = (index) => {
-    const colors = [
-      'bg-slate-600',
-      'bg-stone-600',
-      'bg-emerald-600',
-      'bg-amber-600',
-      'bg-rose-600',
-      'bg-cyan-600',
-      'bg-violet-600',
-      'bg-orange-600'
-    ];
-    return colors[index % colors.length];
-  };
 
   return (
     <div className="bg-white rounded-lg p-6 shadow-md">
       <h2 className="mt-0 mb-5 text-gray-800 text-2xl font-semibold">Expense Summary</h2>
       
-      <div className="flex justify-between items-center p-5 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg mb-6 shadow-md">
+      <div className="flex justify-between items-center p-5 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 rounded-lg mb-6 shadow-md">
         <span className="text-white text-lg font-medium">Total Expenses:</span>
         <span className="text-white text-3xl font-bold">{formatCurrency(totalExpenses)}</span>
       </div>
@@ -61,10 +43,10 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
               className="p-4 bg-gray-50 rounded transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="flex justify-between items-center mb-3">
-                <span className={`text-base font-semibold text-white px-3 py-1 rounded-full ${getCategoryColor(index)}`}>
+                <span className={`text-base font-semibold text-white px-3 py-1 rounded-full ${getCategoryColor(item.category)}`}>
                   {item.category}
                 </span>
-                <span className="text-lg font-semibold text-amber-700">
+                <span className="text-lg font-semibold text-orange-600">
                   {formatCurrency(item.amount)}
                 </span>
               </div>
@@ -72,7 +54,7 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-2 bg-gray-300 rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all ${getCategoryColor(index)}`}
+                    className={`h-full rounded-full transition-all ${getCategoryColor(item.category)}`}
                     style={{ width: `${getPercentage(item.amount)}%` }}
                   />
                 </div>

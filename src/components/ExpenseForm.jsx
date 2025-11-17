@@ -78,7 +78,7 @@ const ExpenseForm = ({ onAddExpense }) => {
             min="0.01"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className={`px-3 py-2.5 border rounded text-sm transition-all focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 ${
+            className={`px-3 py-2.5 border rounded text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 ${
               errors.amount ? 'border-orange-500' : 'border-gray-300'
             }`}
             placeholder="0.00"
@@ -133,14 +133,14 @@ const ExpenseForm = ({ onAddExpense }) => {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="px-3 py-2.5 border border-gray-300 rounded text-sm transition-all focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
+            className="px-3 py-2.5 border border-gray-300 rounded text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
             placeholder="Add a description..."
           />
         </div>
 
         <button
           type="submit"
-          className="col-span-1 md:col-span-2 lg:col-span-4 px-6 py-3 bg-slate-700 text-white rounded text-base font-medium cursor-pointer transition-colors hover:bg-slate-800 active:scale-95"
+          className="col-span-1 md:col-span-2 lg:col-span-4 px-6 py-3 bg-blue-600 text-white rounded text-base font-medium cursor-pointer transition-colors hover:bg-blue-700 active:scale-95"
         >
           Add Expense
         </button>

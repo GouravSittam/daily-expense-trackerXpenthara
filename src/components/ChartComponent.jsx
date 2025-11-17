@@ -11,7 +11,7 @@ import {
   YAxis,
   CartesianGrid
 } from 'recharts';
-import { formatCurrency } from '../utils/constants';
+import { formatCurrency, CATEGORIES, getCategoryColorHex } from '../utils/constants';
 
 /**
  * Component for visualizing expense data with charts
@@ -23,17 +23,10 @@ const ChartComponent = ({ expensesByCategory }) => {
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value);
 
-  // Colors for the charts
-  const COLORS = [
-    '#475569', // slate-600
-    '#78716c', // stone-600
-    '#059669', // emerald-600
-    '#d97706', // amber-600
-    '#e11d48', // rose-600
-    '#0891b2', // cyan-600
-    '#7c3aed', // violet-600
-    '#ea580c'  // orange-600
-  ];
+  // Get contextual colors based on category names
+  const getColorForCategory = (categoryName) => {
+    return getCategoryColorHex(categoryName);
+  };
 
   /**
    * Custom tooltip for charts
@@ -80,13 +73,13 @@ const ChartComponent = ({ expensesByCategory }) => {
                   `${name}: ${(percent * 100).toFixed(0)}%`
                 }
                 outerRadius={100}
-                fill="#475569"
+                fill={chartData.length > 0 ? getColorForCategory(chartData[0].name) : '#6b7280'}
                 dataKey="value"
               >
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={getColorForCategory(entry.name)}
                   />
                 ))}
               </Pie>
@@ -109,11 +102,11 @@ const ChartComponent = ({ expensesByCategory }) => {
               />
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="value" fill="#475569" radius={[8, 8, 0, 0]}>
+              <Bar dataKey="value" fill={chartData.length > 0 ? getColorForCategory(chartData[0].name) : '#6b7280'} radius={[8, 8, 0, 0]}>
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={getColorForCategory(entry.name)}
                   />
                 ))}
               </Bar>

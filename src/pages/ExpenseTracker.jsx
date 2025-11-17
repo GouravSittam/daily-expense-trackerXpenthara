@@ -3,6 +3,7 @@ import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import ExpenseSummary from '../components/ExpenseSummary';
 import ChartComponent from '../components/ChartComponent';
+import Shuffle from '../components/Shuffle';
 import {
   getExpenses,
   addExpense as addExpenseService,
@@ -58,8 +59,30 @@ const ExpenseTracker = () => {
   return (
     <div className="max-w-[1400px] mx-auto p-6">
       <header className="text-center mb-8">
-        <h1 className="m-0 mb-2 text-gray-800 text-4xl font-bold">💰 Expense Tracker</h1>
-        <p className="m-0 text-gray-600 text-base">Track your daily expenses with category summaries</p>
+        <div className="mb-2">
+          <Shuffle
+            text="💰 Expense Tracker"
+            shuffleDirection="right"
+            duration={0.35}
+            animationMode="evenodd"
+            shuffleTimes={3}
+            ease="power3.out"
+            stagger={0.03}
+            threshold={0.1}
+            triggerOnce={true}
+            triggerOnHover={true}
+            respectReducedMotion={true}
+            tag="h1"
+            className="text-gray-800 !text-5xl !leading-tight"
+            style={{ 
+              fontFamily: 'inherit',
+              textTransform: 'none',
+              fontSize: '2.5rem',
+              fontWeight: 'bold'
+            }}
+          />
+        </div>
+        <p className="text-gray-800 italic !text-3xl !leading-tight">Track your daily expenses with category summaries</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-6">
@@ -80,6 +103,20 @@ const ExpenseTracker = () => {
       </div>
 
       <ChartComponent expensesByCategory={expensesByCategory} />
+
+      <footer className="mt-12 mb-4 text-right">
+        <p className="text-sm text-gray-600">
+          Developed by{' '}
+          <a
+            href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-700 hover:underline font-medium transition-colors"
+          >
+            Gourav Chaudhary❤️
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formatCurrency, formatDate, CATEGORIES } from '../utils/constants';
+import { formatCurrency, formatDate, CATEGORIES, getCategoryColor } from '../utils/constants';
 
 /**
  * Component for displaying and filtering expenses
@@ -99,7 +99,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
             id="filter-category"
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-slate-500"
+            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
           >
             <option value="All">All Categories</option>
             {CATEGORIES.map((cat) => (
@@ -119,7 +119,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
             id="filter-date-from"
             value={filterDateFrom}
             onChange={(e) => setFilterDateFrom(e.target.value)}
-            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-slate-500"
+            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
           />
         </div>
 
@@ -133,7 +133,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
             value={filterDateTo}
             onChange={(e) => setFilterDateTo(e.target.value)}
             max={new Date().toISOString().split('T')[0]}
-            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-slate-500"
+            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
           />
         </div>
 
@@ -159,7 +159,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
               onClick={() => handleSortChange('date')}
               className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
                 sortBy === 'date'
-                  ? 'bg-slate-600 text-white border-slate-600'
+                  ? 'bg-blue-600 text-white border-blue-600'
                   : 'bg-white border-gray-300 hover:bg-gray-100'
               }`}
             >
@@ -169,7 +169,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
               onClick={() => handleSortChange('amount')}
               className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
                 sortBy === 'amount'
-                  ? 'bg-slate-600 text-white border-slate-600'
+                  ? 'bg-blue-600 text-white border-blue-600'
                   : 'bg-white border-gray-300 hover:bg-gray-100'
               }`}
             >
@@ -179,7 +179,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
               onClick={() => handleSortChange('category')}
               className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
                 sortBy === 'category'
-                  ? 'bg-slate-600 text-white border-slate-600'
+                  ? 'bg-blue-600 text-white border-blue-600'
                   : 'bg-white border-gray-300 hover:bg-gray-100'
               }`}
             >
@@ -194,11 +194,13 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
                 className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-gray-50 rounded transition-all hover:bg-gray-100 relative"
               >
                 <div className="flex flex-col gap-1 flex-1 mb-2 sm:mb-0">
-                  <div className="font-semibold text-slate-700 text-base">{expense.category}</div>
+                  <div className={`font-semibold text-base inline-block px-2 py-0.5 rounded text-white text-sm ${getCategoryColor(expense.category)}`}>
+                    {expense.category}
+                  </div>
                   <div className="text-gray-600 text-sm">{expense.description}</div>
                   <div className="text-gray-500 text-xs">{formatDate(expense.date)}</div>
                 </div>
-                <div className="text-xl font-semibold text-amber-700 sm:mr-10 mb-2 sm:mb-0">{formatCurrency(expense.amount)}</div>
+                <div className="text-xl font-semibold text-orange-600 sm:mr-10 mb-2 sm:mb-0">{formatCurrency(expense.amount)}</div>
                 <button
                   onClick={() => onDeleteExpense(expense.id)}
                   className="absolute sm:static right-4 top-4 sm:top-auto sm:right-4 sm:transform sm:-translate-y-0 bg-stone-600 text-white rounded-full w-7 h-7 text-xl leading-none cursor-pointer flex items-center justify-center transition-colors hover:bg-stone-700"
