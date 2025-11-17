@@ -10,7 +10,6 @@ import {
   getExpensesByCategory,
   getTotalExpenses
 } from '../services/ExpenseService';
-import './ExpenseTracker.css';
 
 /**
  * Main Expense Tracker page component
@@ -57,14 +56,14 @@ const ExpenseTracker = () => {
   };
 
   return (
-    <div className="expense-tracker">
-      <header className="expense-tracker-header">
-        <h1>💰 Expense Tracker</h1>
-        <p className="subtitle">Track your daily expenses with category summaries</p>
+    <div className="max-w-[1400px] mx-auto p-6">
+      <header className="text-center mb-8">
+        <h1 className="m-0 mb-2 text-gray-800 text-4xl font-bold">💰 Expense Tracker</h1>
+        <p className="m-0 text-gray-600 text-base">Track your daily expenses with category summaries</p>
       </header>
 
-      <div className="expense-tracker-content">
-        <div className="expense-tracker-main">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-6">
+        <div className="flex flex-col gap-6">
           <ExpenseForm onAddExpense={handleAddExpense} />
           <ExpenseList
             expenses={expenses}
@@ -72,7 +71,7 @@ const ExpenseTracker = () => {
           />
         </div>
 
-        <aside className="expense-tracker-sidebar">
+        <aside className="flex flex-col">
           <ExpenseSummary
             expensesByCategory={expensesByCategory}
             totalExpenses={totalExpenses}

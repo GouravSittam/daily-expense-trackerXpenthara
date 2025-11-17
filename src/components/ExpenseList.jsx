@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { formatCurrency, formatDate, CATEGORIES } from '../utils/constants';
-import './ExpenseList.css';
 
 /**
  * Component for displaying and filtering expenses
@@ -83,21 +82,24 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
   const filteredExpenses = getFilteredExpenses();
 
   return (
-    <div className="expense-list-container">
-      <div className="expense-list-header">
-        <h2>Expense List</h2>
-        <span className="expense-count">
+    <div className="bg-white rounded-lg p-6 shadow-md">
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="m-0 text-gray-800 text-2xl font-semibold">Expense List</h2>
+        <span className="text-gray-600 text-sm">
           {filteredExpenses.length} {filteredExpenses.length === 1 ? 'expense' : 'expenses'}
         </span>
       </div>
 
-      <div className="filters-section">
-        <div className="filter-group">
-          <label htmlFor="filter-category">Category:</label>
+      <div className="flex flex-col sm:flex-row gap-3 flex-wrap mb-5 p-4 bg-gray-50 rounded">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="filter-category" className="text-xs font-medium text-gray-600">
+            Category:
+          </label>
           <select
             id="filter-category"
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
+            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-slate-500"
           >
             <option value="All">All Categories</option>
             {CATEGORIES.map((cat) => (
@@ -108,76 +110,98 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label htmlFor="filter-date-from">From:</label>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="filter-date-from" className="text-xs font-medium text-gray-600">
+            From:
+          </label>
           <input
             type="date"
             id="filter-date-from"
             value={filterDateFrom}
             onChange={(e) => setFilterDateFrom(e.target.value)}
+            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-slate-500"
           />
         </div>
 
-        <div className="filter-group">
-          <label htmlFor="filter-date-to">To:</label>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="filter-date-to" className="text-xs font-medium text-gray-600">
+            To:
+          </label>
           <input
             type="date"
             id="filter-date-to"
             value={filterDateTo}
             onChange={(e) => setFilterDateTo(e.target.value)}
             max={new Date().toISOString().split('T')[0]}
+            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-slate-500"
           />
         </div>
 
         {(filterCategory !== 'All' || filterDateFrom || filterDateTo) && (
-          <button onClick={clearFilters} className="clear-filters-button">
+          <button
+            onClick={clearFilters}
+            className="px-4 py-2 bg-stone-500 text-white rounded text-sm cursor-pointer transition-colors hover:bg-stone-600 sm:self-end"
+          >
             Clear Filters
           </button>
         )}
       </div>
 
       {filteredExpenses.length === 0 ? (
-        <div className="no-expenses">
-          <p>No expenses found. Add your first expense above!</p>
+        <div className="text-center py-12 px-6 text-gray-500">
+          <p className="m-0 text-base">No expenses found. Add your first expense above!</p>
         </div>
       ) : (
         <>
-          <div className="sort-controls">
-            <span>Sort by:</span>
+          <div className="flex gap-2 items-center mb-4 p-3 bg-gray-50 rounded">
+            <span className="text-sm font-medium text-gray-600 mr-2">Sort by:</span>
             <button
               onClick={() => handleSortChange('date')}
-              className={sortBy === 'date' ? 'active' : ''}
+              className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
+                sortBy === 'date'
+                  ? 'bg-slate-600 text-white border-slate-600'
+                  : 'bg-white border-gray-300 hover:bg-gray-100'
+              }`}
             >
               Date {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
             </button>
             <button
               onClick={() => handleSortChange('amount')}
-              className={sortBy === 'amount' ? 'active' : ''}
+              className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
+                sortBy === 'amount'
+                  ? 'bg-slate-600 text-white border-slate-600'
+                  : 'bg-white border-gray-300 hover:bg-gray-100'
+              }`}
             >
               Amount {sortBy === 'amount' && (sortOrder === 'asc' ? '↑' : '↓')}
             </button>
             <button
               onClick={() => handleSortChange('category')}
-              className={sortBy === 'category' ? 'active' : ''}
+              className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
+                sortBy === 'category'
+                  ? 'bg-slate-600 text-white border-slate-600'
+                  : 'bg-white border-gray-300 hover:bg-gray-100'
+              }`}
             >
               Category {sortBy === 'category' && (sortOrder === 'asc' ? '↑' : '↓')}
             </button>
           </div>
 
-          <div className="expense-list">
+          <div className="flex flex-col gap-3">
             {filteredExpenses.map((expense) => (
-              <div key={expense.id} className="expense-item">
-                <div className="expense-info">
-                  <div className="expense-category">{expense.category}</div>
-                  <div className="expense-description">{expense.description}</div>
-                  <div className="expense-date">{formatDate(expense.date)}</div>
+              <div
+                key={expense.id}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-gray-50 rounded transition-all hover:bg-gray-100 relative"
+              >
+                <div className="flex flex-col gap-1 flex-1 mb-2 sm:mb-0">
+                  <div className="font-semibold text-slate-700 text-base">{expense.category}</div>
+                  <div className="text-gray-600 text-sm">{expense.description}</div>
+                  <div className="text-gray-500 text-xs">{formatDate(expense.date)}</div>
                 </div>
-                <div className="expense-amount">
-                  {formatCurrency(expense.amount)}
-                </div>
+                <div className="text-xl font-semibold text-amber-700 sm:mr-10 mb-2 sm:mb-0">{formatCurrency(expense.amount)}</div>
                 <button
                   onClick={() => onDeleteExpense(expense.id)}
-                  className="delete-button"
+                  className="absolute sm:static right-4 top-4 sm:top-auto sm:right-4 sm:transform sm:-translate-y-0 bg-stone-600 text-white rounded-full w-7 h-7 text-xl leading-none cursor-pointer flex items-center justify-center transition-colors hover:bg-stone-700"
                   aria-label="Delete expense"
                 >
                   ×

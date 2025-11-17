@@ -12,7 +12,6 @@ import {
   CartesianGrid
 } from 'recharts';
 import { formatCurrency } from '../utils/constants';
-import './ChartComponent.css';
 
 /**
  * Component for visualizing expense data with charts
@@ -26,14 +25,14 @@ const ChartComponent = ({ expensesByCategory }) => {
 
   // Colors for the charts
   const COLORS = [
-    '#3498db',
-    '#2ecc71',
-    '#e74c3c',
-    '#f39c12',
-    '#9b59b6',
-    '#1abc9c',
-    '#e67e22',
-    '#95a5a6'
+    '#475569', // slate-600
+    '#78716c', // stone-600
+    '#059669', // emerald-600
+    '#d97706', // amber-600
+    '#e11d48', // rose-600
+    '#0891b2', // cyan-600
+    '#7c3aed', // violet-600
+    '#ea580c'  // orange-600
   ];
 
   /**
@@ -43,9 +42,9 @@ const ChartComponent = ({ expensesByCategory }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="chart-tooltip">
-          <p className="tooltip-label">{payload[0].name}</p>
-          <p className="tooltip-value">{formatCurrency(payload[0].value)}</p>
+        <div className="bg-white border border-gray-300 rounded p-2 shadow-md">
+          <p className="m-0 mb-1 font-semibold text-gray-800 text-sm">{payload[0].name}</p>
+          <p className="m-0 text-gray-600 text-sm">{formatCurrency(payload[0].value)}</p>
         </div>
       );
     }
@@ -54,22 +53,22 @@ const ChartComponent = ({ expensesByCategory }) => {
 
   if (chartData.length === 0) {
     return (
-      <div className="chart-component-container">
-        <h2>Expense Visualization</h2>
-        <div className="no-chart-data">
-          <p>No data available for visualization. Add expenses to see charts!</p>
+      <div className="bg-white rounded-lg p-6 shadow-md mt-6">
+        <h2 className="mt-0 mb-6 text-gray-800 text-2xl font-semibold">Expense Visualization</h2>
+        <div className="text-center py-12 px-6 text-gray-500">
+          <p className="m-0 text-base">No data available for visualization. Add expenses to see charts!</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="chart-component-container">
-      <h2>Expense Visualization</h2>
+    <div className="bg-white rounded-lg p-6 shadow-md mt-6">
+      <h2 className="mt-0 mb-6 text-gray-800 text-2xl font-semibold">Expense Visualization</h2>
       
-      <div className="charts-wrapper">
-        <div className="chart-item">
-          <h3>Expenses by Category (Pie Chart)</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="flex flex-col">
+          <h3 className="m-0 mb-4 text-gray-600 text-lg font-semibold">Expenses by Category (Pie Chart)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -81,7 +80,7 @@ const ChartComponent = ({ expensesByCategory }) => {
                   `${name}: ${(percent * 100).toFixed(0)}%`
                 }
                 outerRadius={100}
-                fill="#8884d8"
+                fill="#475569"
                 dataKey="value"
               >
                 {chartData.map((entry, index) => (
@@ -97,8 +96,8 @@ const ChartComponent = ({ expensesByCategory }) => {
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-item">
-          <h3>Expenses by Category (Bar Chart)</h3>
+        <div className="flex flex-col">
+          <h3 className="m-0 mb-4 text-gray-600 text-lg font-semibold">Expenses by Category (Bar Chart)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -110,7 +109,7 @@ const ChartComponent = ({ expensesByCategory }) => {
               />
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="value" fill="#3498db" radius={[8, 8, 0, 0]}>
+              <Bar dataKey="value" fill="#475569" radius={[8, 8, 0, 0]}>
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}

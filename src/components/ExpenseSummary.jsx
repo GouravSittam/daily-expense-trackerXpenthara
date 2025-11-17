@@ -1,5 +1,4 @@
 import { formatCurrency } from '../utils/constants';
-import './ExpenseSummary.css';
 
 /**
  * Component for displaying expense summary by category
@@ -23,58 +22,61 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
   };
 
   /**
-   * Gets color for category based on index
+   * Gets color classes for category based on index
    * @param {number} index - Index in array
-   * @returns {string} Color class name
+   * @returns {string} Tailwind color classes
    */
   const getCategoryColor = (index) => {
     const colors = [
-      'color-primary',
-      'color-secondary',
-      'color-success',
-      'color-warning',
-      'color-danger',
-      'color-info',
-      'color-purple',
-      'color-orange'
+      'bg-slate-600',
+      'bg-stone-600',
+      'bg-emerald-600',
+      'bg-amber-600',
+      'bg-rose-600',
+      'bg-cyan-600',
+      'bg-violet-600',
+      'bg-orange-600'
     ];
     return colors[index % colors.length];
   };
 
   return (
-    <div className="expense-summary-container">
-      <h2>Expense Summary</h2>
+    <div className="bg-white rounded-lg p-6 shadow-md">
+      <h2 className="mt-0 mb-5 text-gray-800 text-2xl font-semibold">Expense Summary</h2>
       
-      <div className="total-expenses">
-        <span className="total-label">Total Expenses:</span>
-        <span className="total-amount">{formatCurrency(totalExpenses)}</span>
+      <div className="flex justify-between items-center p-5 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg mb-6 shadow-md">
+        <span className="text-white text-lg font-medium">Total Expenses:</span>
+        <span className="text-white text-3xl font-bold">{formatCurrency(totalExpenses)}</span>
       </div>
 
       {categoryArray.length === 0 ? (
-        <div className="no-categories">
-          <p>No expenses yet. Add expenses to see the summary!</p>
+        <div className="text-center py-12 px-6 text-gray-500">
+          <p className="m-0 text-base">No expenses yet. Add expenses to see the summary!</p>
         </div>
       ) : (
-        <div className="category-list">
+        <div className="flex flex-col gap-4">
           {categoryArray.map((item, index) => (
-            <div key={item.category} className="category-item">
-              <div className="category-header">
-                <span className={`category-name ${getCategoryColor(index)}`}>
+            <div
+              key={item.category}
+              className="p-4 bg-gray-50 rounded transition-all hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="flex justify-between items-center mb-3">
+                <span className={`text-base font-semibold text-white px-3 py-1 rounded-full ${getCategoryColor(index)}`}>
                   {item.category}
                 </span>
-                <span className="category-amount">
+                <span className="text-lg font-semibold text-amber-700">
                   {formatCurrency(item.amount)}
                 </span>
               </div>
               
-              <div className="category-percentage">
-                <div className="percentage-bar">
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-2 bg-gray-300 rounded-full overflow-hidden">
                   <div
-                    className={`percentage-fill ${getCategoryColor(index)}`}
+                    className={`h-full rounded-full transition-all ${getCategoryColor(index)}`}
                     style={{ width: `${getPercentage(item.amount)}%` }}
                   />
                 </div>
-                <span className="percentage-text">
+                <span className="text-sm font-medium text-gray-600 min-w-[45px] text-right">
                   {getPercentage(item.amount).toFixed(1)}%
                 </span>
               </div>
