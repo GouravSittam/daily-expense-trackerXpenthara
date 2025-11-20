@@ -1,4 +1,4 @@
-import { formatCurrency, getCategoryColor } from '../utils/constants';
+import { formatCurrency, getCategoryColor } from "../utils/constants";
 
 /**
  * Component for displaying expense summary by category
@@ -21,44 +21,55 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
     return (amount / totalExpenses) * 100;
   };
 
-
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md">
-      <h2 className="mt-0 mb-5 text-gray-800 text-2xl font-semibold">Expense Summary</h2>
-      
-      <div className="flex justify-between items-center p-5 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 rounded-lg mb-6 shadow-md">
-        <span className="text-white text-lg font-medium">Total Expenses:</span>
-        <span className="text-white text-3xl font-bold">{formatCurrency(totalExpenses)}</span>
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-5">
+        Expense Summary
+      </h2>
+
+      <div className="flex justify-between items-center p-5 bg-blue-600 rounded-lg mb-6 shadow-sm">
+        <span className="text-white text-base font-medium">Total Expenses</span>
+        <span className="text-white text-3xl font-bold">
+          {formatCurrency(totalExpenses)}
+        </span>
       </div>
 
       {categoryArray.length === 0 ? (
-        <div className="text-center py-12 px-6 text-gray-500">
-          <p className="m-0 text-base">No expenses yet. Add expenses to see the summary!</p>
+        <div className="text-center py-12 px-6">
+          <p className="text-gray-500 text-base">
+            No expenses yet. Add expenses to see the summary!
+          </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          {categoryArray.map((item, index) => (
+        <div className="flex flex-col gap-3">
+          {categoryArray.map((item) => (
             <div
               key={item.category}
-              className="p-4 bg-gray-50 rounded transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <div className="flex justify-between items-center mb-3">
-                <span className={`text-base font-semibold text-white px-3 py-1 rounded-full ${getCategoryColor(item.category)}`}>
+                <span
+                  className={`text-base font-semibold text-white px-3 py-1 rounded-lg ${getCategoryColor(
+                    item.category
+                  )}`}
+                >
                   {item.category}
                 </span>
-                <span className="text-lg font-semibold text-orange-600">
+                <span className="text-lg font-bold text-orange-600">
                   {formatCurrency(item.amount)}
                 </span>
               </div>
-              
+
               <div className="flex items-center gap-3">
-                <div className="flex-1 h-2 bg-gray-300 rounded-full overflow-hidden">
+                <div className="flex-1 h-2.5 bg-gray-200 rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all ${getCategoryColor(item.category)}`}
+                    className={`h-full rounded-full transition-all ${getCategoryColor(
+                      item.category
+                    )}`}
                     style={{ width: `${getPercentage(item.amount)}%` }}
                   />
                 </div>
-                <span className="text-sm font-medium text-gray-600 min-w-[45px] text-right">
+                <span className="text-sm font-medium text-gray-600 min-w-[50px] text-right">
                   {getPercentage(item.amount).toFixed(1)}%
                 </span>
               </div>
@@ -71,4 +82,3 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
 };
 
 export default ExpenseSummary;
-

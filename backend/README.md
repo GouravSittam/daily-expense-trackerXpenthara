@@ -1,123 +1,188 @@
-# Expense Tracker Backend API
+<div align="center">
 
-A RESTful API server for managing daily expenses with category-wise tracking and summaries.
+# 🚀 Expense Tracker - Backend API
+
+### _Powerful RESTful API for expense management_
+
+A production-ready Express.js backend with MongoDB, comprehensive validation, and advanced features.
+
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.18-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](../LICENSE)
+
+[API Docs](#-api-endpoints) • [Installation](#-quick-start) • [Testing](#-testing)
+
+</div>
+
+---
+
+## ✨ Features
+
+- 🔌 **RESTful API** - Clean, predictable endpoints
+- 💾 **MongoDB Integration** - NoSQL database with Mongoose ODM
+- ✅ **Input Validation** - Comprehensive validation with Express Validator
+- 🛡️ **Error Handling** - Global error handling middleware
+- 📊 **Statistics Endpoints** - Category totals, date ranges
+- 🔄 **CORS Enabled** - Cross-origin resource sharing
+- 📝 **Request Logging** - Morgan HTTP request logger
+- 🚀 **Auto-reload** - Nodemon for development
+- 🏗️ **MVC Architecture** - Clean separation of concerns
+
+---
 
 ## 🏗️ Architecture
 
-The backend follows a clean, modular architecture with clear separation of concerns:
-
 ```
 backend/
-├── config/
-│   └── database.js          # MongoDB connection configuration
-├── controllers/
-│   └── expenseController.js # Business logic for expense operations
-├── middleware/
-│   ├── errorHandler.js      # Global error handling
-│   ├── notFound.js          # 404 handler
-│   └── validateRequest.js   # Request validation middleware
-├── models/
-│   └── Expense.js           # Mongoose schema and model
-├── routes/
-│   └── expenseRoutes.js     # API route definitions
-├── utils/
-│   └── constants.js         # Shared constants
-├── .env.example             # Environment variables template
-├── .gitignore              # Git ignore rules
-├── package.json            # Dependencies and scripts
-└── server.js               # Main application entry point
+├── 📁 config/
+│   └── database.js               # 🔌 MongoDB connection & config
+├── 📁 controllers/
+│   └── expenseController.js      # 🎮 Business logic layer
+├── 📁 middleware/
+│   ├── errorHandler.js           # ❌ Global error handler
+│   ├── notFound.js               # 🔍 404 handler
+│   └── validateRequest.js        # ✅ Validation middleware
+├── 📁 models/
+│   └── Expense.js                # 📐 Mongoose schema & model
+├── 📁 routes/
+│   └── expenseRoutes.js          # 🛣️ API route definitions
+├── 📁 utils/
+│   └── constants.js              # 🛠️ Shared constants
+├── .env.example                  # 📝 Environment template
+├── server.js                     # 🚀 Application entry point
+└── package.json                  # 📦 Dependencies
 ```
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- MongoDB (v6.0 or higher)
-- npm or yarn
+```bash
+Node.js 18+  |  MongoDB Atlas Account  |  npm
+```
 
 ### Installation
 
-1. **Navigate to the backend directory:**
+```bash
+# 1. Navigate to backend directory
+cd backend
 
-   ```bash
-   cd backend
-   ```
+# 2. Install dependencies
+npm install
 
-2. **Install dependencies:**
+# 3. Configure environment
+cp .env.example .env
 
-   ```bash
-   npm install
-   ```
+# Edit .env with your MongoDB Atlas connection string
+```
 
-3. **Set up environment variables:**
+### Environment Variables
 
-   ```bash
-   cp .env.example .env
-   ```
+Create `.env` file:
 
-   Edit `.env` file with your configuration:
+```env
+# Server Configuration
+PORT=5000
+NODE_ENV=development
 
-   ```env
-   PORT=5000
-   NODE_ENV=development
-   MONGODB_URI=mongodb://localhost:27017/expense-tracker
-   CLIENT_URL=http://localhost:5173
-   ```
+# Database
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
 
-4. **Start MongoDB:**
+# Frontend URL (for CORS)
+CLIENT_URL=http://localhost:5173
+```
 
-   Make sure MongoDB is running on your system:
+### Start Server
 
-   ```bash
-   # Windows (if MongoDB is installed as a service)
-   net start MongoDB
+```bash
+# Development (with auto-reload)
+npm run dev
 
-   # Or run mongod directly
-   mongod
-   ```
+# Production
+npm start
+```
 
-5. **Start the server:**
+Server runs on **http://localhost:5000** 🚀
 
-   **Development mode (with auto-reload):**
-
-   ```bash
-   npm run dev
-   ```
-
-   **Production mode:**
-
-   ```bash
-   npm start
-   ```
-
-The server will start on `http://localhost:5000`
+---
 
 ## 📡 API Endpoints
 
-### Base URL
+### Base URL: `http://localhost:5000/api`
 
-```
-http://localhost:5000/api
-```
+<table>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses</code></td>
+<td>📋 Get all expenses (with filters)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/:id</code></td>
+<td>🔍 Get single expense by ID</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/expenses</code></td>
+<td>➕ Create new expense</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/expenses/:id</code></td>
+<td>✏️ Update expense</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/expenses/:id</code></td>
+<td>🗑️ Delete expense</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/stats/total</code></td>
+<td>💰 Get total expenses</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/stats/by-category</code></td>
+<td>📊 Category-wise totals</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/stats/by-date-range</code></td>
+<td>📅 Date range statistics</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/health</code></td>
+<td>❤️ Health check</td>
+</tr>
+</table>
 
-### Expenses
+---
 
-#### Get All Expenses
+### 📋 Get All Expenses
 
 ```http
-GET /expenses
+GET /api/expenses?category=Food&dateFrom=2025-11-01&limit=20
 ```
 
 **Query Parameters:**
 
-- `category` (optional): Filter by category
-- `dateFrom` (optional): Filter expenses from this date (YYYY-MM-DD)
-- `dateTo` (optional): Filter expenses up to this date (YYYY-MM-DD)
-- `page` (optional): Page number (default: 1)
-- `limit` (optional): Items per page (default: 50, max: 100)
+| Parameter  | Type   | Description                      |
+| ---------- | ------ | -------------------------------- |
+| `category` | string | Filter by category (optional)    |
+| `dateFrom` | date   | Start date YYYY-MM-DD (optional) |
+| `dateTo`   | date   | End date YYYY-MM-DD (optional)   |
+| `page`     | number | Page number (default: 1)         |
+| `limit`    | number | Items per page (max: 100)        |
 
-**Response:**
+**Success Response:**
 
 ```json
 {
@@ -128,11 +193,11 @@ GET /expenses
   "totalPages": 5,
   "data": [
     {
-      "id": "507f1f77bcf86cd799439011",
-      "amount": 50.99,
+      "_id": "507f1f77bcf86cd799439011",
+      "amount": 500,
       "category": "Food",
-      "description": "Grocery shopping",
-      "date": "2025-11-20",
+      "description": "Dinner",
+      "date": "2025-11-20T00:00:00.000Z",
       "createdAt": "2025-11-20T10:30:00.000Z",
       "updatedAt": "2025-11-20T10:30:00.000Z"
     }
@@ -140,206 +205,398 @@ GET /expenses
 }
 ```
 
-#### Get Single Expense
+---
+
+### 🔍 Get Single Expense
 
 ```http
-GET /expenses/:id
+GET /api/expenses/:id
 ```
 
-**Response:**
+**Success Response:**
 
 ```json
 {
   "success": true,
   "data": {
-    "id": "507f1f77bcf86cd799439011",
-    "amount": 50.99,
+    "_id": "507f1f77bcf86cd799439011",
+    "amount": 500,
     "category": "Food",
-    "description": "Grocery shopping",
-    "date": "2025-11-20"
+    "description": "Dinner",
+    "date": "2025-11-20T00:00:00.000Z"
   }
 }
 ```
 
-#### Create Expense
+---
+
+### ➕ Create Expense
 
 ```http
-POST /expenses
+POST /api/expenses
+Content-Type: application/json
 ```
 
 **Request Body:**
 
 ```json
 {
-  "amount": 50.99,
+  "amount": 500,
   "category": "Food",
-  "description": "Grocery shopping",
+  "description": "Dinner with friends",
   "date": "2025-11-20"
 }
 ```
 
 **Validation Rules:**
 
-- `amount`: Required, must be > 0
-- `category`: Required, must be one of: Food, Transport, Shopping, Bills, Entertainment, Healthcare, Education, Other
-- `description`: Optional, max 200 characters
-- `date`: Optional, ISO 8601 format, cannot be in the future
+| Field         | Type   | Required | Rules                                                                                 |
+| ------------- | ------ | -------- | ------------------------------------------------------------------------------------- |
+| `amount`      | number | ✅ Yes   | Must be > 0                                                                           |
+| `category`    | string | ✅ Yes   | One of: Food, Transport, Shopping, Bills, Entertainment, Healthcare, Education, Other |
+| `description` | string | ❌ No    | Max 200 characters                                                                    |
+| `date`        | date   | ✅ Yes   | YYYY-MM-DD format, not in future                                                      |
 
-**Response:**
+**Success Response:**
 
 ```json
 {
   "success": true,
-  "message": "Expense created successfully",
+  "message": "Expense added successfully",
   "data": {
-    "id": "507f1f77bcf86cd799439011",
-    "amount": 50.99,
+    "_id": "507f1f77bcf86cd799439011",
+    "amount": 500,
     "category": "Food",
-    "description": "Grocery shopping",
-    "date": "2025-11-20"
+    "description": "Dinner with friends",
+    "date": "2025-11-20T00:00:00.000Z",
+    "createdAt": "2025-11-20T10:30:00.000Z"
   }
 }
 ```
 
-#### Update Expense
+---
+
+### ✏️ Update Expense
 
 ```http
-PUT /expenses/:id
+PUT /api/expenses/:id
+Content-Type: application/json
 ```
 
-**Request Body:** (all fields optional)
+**Request Body:** (All fields optional)
 
 ```json
 {
-  "amount": 55.99,
-  "category": "Shopping",
-  "description": "Updated description",
-  "date": "2025-11-21"
+  "amount": 600,
+  "description": "Updated dinner description"
 }
 ```
 
-**Response:**
+---
+
+### 🗑️ Delete Expense
+
+```http
+DELETE /api/expenses/:id
+```
+
+**Success Response:**
 
 ```json
 {
   "success": true,
-  "message": "Expense updated successfully",
+  "message": "Expense deleted successfully"
+}
+```
+
+---
+
+### 💰 Get Total Expenses
+
+```http
+GET /api/expenses/stats/total
+```
+
+**Success Response:**
+
+```json
+{
+  "success": true,
   "data": {
-    "id": "507f1f77bcf86cd799439011",
-    "amount": 55.99,
-    "category": "Shopping",
-    "description": "Updated description",
-    "date": "2025-11-21"
+    "total": 15750.5
   }
 }
 ```
 
-#### Delete Expense
+---
+
+### 📊 Get Category Statistics
 
 ```http
-DELETE /expenses/:id
+GET /api/expenses/stats/by-category
 ```
 
-**Response:**
+**Success Response:**
 
 ```json
 {
   "success": true,
-  "message": "Expense deleted successfully",
   "data": {
-    "id": "507f1f77bcf86cd799439011",
-    "amount": 50.99,
-    "category": "Food"
+    "Food": 5000,
+    "Transport": 3000,
+    "Shopping": 2500,
+    "Bills": 5250.5
   }
 }
 ```
 
-### Summary Endpoints
+---
 
-#### Get Expenses by Category
+### 📅 Get Date Range Statistics
 
 ```http
-GET /expenses/summary/by-category
+GET /api/expenses/stats/by-date-range?dateFrom=2025-11-01&dateTo=2025-11-30
 ```
 
-**Response:**
+**Success Response:**
 
 ```json
 {
   "success": true,
-  "data": [
+  "data": {
+    "total": 8500,
+    "count": 15,
+    "dateFrom": "2025-11-01",
+    "dateTo": "2025-11-30"
+  }
+}
+```
+
+---
+
+## ❌ Error Responses
+
+All errors follow this format:
+
+```json
+{
+  "success": false,
+  "message": "Error description",
+  "errors": [
     {
-      "category": "Food",
-      "total": 450.5,
-      "count": 12
-    },
-    {
-      "category": "Transport",
-      "total": 200.0,
-      "count": 8
+      "field": "amount",
+      "message": "Amount must be greater than 0"
     }
   ]
 }
 ```
 
-#### Get Total Expenses
+### Common Error Codes
 
-```http
-GET /expenses/summary/total
+| Code  | Description                        |
+| ----- | ---------------------------------- |
+| `400` | Bad Request - Validation error     |
+| `404` | Not Found - Resource doesn't exist |
+| `500` | Internal Server Error              |
+
+---
+
+## 🧪 Testing
+
+### Using cURL
+
+```bash
+# Create an expense
+curl -X POST http://localhost:5000/api/expenses \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 500,
+    "category": "Food",
+    "description": "Lunch",
+    "date": "2025-11-20"
+  }'
+
+# Get all expenses
+curl http://localhost:5000/api/expenses
+
+# Get by category
+curl http://localhost:5000/api/expenses?category=Food
+
+# Health check
+curl http://localhost:5000/health
 ```
 
-**Response:**
+### Using Postman
+
+1. Import the API collection (if available)
+2. Set base URL: `http://localhost:5000`
+3. Add `/api` prefix to all endpoints
+4. Test each endpoint with sample data
+
+---
+
+## 📦 Dependencies
+
+### Production
+
+| Package             | Version | Purpose               |
+| ------------------- | ------- | --------------------- |
+| `express`           | ^4.18.2 | Web framework         |
+| `mongoose`          | ^8.0.0  | MongoDB ODM           |
+| `express-validator` | ^7.0.1  | Input validation      |
+| `cors`              | ^2.8.5  | CORS middleware       |
+| `dotenv`            | ^16.3.1 | Environment variables |
+| `morgan`            | ^1.10.0 | HTTP logger           |
+
+### Development
+
+| Package   | Version | Purpose             |
+| --------- | ------- | ------------------- |
+| `nodemon` | ^3.0.1  | Auto-restart server |
+
+---
+
+## 🛡️ Security Best Practices
+
+✅ **Input Validation** - All requests validated with Express Validator  
+✅ **MongoDB Injection Protection** - Mongoose sanitizes queries  
+✅ **CORS Configuration** - Controlled cross-origin access  
+✅ **Environment Variables** - Sensitive data in .env  
+✅ **Error Handling** - No sensitive data in error responses
+
+---
+
+## 🐛 Debugging
+
+### Enable Debug Logging
+
+```bash
+# Set in .env
+NODE_ENV=development
+DEBUG=true
+```
+
+### Check MongoDB Connection
+
+```bash
+# The server logs will show:
+✅ Connected to MongoDB: expense-tracker
+```
+
+### Common Issues
+
+| Issue                    | Solution                                           |
+| ------------------------ | -------------------------------------------------- |
+| Port already in use      | Change `PORT` in .env or kill process on port 5000 |
+| MongoDB connection error | Check `MONGODB_URI` in .env file                   |
+| CORS errors              | Verify `CLIENT_URL` in .env matches frontend URL   |
+
+---
+
+## 📝 Scripts
 
 ```json
 {
-  "success": true,
-  "data": {
-    "total": 1250.5
-  }
+  "start": "node server.js",
+  "dev": "nodemon server.js",
+  "test": "echo \"Tests coming soon...\""
 }
 ```
 
-#### Get Complete Statistics
+---
 
-```http
-GET /expenses/summary/statistics
+## 🚢 Deployment
+
+### Deploy to Heroku
+
+```bash
+# Install Heroku CLI
+heroku create your-app-name
+
+# Set environment variables
+heroku config:set MONGODB_URI=your_mongodb_uri
+heroku config:set CLIENT_URL=your_frontend_url
+
+# Deploy
+git push heroku main
 ```
 
-**Response:**
+### Deploy to Railway/Render
 
-```json
+1. Connect your GitHub repository
+2. Set environment variables in dashboard
+3. Auto-deploy on push to main
+
+---
+
+## 📊 Database Schema
+
+### Expense Model
+
+```javascript
 {
-  "success": true,
-  "data": {
-    "total": 1250.5,
-    "count": 45,
-    "expensesByCategory": {
-      "Food": 450.5,
-      "Transport": 200.0,
-      "Shopping": 350.0
-    },
-    "categoryTotals": [
-      {
-        "category": "Food",
-        "total": 450.5,
-        "count": 12
-      }
-    ]
-  }
+  amount: {
+    type: Number,
+    required: true,
+    min: 0.01
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ['Food', 'Transport', 'Shopping', 'Bills',
+           'Entertainment', 'Healthcare', 'Education', 'Other']
+  },
+  description: {
+    type: String,
+    maxLength: 200
+  },
+  date: {
+    type: Date,
+    required: true,
+    max: Date.now
+  },
+  createdAt: Date,
+  updatedAt: Date
 }
 ```
 
-### Health Check
+### Indexes
 
-```http
-GET /health
-```
+- `category` - For faster category filtering
+- `date` - For date range queries
+- `createdAt` - For sorting by creation time
 
-**Response:**
+---
 
-```json
-{
-  "success": true,
+## 🤝 Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests (when available)
+5. Submit a pull request
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](../LICENSE) file
+
+---
+
+<div align="center">
+
+### 👨‍💻 Developed by Gourav Chaudhary
+
+[![GitHub](https://img.shields.io/badge/GitHub-GouravSittam-181717?style=flat-square&logo=github)](https://github.com/GouravSittam)
+
+**Made with ❤️ using Node.js & Express**
+
+[⬆ Back to Top](#-expense-tracker---backend-api)
+
+</div>
   "message": "Server is running",
   "timestamp": "2025-11-20T10:30:00.000Z"
 }

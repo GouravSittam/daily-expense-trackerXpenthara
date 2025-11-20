@@ -4,6 +4,7 @@ import ExpenseList from "../components/ExpenseList";
 import ExpenseSummary from "../components/ExpenseSummary";
 import ChartComponent from "../components/ChartComponent";
 import Shuffle from "../components/Shuffle";
+import OfflineIndicator from "../components/OfflineIndicator";
 import {
   getExpenses,
   addExpense as addExpenseService,
@@ -74,68 +75,72 @@ const ExpenseTracker = () => {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto p-6">
-      <header className="text-center mb-8">
-        <div className="mb-2">
-          <Shuffle
-            text="💰 Expense Tracker"
-            shuffleDirection="right"
-            duration={0.35}
-            animationMode="evenodd"
-            shuffleTimes={3}
-            ease="power3.out"
-            stagger={0.03}
-            threshold={0.1}
-            triggerOnce={true}
-            triggerOnHover={true}
-            respectReducedMotion={true}
-            tag="h1"
-            className="text-gray-800 !text-5xl !leading-tight"
-            style={{
-              fontFamily: "inherit",
-              textTransform: "none",
-              fontSize: "2.5rem",
-              fontWeight: "bold",
-            }}
-          />
-        </div>
-        <p className="text-gray-800 italic !text-3xl !leading-tight">
-          Track your daily expenses with category summaries
-        </p>
-      </header>
+    <div className="min-h-screen">
+      <div className="max-w-[1400px] mx-auto p-6">
+        {/* Offline Indicator */}
+        <OfflineIndicator />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-6">
-        <div className="flex flex-col gap-6">
-          <ExpenseForm onAddExpense={handleAddExpense} />
-          <ExpenseList
-            expenses={expenses}
-            onDeleteExpense={handleDeleteExpense}
-          />
+        <header className="text-center mb-10 py-6">
+          <div className="mb-3">
+            <Shuffle
+              text="💰 Expense Tracker 💰"
+              shuffleDirection="right"
+              duration={0.8}
+              animationMode="evenodd"
+              shuffleTimes={2}
+              ease="power2.inOut"
+              stagger={0.05}
+              threshold={0.1}
+              triggerOnce={true}
+              triggerOnHover={true}
+              respectReducedMotion={true}
+              tag="h1"
+              className="text-5xl leading-tight font-bold text-gray-800"
+              style={{
+                fontFamily: "inherit",
+                textTransform: "none",
+                letterSpacing: "-0.02em",
+              }}
+            />
+          </div>
+          <p className="text-gray-600 italic text-6xl font-normal">
+            Track your daily expenses with ease
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 mb-8">
+          <div className="flex flex-col gap-8">
+            <ExpenseForm onAddExpense={handleAddExpense} />
+            <ExpenseList
+              expenses={expenses}
+              onDeleteExpense={handleDeleteExpense}
+            />
+          </div>
+
+          <aside className="flex flex-col">
+            <ExpenseSummary
+              expensesByCategory={expensesByCategory}
+              totalExpenses={totalExpenses}
+            />
+          </aside>
         </div>
 
-        <aside className="flex flex-col">
-          <ExpenseSummary
-            expensesByCategory={expensesByCategory}
-            totalExpenses={totalExpenses}
-          />
-        </aside>
+        <ChartComponent expensesByCategory={expensesByCategory} />
+
+        <footer className="mt-12 mb-4 text-center">
+          <p className="text-sm text-gray-600">
+            Developed by{" "}
+            <a
+              href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-700 font-medium underline"
+            >
+              Gourav Chaudhary
+            </a>
+          </p>
+        </footer>
       </div>
-
-      <ChartComponent expensesByCategory={expensesByCategory} />
-
-      <footer className="mt-12 mb-4 text-right">
-        <p className="text-sm text-gray-600">
-          Developed by{" "}
-          <a
-            href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 hover:underline font-medium transition-colors"
-          >
-            Gourav Chaudhary❤️
-          </a>
-        </p>
-      </footer>
     </div>
   );
 };

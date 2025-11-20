@@ -1,5 +1,10 @@
-import { useState } from 'react';
-import { formatCurrency, formatDate, CATEGORIES, getCategoryColor } from '../utils/constants';
+import { useState } from "react";
+import {
+  formatCurrency,
+  formatDate,
+  CATEGORIES,
+  getCategoryColor,
+} from "../utils/constants";
 
 /**
  * Component for displaying and filtering expenses
@@ -7,11 +12,11 @@ import { formatCurrency, formatDate, CATEGORIES, getCategoryColor } from '../uti
  * @param {Function} onDeleteExpense - Callback function when expense is deleted
  */
 const ExpenseList = ({ expenses, onDeleteExpense }) => {
-  const [filterCategory, setFilterCategory] = useState('All');
-  const [filterDateFrom, setFilterDateFrom] = useState('');
-  const [filterDateTo, setFilterDateTo] = useState('');
-  const [sortBy, setSortBy] = useState('date'); // date, amount, category
-  const [sortOrder, setSortOrder] = useState('desc'); // asc, desc
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [filterDateFrom, setFilterDateFrom] = useState("");
+  const [filterDateTo, setFilterDateTo] = useState("");
+  const [sortBy, setSortBy] = useState("date"); // date, amount, category
+  const [sortOrder, setSortOrder] = useState("desc"); // asc, desc
 
   /**
    * Filters expenses based on selected filters
@@ -21,17 +26,19 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
     let filtered = [...expenses];
 
     // Filter by category
-    if (filterCategory !== 'All') {
-      filtered = filtered.filter(expense => expense.category === filterCategory);
+    if (filterCategory !== "All") {
+      filtered = filtered.filter(
+        (expense) => expense.category === filterCategory
+      );
     }
 
     // Filter by date range
     if (filterDateFrom) {
-      filtered = filtered.filter(expense => expense.date >= filterDateFrom);
+      filtered = filtered.filter((expense) => expense.date >= filterDateFrom);
     }
 
     if (filterDateTo) {
-      filtered = filtered.filter(expense => expense.date <= filterDateTo);
+      filtered = filtered.filter((expense) => expense.date <= filterDateTo);
     }
 
     // Sort expenses
@@ -39,19 +46,19 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
       let comparison = 0;
 
       switch (sortBy) {
-        case 'amount':
+        case "amount":
           comparison = a.amount - b.amount;
           break;
-        case 'category':
+        case "category":
           comparison = a.category.localeCompare(b.category);
           break;
-        case 'date':
+        case "date":
         default:
           comparison = new Date(a.date) - new Date(b.date);
           break;
       }
 
-      return sortOrder === 'asc' ? comparison : -comparison;
+      return sortOrder === "asc" ? comparison : -comparison;
     });
 
     return filtered;
@@ -63,10 +70,10 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
    */
   const handleSortChange = (newSortBy) => {
     if (sortBy === newSortBy) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       setSortBy(newSortBy);
-      setSortOrder('desc');
+      setSortOrder("desc");
     }
   };
 
@@ -74,32 +81,36 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
    * Clears all filters
    */
   const clearFilters = () => {
-    setFilterCategory('All');
-    setFilterDateFrom('');
-    setFilterDateTo('');
+    setFilterCategory("All");
+    setFilterDateFrom("");
+    setFilterDateTo("");
   };
 
   const filteredExpenses = getFilteredExpenses();
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md">
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="m-0 text-gray-800 text-2xl font-semibold">Expense List</h2>
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800">Expense List</h2>
         <span className="text-gray-600 text-sm">
-          {filteredExpenses.length} {filteredExpenses.length === 1 ? 'expense' : 'expenses'}
+          {filteredExpenses.length}{" "}
+          {filteredExpenses.length === 1 ? "expense" : "expenses"}
         </span>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 flex-wrap mb-5 p-4 bg-gray-50 rounded">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="filter-category" className="text-xs font-medium text-gray-600">
-            Category:
+      <div className="flex flex-col sm:flex-row gap-3 flex-wrap mb-5 p-4 bg-gray-50 rounded-lg">
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="filter-category"
+            className="text-xs font-medium text-gray-700"
+          >
+            Category
           </label>
           <select
             id="filter-category"
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white transition-shadow"
           >
             <option value="All">All Categories</option>
             {CATEGORIES.map((cat) => (
@@ -110,37 +121,43 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
           </select>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="filter-date-from" className="text-xs font-medium text-gray-600">
-            From:
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="filter-date-from"
+            className="text-xs font-medium text-gray-700"
+          >
+            From Date
           </label>
           <input
             type="date"
             id="filter-date-from"
             value={filterDateFrom}
             onChange={(e) => setFilterDateFrom(e.target.value)}
-            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white transition-shadow"
           />
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="filter-date-to" className="text-xs font-medium text-gray-600">
-            To:
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="filter-date-to"
+            className="text-xs font-medium text-gray-700"
+          >
+            To Date
           </label>
           <input
             type="date"
             id="filter-date-to"
             value={filterDateTo}
             onChange={(e) => setFilterDateTo(e.target.value)}
-            max={new Date().toISOString().split('T')[0]}
-            className="px-2.5 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500"
+            max={new Date().toISOString().split("T")[0]}
+            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white transition-shadow"
           />
         </div>
 
-        {(filterCategory !== 'All' || filterDateFrom || filterDateTo) && (
+        {(filterCategory !== "All" || filterDateFrom || filterDateTo) && (
           <button
             onClick={clearFilters}
-            className="px-4 py-2 bg-stone-500 text-white rounded text-sm cursor-pointer transition-colors hover:bg-stone-600 sm:self-end"
+            className="px-4 py-2 bg-gray-600 text-white rounded-lg text-sm font-medium cursor-pointer transition-all hover:bg-gray-700 sm:self-end shadow-sm"
           >
             Clear Filters
           </button>
@@ -148,42 +165,47 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
       </div>
 
       {filteredExpenses.length === 0 ? (
-        <div className="text-center py-12 px-6 text-gray-500">
-          <p className="m-0 text-base">No expenses found. Add your first expense above!</p>
+        <div className="text-center py-12 px-6">
+          <p className="text-gray-500 text-base">
+            No expenses found. Add your first expense above!
+          </p>
         </div>
       ) : (
         <>
-          <div className="flex gap-2 items-center mb-4 p-3 bg-gray-50 rounded">
-            <span className="text-sm font-medium text-gray-600 mr-2">Sort by:</span>
+          <div className="flex gap-2 items-center mb-4 p-3 bg-gray-50 rounded-lg">
+            <span className="text-sm font-medium text-gray-600 mr-2">
+              Sort by:
+            </span>
             <button
-              onClick={() => handleSortChange('date')}
-              className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
-                sortBy === 'date'
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white border-gray-300 hover:bg-gray-100'
+              onClick={() => handleSortChange("date")}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                sortBy === "date"
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Date {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
+              Date {sortBy === "date" && (sortOrder === "asc" ? "↑" : "↓")}
             </button>
             <button
-              onClick={() => handleSortChange('amount')}
-              className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
-                sortBy === 'amount'
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white border-gray-300 hover:bg-gray-100'
+              onClick={() => handleSortChange("amount")}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                sortBy === "amount"
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Amount {sortBy === 'amount' && (sortOrder === 'asc' ? '↑' : '↓')}
+              Amount {sortBy === "amount" && (sortOrder === "asc" ? "↑" : "↓")}
             </button>
             <button
-              onClick={() => handleSortChange('category')}
-              className={`px-3 py-1.5 rounded text-sm cursor-pointer transition-all border ${
-                sortBy === 'category'
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white border-gray-300 hover:bg-gray-100'
+              onClick={() => handleSortChange("category")}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                sortBy === "category"
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Category {sortBy === 'category' && (sortOrder === 'asc' ? '↑' : '↓')}
+              Category{" "}
+              {sortBy === "category" && (sortOrder === "asc" ? "↑" : "↓")}
             </button>
           </div>
 
@@ -191,23 +213,54 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
             {filteredExpenses.map((expense) => (
               <div
                 key={expense.id}
-                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-gray-50 rounded transition-all hover:bg-gray-100 relative"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                <div className="flex flex-col gap-1 flex-1 mb-2 sm:mb-0">
-                  <div className={`font-semibold text-base inline-block px-2 py-0.5 rounded text-white text-sm ${getCategoryColor(expense.category)}`}>
-                    {expense.category}
+                <div className="flex flex-col gap-2 flex-1 mb-3 sm:mb-0">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`font-semibold text-sm px-3 py-1 rounded-lg text-white ${getCategoryColor(
+                        expense.category
+                      )}`}
+                    >
+                      {expense.category}
+                    </span>
+                    {expense._isLocal && (
+                      <span className="text-xs px-2 py-1 bg-orange-100 text-orange-700 rounded-full font-medium">
+                        Syncing...
+                      </span>
+                    )}
                   </div>
-                  <div className="text-gray-600 text-sm">{expense.description}</div>
-                  <div className="text-gray-500 text-xs">{formatDate(expense.date)}</div>
+                  <div className="text-gray-700 text-base">
+                    {expense.description}
+                  </div>
+                  <div className="text-gray-500 text-xs">
+                    {formatDate(expense.date)}
+                  </div>
                 </div>
-                <div className="text-xl font-semibold text-orange-600 sm:mr-10 mb-2 sm:mb-0">{formatCurrency(expense.amount)}</div>
-                <button
-                  onClick={() => onDeleteExpense(expense.id)}
-                  className="absolute sm:static right-4 top-4 sm:top-auto sm:right-4 sm:transform sm:-translate-y-0 bg-stone-600 text-white rounded-full w-7 h-7 text-xl leading-none cursor-pointer flex items-center justify-center transition-colors hover:bg-stone-700"
-                  aria-label="Delete expense"
-                >
-                  ×
-                </button>
+                <div className="flex items-center gap-4">
+                  <div className="text-xl font-bold text-orange-600">
+                    {formatCurrency(expense.amount)}
+                  </div>
+                  <button
+                    onClick={() => onDeleteExpense(expense.id)}
+                    className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                    aria-label="Delete expense"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -218,4 +271,3 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
 };
 
 export default ExpenseList;
-
