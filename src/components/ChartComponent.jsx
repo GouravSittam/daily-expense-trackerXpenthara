@@ -54,12 +54,12 @@ const ChartComponent = ({ expensesByCategory }) => {
 
   if (chartData.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mt-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 mt-6">
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">
           Expense Visualization
         </h2>
-        <div className="text-center py-12 px-6">
-          <p className="text-gray-500 text-base">
+        <div className="text-center py-8 sm:py-12 px-4 sm:px-6">
+          <p className="text-gray-500 text-sm sm:text-base">
             No data available for visualization. Add expenses to see charts!
           </p>
         </div>
@@ -68,17 +68,17 @@ const ChartComponent = ({ expensesByCategory }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mt-6">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+    <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 mt-6">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">
         Expense Visualization
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         <div className="flex flex-col">
-          <h3 className="mb-4 text-gray-700 text-lg font-semibold">
+          <h3 className="mb-3 sm:mb-4 text-gray-700 text-base sm:text-lg font-semibold">
             Expenses by Category (Pie Chart)
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={280} minHeight={250}>
             <PieChart>
               <Pie
                 data={chartData}
@@ -88,7 +88,7 @@ const ChartComponent = ({ expensesByCategory }) => {
                 label={({ name, percent }) =>
                   `${name}: ${(percent * 100).toFixed(0)}%`
                 }
-                outerRadius={100}
+                outerRadius={window.innerWidth < 640 ? 80 : 100}
                 fill={
                   chartData.length > 0
                     ? getColorForCategory(chartData[0].name)
@@ -110,14 +110,23 @@ const ChartComponent = ({ expensesByCategory }) => {
         </div>
 
         <div className="flex flex-col">
-          <h3 className="mb-4 text-gray-700 text-lg font-semibold">
+          <h3 className="mb-3 sm:mb-4 text-gray-700 text-base sm:text-lg font-semibold">
             Expenses by Category (Bar Chart)
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
+          <ResponsiveContainer width="100%" height={280} minHeight={250}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
-              <YAxis />
+              <XAxis
+                dataKey="name"
+                angle={window.innerWidth < 640 ? -90 : -45}
+                textAnchor="end"
+                height={window.innerWidth < 640 ? 100 : 80}
+                fontSize={window.innerWidth < 640 ? 10 : 12}
+              />
+              <YAxis fontSize={window.innerWidth < 640 ? 10 : 12} />
               <Tooltip content={<CustomTooltip />} />
               <Bar
                 dataKey="value"

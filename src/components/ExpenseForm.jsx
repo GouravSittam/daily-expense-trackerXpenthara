@@ -64,13 +64,13 @@ const ExpenseForm = ({ onAddExpense }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-5">
+    <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-5">
         Add New Expense
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
       >
         <div className="flex flex-col">
           <label
@@ -86,7 +86,7 @@ const ExpenseForm = ({ onAddExpense }) => {
             min="0.01"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className={`w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow ${
+            className={`w-full px-3 py-3 sm:py-2.5 border rounded-lg text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow ${
               errors.amount
                 ? "border-red-300 bg-red-50"
                 : "border-gray-300 bg-white"
@@ -170,7 +170,7 @@ const ExpenseForm = ({ onAddExpense }) => {
 
         <button
           type="submit"
-          className="col-span-1 md:col-span-2 lg:col-span-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium cursor-pointer hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
+          className="col-span-1 sm:col-span-2 lg:col-span-4 px-6 py-3 sm:py-3.5 bg-blue-600 text-white rounded-lg text-base font-medium cursor-pointer hover:bg-blue-700 active:bg-blue-800 transition-all shadow-sm hover:shadow-md touch-manipulation"
         >
           Add Expense
         </button>

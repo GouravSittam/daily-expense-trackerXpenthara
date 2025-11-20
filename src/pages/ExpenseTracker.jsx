@@ -76,12 +76,12 @@ const ExpenseTracker = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-[1400px] mx-auto p-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Offline Indicator */}
         <OfflineIndicator />
 
-        <header className="text-center mb-10 py-6">
-          <div className="mb-3">
+        <header className="text-center mb-6 sm:mb-8 lg:mb-10 py-4 sm:py-6">
+          <div className="mb-2 sm:mb-3">
             <Shuffle
               text="💰 Expense Tracker 💰"
               shuffleDirection="right"
@@ -95,7 +95,7 @@ const ExpenseTracker = () => {
               triggerOnHover={true}
               respectReducedMotion={true}
               tag="h1"
-              className="text-5xl leading-tight font-bold text-gray-800"
+              className="text-3xl sm:text-4xl lg:text-5xl leading-tight font-bold text-gray-800 px-2"
               style={{
                 fontFamily: "inherit",
                 textTransform: "none",
@@ -103,13 +103,13 @@ const ExpenseTracker = () => {
               }}
             />
           </div>
-          <p className="text-gray-600 italic text-6xl font-normal">
+          <p className="text-gray-600 italic text-sm sm:text-base lg:text-lg font-normal px-4">
             Track your daily expenses with ease
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 mb-8">
-          <div className="flex flex-col gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6 sm:gap-8 mb-6 sm:mb-8">
+          <div className="flex flex-col gap-6 sm:gap-8">
             <ExpenseForm onAddExpense={handleAddExpense} />
             <ExpenseList
               expenses={expenses}
@@ -127,8 +127,8 @@ const ExpenseTracker = () => {
 
         <ChartComponent expensesByCategory={expensesByCategory} />
 
-        <footer className="mt-12 mb-4 text-center">
-          <p className="text-sm text-gray-600">
+        <footer className="mt-8 sm:mt-12 mb-4 text-center px-4">
+          <p className="text-xs sm:text-sm text-gray-600">
             Developed by{" "}
             <a
               href="https://github.com/GouravSittam/trackwise-penthara.git"

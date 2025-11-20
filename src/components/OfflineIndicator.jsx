@@ -79,20 +79,20 @@ const OfflineIndicator = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5 duration-300">
+    <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 left-4 sm:left-auto z-50 animate-in slide-in-from-bottom-5 duration-300 max-w-sm">
       <div
         className={`backdrop-blur-lg rounded-2xl shadow-2xl border overflow-hidden transition-all duration-300 hover:shadow-xl ${
           offline
-            ? "bg-gradient-to-br from-orange-500/90 to-red-500/90 border-orange-400/20"
-            : "bg-gradient-to-br from-blue-500/90 to-indigo-500/90 border-blue-400/20"
+            ? "bg-linear-to-br from-orange-500/90 to-red-500/90 border-orange-400/20"
+            : "bg-linear-to-br from-blue-500/90 to-indigo-500/90 border-blue-400/20"
         }`}
       >
         {/* Status Bar */}
-        <div className="px-4 py-3">
-          <div className="flex items-center gap-3">
+        <div className="px-3 sm:px-4 py-2.5 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Icon */}
             <div
-              className={`shrink-0 p-2 rounded-xl backdrop-blur-sm ${
+              className={`shrink-0 p-1.5 sm:p-2 rounded-xl backdrop-blur-sm ${
                 syncing
                   ? "bg-white/20"
                   : offline
@@ -102,7 +102,7 @@ const OfflineIndicator = () => {
             >
               {syncing ? (
                 <svg
-                  className="animate-spin h-5 w-5 text-white"
+                  className="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -123,7 +123,7 @@ const OfflineIndicator = () => {
                 </svg>
               ) : offline ? (
                 <svg
-                  className="h-5 w-5 text-white"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -137,7 +137,7 @@ const OfflineIndicator = () => {
                 </svg>
               ) : (
                 <svg
-                  className="h-5 w-5 text-white"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -154,8 +154,8 @@ const OfflineIndicator = () => {
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <p className="text-sm font-semibold text-white">
+              <div className="flex items-center gap-2 flex-wrap">
+                <p className="text-xs sm:text-sm font-semibold text-white">
                   {syncing
                     ? "Syncing Data..."
                     : offline
@@ -180,9 +180,9 @@ const OfflineIndicator = () => {
             {offline && pendingCount > 0 && !syncing && (
               <button
                 onClick={handleSync}
-                className="shrink-0 px-4 py-1.5 text-xs font-medium text-white bg-white/20 hover:bg-white/30 active:bg-white/40 rounded-lg transition-all duration-200 backdrop-blur-sm border border-white/10 hover:border-white/20"
+                className="shrink-0 px-3 sm:px-4 py-1.5 text-xs font-medium text-white bg-white/20 hover:bg-white/30 active:bg-white/40 rounded-lg transition-all duration-200 backdrop-blur-sm border border-white/10 hover:border-white/20 touch-manipulation"
               >
-                Retry Now
+                Retry
               </button>
             )}
           </div>
@@ -190,10 +190,10 @@ const OfflineIndicator = () => {
 
         {/* Info Banner */}
         {offline && (
-          <div className="px-4 py-2.5 bg-black/10 border-t border-white/10">
+          <div className="px-3 sm:px-4 py-2 sm:py-2.5 bg-black/10 border-t border-white/10">
             <div className="flex items-start gap-2">
               <svg
-                className="h-4 w-4 text-white/80 shrink-0 mt-0.5"
+                className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white/80 shrink-0 mt-0.5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
