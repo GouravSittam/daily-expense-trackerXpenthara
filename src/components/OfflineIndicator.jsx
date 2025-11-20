@@ -73,8 +73,8 @@ const OfflineIndicator = () => {
     };
   }, []);
 
-  // Don't show anything if online and nothing pending
-  if (!offline && pendingCount === 0) {
+  // Only show when offline or when there are pending changes
+  if (!offline) {
     return null;
   }
 
