@@ -11,7 +11,7 @@ A production-ready Express.js backend with MongoDB, comprehensive validation, an
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](../LICENSE)
 
-[API Docs](#-api-endpoints) • [Installation](#-quick-start) • [Testing](#-testing)
+[Live API](https://trackwise-penthara-backend.vercel.app) • [API Docs](#-api-endpoints) • [Installation](#-quick-start) • [Testing](#-testing)
 
 </div>
 
@@ -28,6 +28,42 @@ A production-ready Express.js backend with MongoDB, comprehensive validation, an
 - 📝 **Request Logging** - Morgan HTTP request logger
 - 🚀 **Auto-reload** - Nodemon for development
 - 🏗️ **MVC Architecture** - Clean separation of concerns
+
+---
+
+## 🌐 Production Deployment
+
+### ✅ Live & Running
+
+| Status      | URL                                                                      |
+| ----------- | ------------------------------------------------------------------------ |
+| 🟢 Live     | https://trackwise-penthara-backend.vercel.app                            |
+| 🟢 Health   | [Check Health](https://trackwise-penthara-backend.vercel.app/api/health) |
+| 🟢 Database | MongoDB Atlas Connected                                                  |
+| 🟢 CORS     | Configured for https://trackwise-penthara.vercel.app                     |
+
+### 📡 Test Live API
+
+```bash
+# Health Check
+curl https://trackwise-penthara-backend.vercel.app/api/health
+
+# Get All Expenses
+curl https://trackwise-penthara-backend.vercel.app/api/expenses
+
+# Get Statistics
+curl https://trackwise-penthara-backend.vercel.app/api/expenses/summary/statistics
+```
+
+**Expected Response:**
+
+```json
+{
+  "success": true,
+  "message": "Server is running",
+  "timestamp": "2025-11-20T11:53:46.855Z"
+}
+```
 
 ---
 
@@ -90,7 +126,7 @@ NODE_ENV=development
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
 
 # Frontend URL (for CORS)
-CLIENT_URL=https://your-frontend-domain.vercel.app
+CLIENT_URL=https://trackwise-penthara.vercel.app
 # For development: http://localhost:5173
 ```
 
@@ -426,21 +462,36 @@ curl -X POST https://trackwise-penthara-backend.vercel.app/api/expenses \
   }'
 
 # Get all expenses
+# Development
 curl http://localhost:5000/api/expenses
 
+# Production
+curl https://trackwise-penthara-backend.vercel.app/api/expenses
+
 # Get by category
+# Development
 curl http://localhost:5000/api/expenses?category=Food
 
+# Production
+curl https://trackwise-penthara-backend.vercel.app/api/expenses?category=Food
+
 # Health check
-curl http://localhost:5000/health
+# Development
+curl http://localhost:5000/api/health
+
+# Production
+curl https://trackwise-penthara-backend.vercel.app/api/health
 ```
 
 ### Using Postman
 
-1. Import the API collection (if available)
-2. Set base URL: `http://localhost:5000`
-3. Add `/api` prefix to all endpoints
-4. Test each endpoint with sample data
+**Development:**
+
+1. Set base URL: `http://localhost:5000/api`
+
+**Production:**
+
+1. Set base URL: `https://trackwise-penthara-backend.vercel.app/api`
 
 ---
 
@@ -711,25 +762,42 @@ Common HTTP Status Codes:
 
 ## 📝 Environment Variables
 
-| Variable      | Description               | Default                                   |
-| ------------- | ------------------------- | ----------------------------------------- |
-| `PORT`        | Server port               | 5000                                      |
-| `NODE_ENV`    | Environment mode          | development                               |
-| `MONGODB_URI` | MongoDB connection string | mongodb://localhost:27017/expense-tracker |
-| `CLIENT_URL`  | Frontend URL for CORS     | http://localhost:5173                     |
+| Variable      | Description               | Example                                        |
+| ------------- | ------------------------- | ---------------------------------------------- |
+| `PORT`        | Server port               | 5000                                           |
+| `NODE_ENV`    | Environment mode          | development / production                       |
+| `MONGODB_URI` | MongoDB connection string | mongodb+srv://user:pass@cluster.mongodb.net/db |
+| `CLIENT_URL`  | Frontend URL for CORS     | https://trackwise-penthara.vercel.app          |
+
+### Production Configuration
+
+```bash
+MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
+CLIENT_URL=https://trackwise-penthara.vercel.app
+NODE_ENV=production
+```
+
+### Development Configuration
+
+```bash
+MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
+CLIENT_URL=http://localhost:5173
+NODE_ENV=development
+PORT=5000
+```
 
 ## 🚨 Troubleshooting
 
-### MongoDB Connection Issues
+### MongoDB Connection Issues (Atlas)
 
 ```
-Error: connect ECONNREFUSED 127.0.0.1:27017
+Error: MongoServerError: bad auth
 ```
 
-**Solution:** Ensure MongoDB is running:
+**Solution:** Check your MongoDB Atlas credentials in `.env`:
 
 ```bash
-net start MongoDB
+MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
 ```
 
 ### Port Already in Use
@@ -738,23 +806,74 @@ net start MongoDB
 Error: Port 5000 is already in use
 ```
 
-**Solution:** Change PORT in `.env` or kill the process using port 5000
+**Solution:** Change PORT in `.env` or kill the process:
+
+**Windows:**
+
+```bash
+netstat -ano | findstr :5000
+taskkill /PID <process_id> /F
+```
+
+**Mac/Linux:**
+
+```bash
+lsof -ti:5000 | xargs kill -9
+```
 
 ### CORS Errors
 
-**Solution:** Ensure `CLIENT_URL` in `.env` matches your frontend URL
+**Solution:** Ensure `CLIENT_URL` in `.env` matches your frontend URL:
+
+**Production:**
+
+```bash
+CLIENT_URL=https://trackwise-penthara.vercel.app
+```
+
+**Development:**
+
+```bash
+CLIENT_URL=http://localhost:5173
+```
 
 ## 📚 Additional Resources
 
 - [Express.js Documentation](https://expressjs.com/)
 - [Mongoose Documentation](https://mongoosejs.com/)
-- [MongoDB Documentation](https://docs.mongodb.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [Vercel Deployment Docs](https://vercel.com/docs)
 - [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)
+
+---
+
+## 🎯 Project Links
+
+- **Live API**: https://trackwise-penthara-backend.vercel.app
+- **Frontend**: https://trackwise-penthara.vercel.app
+- **GitHub Repo**: https://github.com/GouravSittam/daily-expense-trackerXpenthara
+- **API Health**: [Check Status](https://trackwise-penthara-backend.vercel.app/api/health)
+
+---
+
+<div align="center">
 
 ## 👨‍💻 Author
 
-Gourav Chaudhary
+**Gourav Chaudhary**
+
+[![GitHub](https://img.shields.io/badge/GitHub-GouravSittam-181717?style=for-the-badge&logo=github)](https://github.com/GouravSittam)
+
+---
 
 ## 📄 License
 
-ISC
+ISC License - see the [LICENSE](../LICENSE) file for details
+
+---
+
+**Made with ❤️ by Gourav Chaudhary**
+
+⭐ Star this repo if you find it helpful!
+
+</div>

@@ -12,7 +12,7 @@ A beautiful, full-stack expense tracking application with real-time sync, offlin
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-[Live Demo](#) • [Report Bug](https://github.com/GouravSittam/daily-expense-trackerXpenthara/issues) • [Request Feature](https://github.com/GouravSittam/daily-expense-trackerXpenthara/issues)
+[Live Demo](https://trackwise-penthara.vercel.app) • [Backend API](https://trackwise-penthara-backend.vercel.app) • [Report Bug](https://github.com/GouravSittam/daily-expense-trackerXpenthara/issues) • [Request Feature](https://github.com/GouravSittam/daily-expense-trackerXpenthara/issues)
 
 </div>
 
@@ -314,9 +314,9 @@ Content-Type: application/json
 
 ### Live URLs
 
-- **Frontend**: Deploy to Vercel/Netlify/GitHub Pages
-- **Backend**: https://trackwise-penthara-backend.vercel.app
-- **Database**: MongoDB Atlas (Cloud)
+- **Frontend**: https://trackwise-penthara.vercel.app ✅ (Live)
+- **Backend**: https://trackwise-penthara-backend.vercel.app ✅ (Live)
+- **Database**: MongoDB Atlas (Cloud) ✅ (Connected)
 
 ### Environment Variables for Production
 
@@ -329,8 +329,8 @@ VITE_API_URL=https://trackwise-penthara-backend.vercel.app/api
 **Backend (Vercel/Railway/Render)**
 
 ```bash
-MONGODB_URI=your_mongodb_atlas_uri
-CLIENT_URL=https://your-frontend-domain.vercel.app
+MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
+CLIENT_URL=https://trackwise-penthara.vercel.app
 NODE_ENV=production
 ```
 
@@ -341,19 +341,30 @@ NODE_ENV=production
 ```bash
 # Backend is live at:
 https://trackwise-penthara-backend.vercel.app
+
+# API Health Check:
+curl https://trackwise-penthara-backend.vercel.app/api/health
 ```
 
-**Frontend (Vercel)**
+**Frontend (Already Deployed) ✅**
 
 ```bash
-# 1. Push to GitHub
-git push origin main
+# Frontend is live at:
+https://trackwise-penthara.vercel.app
+
+# Configured with production backend
+# Auto-syncs with MongoDB Atlas
+```
 
 # 2. Import to Vercel
+
 # - Connect GitHub repo
+
 # - Add VITE_API_URL environment variable
+
 # - Deploy!
-```
+
+````
 
 **Frontend (Netlify)**
 
@@ -363,7 +374,52 @@ npm run build
 
 # 2. Deploy dist folder
 netlify deploy --prod --dir=dist
+````
+
+## 🌐 Production Status
+
+### ✅ Fully Deployed & Live
+
+| Component    | Status       | URL                                                                  |
+| ------------ | ------------ | -------------------------------------------------------------------- |
+| Frontend     | ✅ Live      | https://trackwise-penthara.vercel.app                                |
+| Backend API  | ✅ Live      | https://trackwise-penthara-backend.vercel.app                        |
+| Database     | ✅ Connected | MongoDB Atlas                                                        |
+| Health Check | ✅ Working   | [Test Now](https://trackwise-penthara-backend.vercel.app/api/health) |
+
+### 📡 API Endpoints (Live)
+
+```bash
+# Health Check
+GET https://trackwise-penthara-backend.vercel.app/api/health
+
+# Get All Expenses
+GET https://trackwise-penthara-backend.vercel.app/api/expenses
+
+# Add Expense
+POST https://trackwise-penthara-backend.vercel.app/api/expenses
+
+# Get Statistics
+GET https://trackwise-penthara-backend.vercel.app/api/expenses/summary/statistics
 ```
+
+### 🔧 Configuration
+
+**Frontend Environment:**
+
+```bash
+VITE_API_URL=https://trackwise-penthara-backend.vercel.app/api
+```
+
+**Backend Environment:**
+
+```bash
+MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
+CLIENT_URL=https://trackwise-penthara.vercel.app
+NODE_ENV=production
+```
+
+---
 
 ## 🤝 Contributing
 
