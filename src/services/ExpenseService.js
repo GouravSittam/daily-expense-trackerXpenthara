@@ -39,15 +39,29 @@ const handleResponse = async (response) => {
 const isBackendOnline = async () => {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout for Vercel cold starts
 
     const response = await fetch(`${API_BASE_URL}/health`, {
+      method: "GET",
       signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     clearTimeout(timeoutId);
 
-    return response.ok;
+    if (response.ok) {
+      console.log("✅ Backend is online");
+      setOfflineMode(false);
+      return true;
+    }
+
+    console.warn("⚠️ Backend returned non-OK status:", response.status);
+    setOfflineMode(true);
+    return false;
   } catch (error) {
+    console.error("❌ Backend connection failed:", error.message);
+    setOfflineMode(true);
     return false;
   }
 };
@@ -193,10 +207,16 @@ export const syncPendingOperations = async () => {
  */
 export const getExpenses = async (filters = {}) => {
   try {
-    // Try to sync pending operations first
-    if (!isOfflineMode()) {
-      await syncPendingOperations();
+    // First check if backend is online
+    const online = await isBackendOnline();
+
+    if (!online) {
+      console.warn("📴 Backend offline - using local storage");
+      return getExpensesFromLocalStorage();
     }
+
+    // Try to sync pending operations first
+    await syncPendingOperations();
 
     const queryParams = new URLSearchParams();
 
