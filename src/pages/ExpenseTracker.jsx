@@ -5,6 +5,7 @@ import ExpenseSummary from "../components/ExpenseSummary";
 import ChartComponent from "../components/ChartComponent";
 import Shuffle from "../components/Shuffle";
 import OfflineIndicator from "../components/OfflineIndicator";
+import LightRays from "../components/LightRays";
 import {
   getExpenses,
   addExpense as addExpenseService,
@@ -75,8 +76,25 @@ const ExpenseTracker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* LightRays Background */}
+      <div className="fixed inset-0 w-full h-full z-0 bg-gray-900/10">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#2563eb"
+          raysSpeed={0.8}
+          lightSpread={0.6}
+          rayLength={1.5}
+          followMouse={true}
+          mouseInfluence={0.05}
+          noiseAmount={0.08}
+          distortion={0.02}
+          fadeDistance={1.2}
+          saturation={0.5}
+        />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 relative z-10">
         {/* Offline Indicator */}
         <OfflineIndicator />
 
