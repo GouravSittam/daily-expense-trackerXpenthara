@@ -90,7 +90,8 @@ NODE_ENV=development
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
 
 # Frontend URL (for CORS)
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=https://your-frontend-domain.vercel.app
+# For development: http://localhost:5173
 ```
 
 ### Start Server
@@ -103,13 +104,17 @@ npm run dev
 npm start
 ```
 
-Server runs on **http://localhost:5000** 🚀
+Server runs on **http://localhost:5000** (Development) 🚀
+**Production**: https://trackwise-penthara-backend.vercel.app 🌐
 
 ---
 
 ## 📡 API Endpoints
 
-### Base URL: `http://localhost:5000/api`
+### Base URL
+
+- **Development**: `http://localhost:5000/api`
+- **Production**: `https://trackwise-penthara-backend.vercel.app/api`
 
 <table>
 <tr>
@@ -407,7 +412,11 @@ All errors follow this format:
 
 ```bash
 # Create an expense
+# Development
 curl -X POST http://localhost:5000/api/expenses \
+
+# Production
+curl -X POST https://trackwise-penthara-backend.vercel.app/api/expenses \
   -H "Content-Type: application/json" \
   -d '{
     "amount": 500,

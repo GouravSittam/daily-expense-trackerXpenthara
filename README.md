@@ -78,15 +78,18 @@ echo "PORT=5000" >> .env
 
 # 5. Start the backend server
 npm run dev
-# Backend runs on http://localhost:5000
+# Backend runs on http://localhost:5000 (Development)
+# Production: https://trackwise-penthara-backend.vercel.app
 
 # 6. In a new terminal, start the frontend
 cd ..
 npm run dev
-# Frontend runs on http://localhost:5173
+# Frontend runs on http://localhost:5173 (Development)
 ```
 
-### 🎉 That's it! Open http://localhost:5173 in your browser
+### 🎉 Development: Open http://localhost:5173 in your browser
+
+### 🚀 Production: App connects to https://trackwise-penthara-backend.vercel.app
 
 ---
 
@@ -299,13 +302,68 @@ Content-Type: application/json
 }
 ```
 
-## 🛡️ Security Features
+## 🔒 Security Features
 
 - ✅ **Input Validation**: Server-side validation with Express Validator
 - ✅ **MongoDB Injection Protection**: Mongoose schema validation
 - ✅ **CORS Configuration**: Controlled cross-origin requests
 - ✅ **Environment Variables**: Sensitive data in .env files
 - ✅ **Error Handling**: Comprehensive error middleware
+
+## 🚀 Deployment
+
+### Live URLs
+
+- **Frontend**: Deploy to Vercel/Netlify/GitHub Pages
+- **Backend**: https://trackwise-penthara-backend.vercel.app
+- **Database**: MongoDB Atlas (Cloud)
+
+### Environment Variables for Production
+
+**Frontend (.env.production)**
+
+```bash
+VITE_API_URL=https://trackwise-penthara-backend.vercel.app/api
+```
+
+**Backend (Vercel/Railway/Render)**
+
+```bash
+MONGODB_URI=your_mongodb_atlas_uri
+CLIENT_URL=https://your-frontend-domain.vercel.app
+NODE_ENV=production
+```
+
+### Quick Deploy
+
+**Backend (Already Deployed) ✅**
+
+```bash
+# Backend is live at:
+https://trackwise-penthara-backend.vercel.app
+```
+
+**Frontend (Vercel)**
+
+```bash
+# 1. Push to GitHub
+git push origin main
+
+# 2. Import to Vercel
+# - Connect GitHub repo
+# - Add VITE_API_URL environment variable
+# - Deploy!
+```
+
+**Frontend (Netlify)**
+
+```bash
+# 1. Build the project
+npm run build
+
+# 2. Deploy dist folder
+netlify deploy --prod --dir=dist
+```
 
 ## 🤝 Contributing
 

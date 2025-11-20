@@ -6,7 +6,8 @@
 
 // API Base URL - Update this based on your backend server
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  import.meta.env.VITE_API_URL ||
+  "https://trackwise-penthara-backend.vercel.app/api";
 
 // Storage keys
 const STORAGE_KEYS = {
