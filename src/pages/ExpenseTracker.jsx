@@ -131,7 +131,7 @@ const ExpenseTracker = () => {
           <p className="text-sm text-gray-600">
             Developed by{" "}
             <a
-              href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
+              href="https://github.com/GouravSittam/trackwise-penthara.git"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-700 font-medium underline"
