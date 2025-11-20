@@ -17,6 +17,9 @@ const STORAGE_KEYS = {
   OFFLINE_MODE: "offlineMode",
 };
 
+// Flag to prevent duplicate console banners
+let hasShownBanner = false;
+
 /**
  * Helper function to handle API errors
  * @param {Response} response - Fetch response object
@@ -51,16 +54,74 @@ const isBackendOnline = async () => {
     clearTimeout(timeoutId);
 
     if (response.ok) {
-      console.log("✅ Backend is online");
+      // Show banner only once per session
+      if (!hasShownBanner) {
+        // Awesome animated console banner
+        console.log(
+          "%c╔═══════════════════════════════════════════════════════════╗",
+          "color: #667eea; font-weight: bold; font-size: 12px;"
+        );
+        console.log(
+          "%c║        🚀 TRACKWISE PENTHARA - CONNECTED ✨              ║",
+          "background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); color: white; padding: 12px 20px; font-weight: bold; font-size: 16px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"
+        );
+        console.log(
+          "%c║                                                           ║",
+          "color: #667eea; font-weight: bold; font-size: 12px;"
+        );
+        console.log(
+          "%c║  ⚡ Server Status: ONLINE & READY                        ║",
+          "color: #10b981; font-weight: bold; font-size: 13px; text-shadow: 0 0 10px #10b981;"
+        );
+        console.log(
+          "%c║  💜 Created by: Gourav Chaudhary                         ║",
+          "color: #a855f7; font-weight: bold; font-size: 13px;"
+        );
+        console.log(
+          "%c║  🔗 GitHub: GouravSittam/daily-expense-trackerXpenthara ║",
+          "color: #3b82f6; font-size: 12px; font-style: italic;"
+        );
+        console.log(
+          "%c║  🌐 Backend: trackwise-penthara-backend.vercel.app       ║",
+          "color: #8b5cf6; font-size: 11px;"
+        );
+        console.log(
+          "%c╚═══════════════════════════════════════════════════════════╝",
+          "color: #667eea; font-weight: bold; font-size: 12px;"
+        );
+        console.log(
+          "%c✨ Welcome to TrackWise! Your expenses are in good hands 🎯",
+          "background: linear-gradient(90deg, #ffd89b 0%, #19547b 100%); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin-top: 10px;"
+        );
+        hasShownBanner = true;
+      }
       setOfflineMode(false);
       return true;
     }
 
-    console.warn("⚠️ Backend returned non-OK status:", response.status);
+    console.warn(
+      "%c⚠️ BACKEND UNREACHABLE",
+      "background: linear-gradient(90deg, #ff9800 0%, #ff5722 100%); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.log(
+      "%c🔄 Switching to Offline Mode...",
+      "color: #ff9800; font-size: 12px; font-style: italic;"
+    );
     setOfflineMode(true);
     return false;
   } catch (error) {
-    console.error("❌ Backend connection failed:", error.message);
+    console.error(
+      "%c❌ CONNECTION FAILED - OFFLINE MODE ACTIVATED",
+      "background: linear-gradient(135deg, #f44336 0%, #e91e63 50%, #9c27b0 100%); color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.log(
+      "%c💾 Don't worry! Your data is safe locally 🛡️",
+      "background: linear-gradient(90deg, #9c27b0 0%, #673ab7 100%); color: white; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px;"
+    );
+    console.log(
+      "%c🔄 Changes will sync automatically when you're back online ⚡",
+      "color: #9c27b0; font-size: 11px; font-style: italic;"
+    );
     setOfflineMode(true);
     return false;
   }
@@ -136,7 +197,14 @@ export const syncPendingOperations = async () => {
     return { success: false, synced: 0, failed: 0, message: "Backend offline" };
   }
 
-  console.log(`🔄 Syncing ${queue.length} pending operations...`);
+  console.log(
+    `%c🔄 SYNCING ${queue.length} OPERATIONS ⚡`,
+    "background: linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #a8ff78 100%); color: white; padding: 10px 20px; border-radius: 12px; font-weight: bold; font-size: 14px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 1px;"
+  );
+  console.log(
+    "%c⏳ Please wait while we sync your data...",
+    "color: #11998e; font-size: 11px; font-style: italic;"
+  );
 
   let synced = 0;
   let failed = 0;
@@ -195,7 +263,18 @@ export const syncPendingOperations = async () => {
     setOfflineMode(false);
   }
 
-  console.log(`✅ Sync complete: ${synced} synced, ${failed} failed`);
+  console.log(
+    `%c✨ SYNC COMPLETE! 🎉`,
+    "background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #667eea 100%); color: white; padding: 12px 24px; border-radius: 12px; font-weight: bold; font-size: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 1px;"
+  );
+  console.log(
+    `%c✅ ${synced} Synced Successfully | ❌ ${failed} Failed`,
+    "background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; border: 2px solid #10b981;"
+  );
+  console.log(
+    "%c🎯 All your data is up to date! - TrackWise by Gourav",
+    "color: #667eea; font-size: 11px; font-style: italic;"
+  );
 
   return { success: true, synced, failed };
 };
@@ -211,7 +290,14 @@ export const getExpenses = async (filters = {}) => {
     const online = await isBackendOnline();
 
     if (!online) {
-      console.warn("📴 Backend offline - using local storage");
+      console.warn(
+        "%c📴 OFFLINE MODE ACTIVE",
+        "background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #ff6b6b 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 13px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+      );
+      console.log(
+        "%c💾 Using Local Storage | Your data is safe!",
+        "color: #ff6b6b; font-size: 11px; font-weight: bold;"
+      );
       return getExpensesFromLocalStorage();
     }
 
@@ -238,8 +324,18 @@ export const getExpenses = async (filters = {}) => {
 
     return result.data || [];
   } catch (error) {
-    console.error("Error fetching expenses:", error);
-    console.warn("📴 Backend offline - using local storage");
+    console.error(
+      "%c⚠️ FETCH FAILED - SWITCHING TO LOCAL DATA",
+      "background: linear-gradient(135deg, #ff6348 0%, #ff4757 50%, #ff3838 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 13px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.warn(
+      "%c📴 Offline Mode Active | Local Storage Engaged 💾",
+      "background: linear-gradient(90deg, #ffa502 0%, #ff6348 100%); color: white; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-size: 12px;"
+    );
+    console.log(
+      "%c🔄 Will retry automatically when connection is restored",
+      "color: #ffa502; font-size: 10px; font-style: italic;"
+    );
 
     // Mark as offline
     setOfflineMode(true);
@@ -268,7 +364,14 @@ export const addExpense = async (expense) => {
 
     if (!online) {
       // Backend offline - save to localStorage and queue for sync
-      console.warn("📴 Backend offline - saving to local storage");
+      console.warn(
+        "%c💾 EXPENSE SAVED LOCALLY",
+        "background: linear-gradient(135deg, #fa709a 0%, #fee140 50%, #fa709a 100%); color: white; padding: 10px 20px; border-radius: 12px; font-weight: bold; font-size: 14px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); animation: pulse 2s infinite;"
+      );
+      console.log(
+        "%c🔄 Will sync when connection returns | TrackWise",
+        "background: rgba(250, 112, 154, 0.2); color: #fa709a; padding: 4px 10px; border-radius: 6px; font-size: 11px; border: 1px solid #fa709a;"
+      );
       setOfflineMode(true);
 
       const localExpense = {
@@ -312,8 +415,18 @@ export const addExpense = async (expense) => {
 
     return result.data;
   } catch (error) {
-    console.error("Error adding expense:", error);
-    console.warn("📴 Saving to local storage due to error");
+    console.error(
+      "%c❌ SAVE FAILED - BACKUP MODE ACTIVATED",
+      "background: linear-gradient(135deg, #e74c3c 0%, #c0392b 50%, #e74c3c 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 13px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.warn(
+      "%c💜 Offline Backup Active | TrackWise by Gourav Chaudhary",
+      "background: linear-gradient(90deg, #9b59b6 0%, #8e44ad 100%); color: white; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-size: 12px;"
+    );
+    console.log(
+      "%c🛡️ Your expense is safe in local storage!",
+      "color: #9b59b6; font-size: 11px; font-style: italic;"
+    );
 
     setOfflineMode(true);
 
@@ -353,7 +466,14 @@ export const deleteExpense = async (id) => {
 
     // If it's a local-only expense, just remove from storage
     if (id.startsWith("local_")) {
-      console.log("Deleted local expense:", id);
+      console.log(
+        "%c🗑️ EXPENSE DELETED SUCCESSFULLY",
+        "background: linear-gradient(135deg, #ee0979 0%, #ff6a00 50%, #ee0979 100%); color: white; padding: 10px 20px; border-radius: 12px; font-weight: bold; font-size: 13px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"
+      );
+      console.log(
+        "%c✨ Expense removed from your records - TrackWise",
+        "color: #ee0979; font-size: 11px; font-style: italic;"
+      );
       return;
     }
 
@@ -361,7 +481,14 @@ export const deleteExpense = async (id) => {
     const online = await isBackendOnline();
 
     if (!online) {
-      console.warn("📴 Backend offline - queuing delete operation");
+      console.warn(
+        "%c📴 OFFLINE DELETE - QUEUED FOR SYNC",
+        "background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%); color: white; padding: 8px 16px; border-radius: 10px; font-weight: bold; font-size: 12px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+      );
+      console.log(
+        "%c🔄 Delete will process when connection returns",
+        "color: #f39c12; font-size: 10px; font-style: italic;"
+      );
       setOfflineMode(true);
 
       // Add to sync queue
@@ -380,8 +507,18 @@ export const deleteExpense = async (id) => {
     await handleResponse(response);
     setOfflineMode(false);
   } catch (error) {
-    console.error("Error deleting expense:", error);
-    console.warn("📴 Queuing delete for later sync");
+    console.error(
+      "%c❌ DELETE FAILED - OPERATION QUEUED",
+      "background: linear-gradient(135deg, #c0392b 0%, #e74c3c 50%, #c0392b 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 13px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.warn(
+      "%c🔄 Will Retry When Online | TrackWise Penthara",
+      "background: linear-gradient(90deg, #3498db 0%, #2980b9 100%); color: white; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-size: 11px;"
+    );
+    console.log(
+      "%c💾 Delete operation saved for automatic retry",
+      "color: #3498db; font-size: 10px; font-style: italic;"
+    );
 
     setOfflineMode(true);
 
@@ -439,7 +576,14 @@ export const getExpensesByCategory = async () => {
 
     return result.data.expensesByCategory || {};
   } catch (error) {
-    console.error("Error fetching category summary:", error);
+    console.error(
+      "%c❌ FAILED TO LOAD STATISTICS",
+      "background: linear-gradient(135deg, #e74c3c 0%, #c0392b 50%, #e74c3c 100%); color: white; padding: 8px 16px; border-radius: 10px; font-weight: bold; font-size: 12px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.log(
+      "%c📊 Unable to fetch category statistics | TrackWise",
+      "color: #e74c3c; font-size: 10px; font-style: italic;"
+    );
     return {};
   }
 };
@@ -455,7 +599,14 @@ export const getTotalExpenses = async () => {
 
     return result.data.total || 0;
   } catch (error) {
-    console.error("Error fetching total expenses:", error);
+    console.error(
+      "%c❌ FAILED TO CALCULATE TOTAL",
+      "background: linear-gradient(135deg, #e74c3c 0%, #c0392b 50%, #e74c3c 100%); color: white; padding: 8px 16px; border-radius: 10px; font-weight: bold; font-size: 12px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+    );
+    console.log(
+      "%c💰 Unable to calculate total expenses | TrackWise",
+      "color: #e74c3c; font-size: 10px; font-style: italic;"
+    );
     return 0;
   }
 };
