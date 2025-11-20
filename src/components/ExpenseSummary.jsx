@@ -22,56 +22,56 @@ const ExpenseSummary = ({ expensesByCategory, totalExpenses }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
-      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-5">
+    <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-lg border border-gray-200">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 sm:mb-6 tracking-tight">
         Expense Summary
       </h2>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 p-4 sm:p-5 bg-blue-600 rounded-lg mb-5 sm:mb-6 shadow-sm">
-        <span className="text-white text-sm sm:text-base font-medium">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 p-5 sm:p-6 bg-linear-to-r from-blue-600 to-blue-700 rounded-2xl mb-6 shadow-xl">
+        <span className="text-white text-base sm:text-lg font-bold uppercase tracking-wide">
           Total Expenses
         </span>
-        <span className="text-white text-2xl sm:text-3xl font-bold">
+        <span className="text-white text-3xl sm:text-4xl font-black">
           {formatCurrency(totalExpenses)}
         </span>
       </div>
 
       {categoryArray.length === 0 ? (
-        <div className="text-center py-8 sm:py-12 px-4 sm:px-6">
-          <p className="text-gray-500 text-sm sm:text-base">
+        <div className="text-center py-12 sm:py-16 px-4 sm:px-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
+          <p className="text-gray-600 text-base sm:text-lg font-medium">
             No expenses yet. Add expenses to see the summary!
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {categoryArray.map((item) => (
             <div
               key={item.category}
-              className="p-3 sm:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              className="p-4 sm:p-5 bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl hover:shadow-md transition-all border border-gray-200"
             >
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-4">
                 <span
-                  className={`text-xs sm:text-sm lg:text-base font-semibold text-white px-2 sm:px-3 py-1 rounded-lg ${getCategoryColor(
+                  className={`text-sm sm:text-base font-bold text-white px-4 py-2 rounded-xl shadow-md ${getCategoryColor(
                     item.category
                   )}`}
                 >
                   {item.category}
                 </span>
-                <span className="text-base sm:text-lg font-bold text-orange-600">
+                <span className="text-xl sm:text-2xl font-black bg-linear-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                   {formatCurrency(item.amount)}
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="flex-1 h-2 sm:h-2.5 bg-gray-200 rounded-full overflow-hidden">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                   <div
-                    className={`h-full rounded-full transition-all ${getCategoryColor(
+                    className={`h-full rounded-full transition-all duration-500 ${getCategoryColor(
                       item.category
                     )}`}
                     style={{ width: `${getPercentage(item.amount)}%` }}
                   />
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-gray-600 min-w-[45px] sm:min-w-[50px] text-right">
+                <span className="text-sm sm:text-base font-bold text-gray-700 min-w-[50px] sm:min-w-[60px] text-right">
                   {getPercentage(item.amount).toFixed(1)}%
                 </span>
               </div>

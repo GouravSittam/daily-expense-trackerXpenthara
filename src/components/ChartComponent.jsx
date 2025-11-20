@@ -54,12 +54,12 @@ const ChartComponent = ({ expensesByCategory }) => {
 
   if (chartData.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 mt-6">
-        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">
+      <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-lg border border-gray-200 mt-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 sm:mb-7 tracking-tight">
           Expense Visualization
         </h2>
-        <div className="text-center py-8 sm:py-12 px-4 sm:px-6">
-          <p className="text-gray-500 text-sm sm:text-base">
+        <div className="text-center py-12 sm:py-16 px-4 sm:px-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
+          <p className="text-gray-600 text-base sm:text-lg font-medium">
             No data available for visualization. Add expenses to see charts!
           </p>
         </div>
@@ -68,14 +68,14 @@ const ChartComponent = ({ expensesByCategory }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 mt-6">
-      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">
+    <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-lg border border-gray-200 mt-6">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 sm:mb-7 tracking-tight">
         Expense Visualization
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <div className="flex flex-col">
-          <h3 className="mb-3 sm:mb-4 text-gray-700 text-base sm:text-lg font-semibold">
+        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-5 border border-gray-200">
+          <h3 className="mb-4 sm:mb-5 text-gray-900 text-lg sm:text-xl font-bold tracking-tight">
             Expenses by Category (Pie Chart)
           </h3>
           <ResponsiveContainer width="100%" height={280} minHeight={250}>
@@ -109,8 +109,8 @@ const ChartComponent = ({ expensesByCategory }) => {
           </ResponsiveContainer>
         </div>
 
-        <div className="flex flex-col">
-          <h3 className="mb-3 sm:mb-4 text-gray-700 text-base sm:text-lg font-semibold">
+        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-5 border border-gray-200">
+          <h3 className="mb-4 sm:mb-5 text-gray-900 text-lg sm:text-xl font-bold tracking-tight">
             Expenses by Category (Bar Chart)
           </h3>
           <ResponsiveContainer width="100%" height={280} minHeight={250}>
