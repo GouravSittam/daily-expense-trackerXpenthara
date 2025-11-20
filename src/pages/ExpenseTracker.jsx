@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import ExpenseForm from '../components/ExpenseForm';
-import ExpenseList from '../components/ExpenseList';
-import ExpenseSummary from '../components/ExpenseSummary';
-import ChartComponent from '../components/ChartComponent';
-import Shuffle from '../components/Shuffle';
+import { useState, useEffect } from "react";
+import ExpenseForm from "../components/ExpenseForm";
+import ExpenseList from "../components/ExpenseList";
+import ExpenseSummary from "../components/ExpenseSummary";
+import ChartComponent from "../components/ChartComponent";
+import Shuffle from "../components/Shuffle";
 import {
   getExpenses,
   addExpense as addExpenseService,
   deleteExpense as deleteExpenseService,
   getExpensesByCategory,
-  getTotalExpenses
-} from '../services/ExpenseService';
+  getTotalExpenses,
+} from "../services/ExpenseService";
 
 /**
  * Main Expense Tracker page component
@@ -24,11 +24,18 @@ const ExpenseTracker = () => {
   /**
    * Loads expenses from service and updates state
    */
-  const loadExpenses = () => {
-    const loadedExpenses = getExpenses();
-    setExpenses(loadedExpenses);
-    setExpensesByCategory(getExpensesByCategory());
-    setTotalExpenses(getTotalExpenses());
+  const loadExpenses = async () => {
+    try {
+      const loadedExpenses = await getExpenses();
+      const categoryData = await getExpensesByCategory();
+      const total = await getTotalExpenses();
+
+      setExpenses(loadedExpenses);
+      setExpensesByCategory(categoryData);
+      setTotalExpenses(total);
+    } catch (error) {
+      console.error("Error loading expenses:", error);
+    }
   };
 
   // Load expenses on component mount
@@ -40,19 +47,29 @@ const ExpenseTracker = () => {
    * Handles adding a new expense
    * @param {Object} expense - Expense object to add
    */
-  const handleAddExpense = (expense) => {
-    addExpenseService(expense);
-    loadExpenses(); // Reload to update all state
+  const handleAddExpense = async (expense) => {
+    try {
+      await addExpenseService(expense);
+      await loadExpenses(); // Reload to update all state
+    } catch (error) {
+      console.error("Error adding expense:", error);
+      alert("Failed to add expense. Please try again.");
+    }
   };
 
   /**
    * Handles deleting an expense
    * @param {string} id - Expense id to delete
    */
-  const handleDeleteExpense = (id) => {
-    if (window.confirm('Are you sure you want to delete this expense?')) {
-      deleteExpenseService(id);
-      loadExpenses(); // Reload to update all state
+  const handleDeleteExpense = async (id) => {
+    if (window.confirm("Are you sure you want to delete this expense?")) {
+      try {
+        await deleteExpenseService(id);
+        await loadExpenses(); // Reload to update all state
+      } catch (error) {
+        console.error("Error deleting expense:", error);
+        alert("Failed to delete expense. Please try again.");
+      }
     }
   };
 
@@ -74,15 +91,17 @@ const ExpenseTracker = () => {
             respectReducedMotion={true}
             tag="h1"
             className="text-gray-800 !text-5xl !leading-tight"
-            style={{ 
-              fontFamily: 'inherit',
-              textTransform: 'none',
-              fontSize: '2.5rem',
-              fontWeight: 'bold'
+            style={{
+              fontFamily: "inherit",
+              textTransform: "none",
+              fontSize: "2.5rem",
+              fontWeight: "bold",
             }}
           />
         </div>
-        <p className="text-gray-800 italic !text-3xl !leading-tight">Track your daily expenses with category summaries</p>
+        <p className="text-gray-800 italic !text-3xl !leading-tight">
+          Track your daily expenses with category summaries
+        </p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-6">
@@ -106,7 +125,7 @@ const ExpenseTracker = () => {
 
       <footer className="mt-12 mb-4 text-right">
         <p className="text-sm text-gray-600">
-          Developed by{' '}
+          Developed by{" "}
           <a
             href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
             target="_blank"
@@ -122,4 +141,3 @@ const ExpenseTracker = () => {
 };
 
 export default ExpenseTracker;
-
