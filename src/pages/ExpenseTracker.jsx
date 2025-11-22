@@ -133,10 +133,10 @@ const ExpenseTracker = () => {
         {/* Footer */}
         <footer
           className="mt-12 xs:mt-14 sm:mt-16 md:mt-20 border-t border-gray-200/50 backdrop-blur-sm"
-          style={{ 
+          style={{
             fontFamily: "IBM Plex Sans Condensed, sans-serif",
             WebkitBackdropFilter: "blur(4px)",
-            backdropFilter: "blur(4px)"
+            backdropFilter: "blur(4px)",
           }}
         >
           <div className="py-6 xs:py-7 sm:py-8 md:py-10 px-3 xs:px-4 sm:px-6 lg:px-8">
@@ -201,7 +201,10 @@ const ExpenseTracker = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 xs:gap-2 text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors text-xs xs:text-sm group font-light touch-manipulation min-h-11"
-                    style={{ fontWeight: "400", WebkitTapHighlightColor: "transparent" }}
+                    style={{
+                      fontWeight: "400",
+                      WebkitTapHighlightColor: "transparent",
+                    }}
                   >
                     <svg
                       className="w-4 h-4 xs:w-5 xs:h-5 group-hover:scale-110 group-active:scale-95 transition-transform"
@@ -222,7 +225,10 @@ const ExpenseTracker = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 xs:gap-2 text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors text-xs xs:text-sm group font-light touch-manipulation min-h-11"
-                    style={{ fontWeight: "400", WebkitTapHighlightColor: "transparent" }}
+                    style={{
+                      fontWeight: "400",
+                      WebkitTapHighlightColor: "transparent",
+                    }}
                   >
                     <svg
                       className="w-4 h-4 xs:w-5 xs:h-5 group-hover:scale-110 group-active:scale-95 transition-transform"
@@ -239,7 +245,10 @@ const ExpenseTracker = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 xs:gap-2 text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors text-xs xs:text-sm group font-light touch-manipulation min-h-11"
-                    style={{ fontWeight: "400", WebkitTapHighlightColor: "transparent" }}
+                    style={{
+                      fontWeight: "400",
+                      WebkitTapHighlightColor: "transparent",
+                    }}
                   >
                     <svg
                       className="w-4 h-4 xs:w-5 xs:h-5 group-hover:scale-110 group-active:scale-95 transition-transform"
@@ -276,7 +285,10 @@ const ExpenseTracker = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:text-blue-700 active:text-blue-800 hover:underline transition-all font-medium touch-manipulation"
-                    style={{ fontWeight: "500", WebkitTapHighlightColor: "transparent" }}
+                    style={{
+                      fontWeight: "500",
+                      WebkitTapHighlightColor: "transparent",
+                    }}
                   >
                     Gourav Chaudhary
                   </a>
