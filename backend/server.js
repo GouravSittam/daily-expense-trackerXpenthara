@@ -2,8 +2,10 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import connectDB from "./config/database.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import notFound from "./middleware/notFound.js";
 
@@ -26,6 +28,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Logging middleware (only in development)
 if (process.env.NODE_ENV === "development") {
@@ -55,6 +58,7 @@ app.get("/api", (req, res) => {
     message: "Expense Tracker API",
     version: "1.0.0",
     endpoints: {
+      auth: "/api/auth",
       expenses: "/api/expenses",
       health: "/api/health",
     },
@@ -62,6 +66,7 @@ app.get("/api", (req, res) => {
 });
 
 // API Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 
 // Error handling middleware (must be after routes)
@@ -89,6 +94,10 @@ const server = app.listen(PORT, () => {
   }                                ║
 ║                                                           ║
 ║   Endpoints:                                             ║
+║   - POST   /api/auth/register                            ║
+║   - POST   /api/auth/login                               ║
+║   - POST   /api/auth/logout                              ║
+║   - GET    /api/auth/profile                             ║
 ║   - GET    /api/health                                   ║
 ║   - GET    /api/expenses                                 ║
 ║   - POST   /api/expenses                                 ║

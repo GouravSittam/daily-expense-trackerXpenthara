@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Shuffle from "./Shuffle";
 
 /**
  * Cyber-Brutalist Navbar component
- * Features electric accents and bold typography
+ * Features electric accents and bold typography with authentication
  */
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   // Handle scroll effect
   useEffect(() => {
@@ -25,6 +31,18 @@ const Navbar = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
       setIsMobileMenuOpen(false);
+    }
+  };
+
+  /**
+   * Handle logout
+   */
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/auth");
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   };
 
@@ -58,7 +76,7 @@ const Navbar = () => {
               }
             }}
           >
-            <span className="text-2xl">💰</span>
+            <span className="text-2xl"></span>
             <Shuffle
               text="EXPENSE TRACKER"
               shuffleDirection="right"
@@ -109,7 +127,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => scrollToSection("summary")}
-              className="px-3 py-1.5 border-2 border-eco-purple text-eco-purple hover:bg-eco-purple hover:text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-purple touch-manipulation"
+              className="px-3 py-1.5 border-2 border-eco-purple text-eco-purple hover:bg-eco-purple hover:text-black font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-purple touch-manipulation"
               style={{
                 fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
@@ -119,7 +137,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => scrollToSection("analytics")}
-              className="px-3 py-1.5 border-2 border-eco-pink text-eco-pink hover:bg-eco-pink hover:text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-pink touch-manipulation"
+              className="px-3 py-1.5 border-2 border-eco-pink text-eco-pink hover:bg-eco-pink hover:text-black font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-pink touch-manipulation"
               style={{
                 fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
@@ -153,6 +171,52 @@ const Navbar = () => {
               </svg>
               <span>GitHub</span>
             </a>
+
+            {/* User Menu */}
+            <div className="relative">
+              <button
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="px-4 py-2 border-2 border-eco-purple text-eco-purple hover:bg-eco-purple hover:text-black font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 touch-manipulation"
+                style={{
+                  fontFamily: "Space Grotesk, sans-serif",
+                  WebkitTapHighlightColor: "transparent",
+                }}
+              >
+                <span>👤</span>
+                <span className="hidden xl:inline">
+                  {user?.name || user?.email?.split("@")[0]}
+                </span>
+              </button>
+
+              {/* User Dropdown */}
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-64 bg-white border-4 border-black shadow-brutal-lg overflow-hidden">
+                  <div className="px-4 py-3 bg-eco-cyan/10 border-b-2 border-black">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Logged in as
+                    </p>
+                    <p className="text-sm font-black text-gray-900 truncate">
+                      {user?.email}
+                    </p>
+                    {user?.name && (
+                      <p className="text-xs text-gray-600 mt-1">{user.name}</p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      handleLogout();
+                    }}
+                    className="w-full px-4 py-3 text-left font-bold text-sm uppercase tracking-wider bg-white hover:bg-red-500 hover:text-white border-t-2 border-black transition-all"
+                    style={{
+                      fontFamily: "Space Grotesk, sans-serif",
+                    }}
+                  >
+                    🚪 Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -272,6 +336,26 @@ const Navbar = () => {
               </svg>
               <span>View on GitHub</span>
             </a>
+
+            {/* User Info & Logout - Mobile */}
+            <div className="mt-2 px-4 py-3 bg-eco-purple/10 border-2 border-eco-purple">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                Logged in as
+              </p>
+              <p className="text-sm font-black text-gray-900 truncate mb-2">
+                {user?.email}
+              </p>
+              <button
+                onClick={handleLogout}
+                className="w-full px-4 py-2 bg-red-500 text-white border-2 border-black font-bold text-sm uppercase tracking-wider hover:bg-red-600 transition-all touch-manipulation"
+                style={{
+                  fontFamily: "Space Grotesk, sans-serif",
+                  WebkitTapHighlightColor: "transparent",
+                }}
+              >
+                🚪 Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ import {
   getTotalExpenses,
   getExpenseStatistics,
 } from "../controllers/expenseController.js";
+import { protect } from "../middleware/auth.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 import { CATEGORIES } from "../utils/constants.js";
 
@@ -49,58 +50,70 @@ const expenseValidationRules = [
 /**
  * @route   GET /api/expenses
  * @desc    Get all expenses with optional filtering
- * @access  Public
+ * @access  Private
  * @query   category, dateFrom, dateTo, page, limit
  */
-router.get("/", getAllExpenses);
+router.get("/", protect, getAllExpenses);
 
 /**
  * @route   GET /api/expenses/summary/statistics
  * @desc    Get comprehensive expense statistics
- * @access  Public
+ * @access  Private
  */
-router.get("/summary/statistics", getExpenseStatistics);
+router.get("/summary/statistics", protect, getExpenseStatistics);
 
 /**
  * @route   GET /api/expenses/summary/by-category
  * @desc    Get expenses grouped by category
- * @access  Public
+ * @access  Private
  */
-router.get("/summary/by-category", getExpensesByCategory);
+router.get("/summary/by-category", protect, getExpensesByCategory);
 
 /**
  * @route   GET /api/expenses/summary/total
  * @desc    Get total of all expenses
- * @access  Public
+ * @access  Private
  */
-router.get("/summary/total", getTotalExpenses);
+router.get("/summary/total", protect, getTotalExpenses);
 
 /**
  * @route   GET /api/expenses/:id
  * @desc    Get a single expense by ID
- * @access  Public
+ * @access  Private
  */
-router.get("/:id", getExpenseById);
+router.get("/:id", protect, getExpenseById);
 
 /**
  * @route   POST /api/expenses
  * @desc    Create a new expense
- * @access  Public
+ * @access  Private
  */
-router.post("/", expenseValidationRules, validateRequest, createExpense);
+router.post(
+  "/",
+  protect,
+  expenseValidationRules,
+  validateRequest,
+  createExpense
+);
 
 /**
  * @route   PUT /api/expenses/:id
  * @desc    Update an expense
- * @access  Public
+ * @access  Private
  */
-router.put("/:id", expenseValidationRules, validateRequest, updateExpense);
+router.put(
+  "/:id",
+  protect,
+  expenseValidationRules,
+  validateRequest,
+  updateExpense
+);
 
 /**
  * @route   DELETE /api/expenses/:id
  * @desc    Delete an expense
- * @access  Public
+ * @access  Private
  */
-router.delete("/:id", deleteExpense);
+router.delete("/:id", protect, deleteExpense);
 
 export default router;

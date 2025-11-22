@@ -4,6 +4,8 @@
  * Implements offline-first approach with automatic sync when backend reconnects
  */
 
+import { getToken } from "./AuthService";
+
 // API Base URL - Update this based on your backend server
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
@@ -19,6 +21,18 @@ const STORAGE_KEYS = {
 
 // Flag to prevent duplicate console banners
 let hasShownBanner = false;
+
+/**
+ * Helper function to get auth headers
+ * @returns {Object} Headers with auth token
+ */
+const getAuthHeaders = () => {
+  const token = getToken();
+  return {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+};
 
 /**
  * Helper function to handle API errors
@@ -47,9 +61,7 @@ const isBackendOnline = async () => {
     const response = await fetch(`${API_BASE_URL}/health`, {
       method: "GET",
       signal: controller.signal,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: getAuthHeaders(),
     });
     clearTimeout(timeoutId);
 
@@ -216,7 +228,8 @@ export const syncPendingOperations = async () => {
         case "CREATE":
           await fetch(`${API_BASE_URL}/expenses`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: getAuthHeaders(),
+            credentials: "include",
             body: JSON.stringify(operation.data),
           });
           synced++;
@@ -225,7 +238,8 @@ export const syncPendingOperations = async () => {
         case "UPDATE":
           await fetch(`${API_BASE_URL}/expenses/${operation.id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: getAuthHeaders(),
+            credentials: "include",
             body: JSON.stringify(operation.data),
           });
           synced++;
@@ -234,6 +248,8 @@ export const syncPendingOperations = async () => {
         case "DELETE":
           await fetch(`${API_BASE_URL}/expenses/${operation.id}`, {
             method: "DELETE",
+            headers: getAuthHeaders(),
+            credentials: "include",
           });
           synced++;
           break;
@@ -313,7 +329,10 @@ export const getExpenses = async (filters = {}) => {
     const url = `${API_BASE_URL}/expenses${
       queryParams.toString() ? `?${queryParams}` : ""
     }`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: getAuthHeaders(),
+      credentials: "include",
+    });
     const result = await handleResponse(response);
 
     // Save to localStorage as cache
@@ -324,6 +343,22 @@ export const getExpenses = async (filters = {}) => {
 
     return result.data || [];
   } catch (error) {
+    // Check if it's an auth error
+    if (
+      error.message &&
+      (error.message.includes("authorized") || error.message.includes("login"))
+    ) {
+      console.error(
+        "%c🔒 AUTHENTICATION REQUIRED",
+        "background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 13px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
+      );
+      console.warn(
+        "%c🚪 Please login to access your expenses",
+        "background: linear-gradient(90deg, #a855f7 0%, #667eea 100%); color: white; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-size: 12px;"
+      );
+      throw error; // Re-throw to let auth context handle it
+    }
+
     console.error(
       "%c⚠️ FETCH FAILED - SWITCHING TO LOCAL DATA",
       "background: linear-gradient(135deg, #ff6348 0%, #ff4757 50%, #ff3838 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 13px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);"
@@ -396,14 +431,12 @@ export const addExpense = async (expense) => {
       return localExpense;
     }
 
-    const response = await fetch(`${API_BASE_URL}/expenses`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(expenseData),
+    const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      credentials: "include",
+      body: JSON.stringify(updateData),
     });
-
     const result = await handleResponse(response);
 
     // Update localStorage cache
@@ -502,6 +535,8 @@ export const deleteExpense = async (id) => {
 
     const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
+      credentials: "include",
     });
 
     await handleResponse(response);
@@ -571,7 +606,13 @@ export const updateExpense = async (id, updatedExpense) => {
  */
 export const getExpensesByCategory = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/expenses/summary/statistics`);
+    const response = await fetch(
+      `${API_BASE_URL}/expenses/summary/statistics`,
+      {
+        headers: getAuthHeaders(),
+        credentials: "include",
+      }
+    );
     const result = await handleResponse(response);
 
     return result.data.expensesByCategory || {};
@@ -594,7 +635,13 @@ export const getExpensesByCategory = async () => {
  */
 export const getTotalExpenses = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/expenses/summary/statistics`);
+    const response = await fetch(
+      `${API_BASE_URL}/expenses/summary/statistics`,
+      {
+        headers: getAuthHeaders(),
+        credentials: "include",
+      }
+    );
     const result = await handleResponse(response);
 
     return result.data.total || 0;

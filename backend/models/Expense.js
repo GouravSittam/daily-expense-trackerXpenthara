@@ -7,6 +7,11 @@ import { CATEGORIES } from "../utils/constants.js";
  */
 const expenseSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "User is required"],
+    },
     amount: {
       type: Number,
       required: [true, "Amount is required"],
@@ -55,6 +60,8 @@ const expenseSchema = new mongoose.Schema(
 /**
  * Indexes for better query performance
  */
+expenseSchema.index({ user: 1, date: -1 }); // User's most recent first
+expenseSchema.index({ user: 1, category: 1 }); // User's expenses by category
 expenseSchema.index({ date: -1 }); // Most recent first
 expenseSchema.index({ category: 1 });
 expenseSchema.index({ amount: -1 });
@@ -77,17 +84,24 @@ expenseSchema.methods.toResponseObject = function () {
     category: this.category,
     description: this.description,
     date: this.formattedDate,
+    user: this.user,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
 };
 
 /**
- * Static method to get expenses grouped by category
+ * Static method to get expenses grouped by category for a specific user
+ * @param {String} userId - User ID to filter by
  * @returns {Promise<Array>} Array of category totals
  */
-expenseSchema.statics.getExpensesByCategory = async function () {
+expenseSchema.statics.getExpensesByCategory = async function (userId = null) {
+  const matchStage = userId
+    ? { user: new mongoose.Types.ObjectId(userId) }
+    : {};
+
   return await this.aggregate([
+    { $match: matchStage },
     {
       $group: {
         _id: "$category",
@@ -110,11 +124,17 @@ expenseSchema.statics.getExpensesByCategory = async function () {
 };
 
 /**
- * Static method to get total expenses
+ * Static method to get total expenses for a specific user
+ * @param {String} userId - User ID to filter by
  * @returns {Promise<Number>} Total amount of all expenses
  */
-expenseSchema.statics.getTotalExpenses = async function () {
+expenseSchema.statics.getTotalExpenses = async function (userId = null) {
+  const matchStage = userId
+    ? { user: new mongoose.Types.ObjectId(userId) }
+    : {};
+
   const result = await this.aggregate([
+    { $match: matchStage },
     {
       $group: {
         _id: null,

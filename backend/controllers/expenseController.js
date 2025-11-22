@@ -22,8 +22,10 @@ export const getAllExpenses = async (req, res) => {
       limit = PAGINATION.DEFAULT_LIMIT,
     } = req.query;
 
-    // Build query filter
-    const filter = {};
+    // Build query filter - always filter by authenticated user
+    const filter = {
+      user: req.user.id,
+    };
 
     if (category) {
       filter.category = category;
@@ -92,7 +94,7 @@ export const getAllExpenses = async (req, res) => {
 export const getExpenseById = async (req, res) => {
   try {
     const { id } = req.params;
-    const expense = await Expense.findById(id);
+    const expense = await Expense.findOne({ _id: id, user: req.user.id });
 
     if (!expense) {
       return res.status(STATUS_CODES.NOT_FOUND).json({
@@ -127,6 +129,7 @@ export const createExpense = async (req, res) => {
 
     // Create new expense
     const expense = new Expense({
+      user: req.user.id,
       amount: parseFloat(amount),
       category,
       description: description || `${category} Expense`,
@@ -172,8 +175,8 @@ export const updateExpense = async (req, res) => {
     const { id } = req.params;
     const { amount, category, description, date } = req.body;
 
-    // Find expense
-    const expense = await Expense.findById(id);
+    // Find expense - ensure it belongs to the user
+    const expense = await Expense.findOne({ _id: id, user: req.user.id });
 
     if (!expense) {
       return res.status(STATUS_CODES.NOT_FOUND).json({
@@ -226,7 +229,10 @@ export const deleteExpense = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const expense = await Expense.findByIdAndDelete(id);
+    const expense = await Expense.findOneAndDelete({
+      _id: id,
+      user: req.user.id,
+    });
 
     if (!expense) {
       return res.status(STATUS_CODES.NOT_FOUND).json({
@@ -258,7 +264,7 @@ export const deleteExpense = async (req, res) => {
  */
 export const getExpensesByCategory = async (req, res) => {
   try {
-    const categoryTotals = await Expense.getExpensesByCategory();
+    const categoryTotals = await Expense.getExpensesByCategory(req.user.id);
 
     res.status(STATUS_CODES.OK).json({
       success: true,
@@ -282,7 +288,7 @@ export const getExpensesByCategory = async (req, res) => {
  */
 export const getTotalExpenses = async (req, res) => {
   try {
-    const total = await Expense.getTotalExpenses();
+    const total = await Expense.getTotalExpenses(req.user.id);
 
     res.status(STATUS_CODES.OK).json({
       success: true,
@@ -307,9 +313,9 @@ export const getTotalExpenses = async (req, res) => {
 export const getExpenseStatistics = async (req, res) => {
   try {
     const [categoryTotals, total, count] = await Promise.all([
-      Expense.getExpensesByCategory(),
-      Expense.getTotalExpenses(),
-      Expense.countDocuments(),
+      Expense.getExpensesByCategory(req.user.id),
+      Expense.getTotalExpenses(req.user.id),
+      Expense.countDocuments({ user: req.user.id }),
     ]);
 
     // Convert category totals to object format
