@@ -76,22 +76,24 @@ app.use(errorHandler);
 // Server configuration
 const PORT = process.env.PORT || 5000;
 
-/**
- * Start the server
- */
-const server = app.listen(PORT, () => {
-  console.log(`
+// Only start server if not in serverless environment
+if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+  /**
+   * Start the server
+   */
+  const server = app.listen(PORT, () => {
+    console.log(`
 ╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║
 ║   🚀 Expense Tracker API Server                          ║
 ║                                                           ║
 ║   📡 Server running on port: ${PORT}                        ║
 ║   🌍 Environment: ${
-    process.env.NODE_ENV || "development"
-  }                      ║
+      process.env.NODE_ENV || "development"
+    }                      ║
 ║   📂 Database: ${
-    process.env.MONGODB_URI ? "Connected" : "Not configured"
-  }                                ║
+      process.env.MONGODB_URI ? "Connected" : "Not configured"
+    }                                ║
 ║                                                           ║
 ║   Endpoints:                                             ║
 ║   - POST   /api/auth/register                            ║
@@ -107,25 +109,26 @@ const server = app.listen(PORT, () => {
 ║   - GET    /api/expenses/summary/statistics              ║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
-  `);
-});
+    `);
+  });
 
-/**
- * Handle unhandled promise rejections
- */
-process.on("unhandledRejection", (err) => {
-  console.error("❌ Unhandled Promise Rejection:", err);
-  server.close(() => {
+  /**
+   * Handle unhandled promise rejections
+   */
+  process.on("unhandledRejection", (err) => {
+    console.error("❌ Unhandled Promise Rejection:", err);
+    server.close(() => {
+      process.exit(1);
+    });
+  });
+
+  /**
+   * Handle uncaught exceptions
+   */
+  process.on("uncaughtException", (err) => {
+    console.error("❌ Uncaught Exception:", err);
     process.exit(1);
   });
-});
-
-/**
- * Handle uncaught exceptions
- */
-process.on("uncaughtException", (err) => {
-  console.error("❌ Uncaught Exception:", err);
-  process.exit(1);
-});
+}
 
 export default app;
