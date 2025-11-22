@@ -39,11 +39,17 @@ const ChartComponent = ({ expensesByCategory }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white border-2 border-gray-300 rounded-xl p-3 sm:p-4 shadow-xl">
-          <p className="m-0 mb-1.5 font-bold text-gray-900 text-sm sm:text-base">
+        <div className="bg-white border-4 border-black p-3 sm:p-4 shadow-brutal">
+          <p
+            className="m-0 mb-1.5 font-black text-gray-900 text-sm sm:text-base uppercase tracking-wide"
+            style={{ fontFamily: "Space Grotesk, sans-serif" }}
+          >
             {payload[0].name}
           </p>
-          <p className="m-0 text-orange-600 text-lg sm:text-xl font-black">
+          <p
+            className="m-0 text-eco-cyan text-lg sm:text-xl font-black"
+            style={{ fontFamily: "Space Grotesk, sans-serif" }}
+          >
             {formatCurrency(payload[0].value)}
           </p>
         </div>
@@ -54,13 +60,25 @@ const ChartComponent = ({ expensesByCategory }) => {
 
   if (chartData.length === 0) {
     return (
-      <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-lg border border-gray-200 mt-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 sm:mb-7 tracking-tight">
-          Expense Visualization
-        </h2>
-        <div className="text-center py-12 sm:py-16 px-4 sm:px-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
-          <p className="text-gray-600 text-base sm:text-lg font-medium">
-            No data available for visualization. Add expenses to see charts!
+      <div className="brutal-card bg-white p-5 sm:p-7 border-6 border-black mt-6">
+        <div
+          className="electric-border"
+          style={{ borderColor: "#00D9FF" }}
+        ></div>
+        <div className="flex items-center gap-3 mb-5 sm:mb-7">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-eco-cyan border-4 border-black flex items-center justify-center shadow-brutal-sm">
+            <span className="text-2xl sm:text-3xl">📊</span>
+          </div>
+          <h2
+            className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight uppercase"
+            style={{ fontFamily: "Space Grotesk, sans-serif" }}
+          >
+            Expense Visualization
+          </h2>
+        </div>
+        <div className="text-center py-12 sm:py-16 px-4 sm:px-6 bg-gray-100 border-4 border-dashed border-black">
+          <p className="text-gray-700 text-base sm:text-lg font-bold uppercase">
+            📈 No data available! Add expenses to see charts!
           </p>
         </div>
       </div>
@@ -68,15 +86,27 @@ const ChartComponent = ({ expensesByCategory }) => {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-200 mt-6">
-      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-8 tracking-tight text-center sm:text-left">
-        Expense Visualization
-      </h2>
+    <div className="brutal-card bg-white p-4 sm:p-6 lg:p-8 border-6 border-black mt-6">
+      <div className="electric-border" style={{ borderColor: "#00D9FF" }}></div>
+      <div className="flex items-center gap-3 mb-4 sm:mb-6 lg:mb-8">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 bg-eco-cyan border-4 border-black flex items-center justify-center shadow-brutal-sm">
+          <span className="text-2xl sm:text-3xl">📊</span>
+        </div>
+        <h2
+          className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900 tracking-tight uppercase"
+          style={{ fontFamily: "Space Grotesk, sans-serif" }}
+        >
+          Expense Visualization
+        </h2>
+      </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
-        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-4 sm:p-5 lg:p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-          <h3 className="mb-3 sm:mb-4 lg:mb-5 text-gray-900 text-base sm:text-lg lg:text-xl font-bold tracking-tight text-center">
-            Category Distribution
+        <div className="flex flex-col bg-gray-50 p-4 sm:p-5 lg:p-6 border-4 border-black shadow-brutal-sm hover:shadow-brutal hover:-translate-x-1 hover:-translate-y-1 transition-all">
+          <h3
+            className="mb-3 sm:mb-4 lg:mb-5 text-gray-900 text-base sm:text-lg lg:text-xl font-black tracking-tight text-center uppercase"
+            style={{ fontFamily: "Space Grotesk, sans-serif" }}
+          >
+            🥧 Category Distribution
           </h3>
           <ResponsiveContainer width="100%" height={300} minHeight={250}>
             <PieChart>
@@ -125,9 +155,12 @@ const ChartComponent = ({ expensesByCategory }) => {
           </ResponsiveContainer>
         </div>
 
-        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-4 sm:p-5 lg:p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-          <h3 className="mb-3 sm:mb-4 lg:mb-5 text-gray-900 text-base sm:text-lg lg:text-xl font-bold tracking-tight text-center">
-            Amount Comparison
+        <div className="flex flex-col bg-gray-50 p-4 sm:p-5 lg:p-6 border-4 border-black shadow-brutal-sm hover:shadow-brutal hover:-translate-x-1 hover:-translate-y-1 transition-all">
+          <h3
+            className="mb-3 sm:mb-4 lg:mb-5 text-gray-900 text-base sm:text-lg lg:text-xl font-black tracking-tight text-center uppercase"
+            style={{ fontFamily: "Space Grotesk, sans-serif" }}
+          >
+            📊 Amount Comparison
           </h3>
           <ResponsiveContainer width="100%" height={300} minHeight={250}>
             <BarChart

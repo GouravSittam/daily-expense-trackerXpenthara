@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import Shuffle from "./Shuffle";
 
 /**
- * Modern Navbar component with glassmorphism design
- * Matches the project's IBM Plex Sans Condensed font theme
+ * Cyber-Brutalist Navbar component
+ * Features electric accents and bold typography
  */
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,11 +32,11 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/90 backdrop-blur-lg shadow-lg border-b border-gray-200/50"
-          : "bg-white/70 backdrop-blur-md shadow-md"
+          ? "bg-white/95 backdrop-blur-lg border-b-4 border-eco-cyan shadow-lg"
+          : "bg-white/90 backdrop-blur-md border-b-4 border-eco-cyan/50"
       }`}
       style={{
-        fontFamily: "IBM Plex Sans Condensed, sans-serif",
+        fontFamily: "Space Grotesk, Montserrat, sans-serif",
         WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(12px)",
         backdropFilter: isScrolled ? "blur(16px)" : "blur(12px)",
         willChange: "transform",
@@ -46,7 +46,7 @@ const Navbar = () => {
     >
       <div className="max-w-[1400px] mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 xs:h-16 sm:h-18 md:h-20">
-          {/* Logo/Brand */}
+          {/* Logo/Brand - Brutalist */}
           <div
             className="flex items-center gap-1 xs:gap-2 cursor-pointer group touch-manipulation"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -58,8 +58,9 @@ const Navbar = () => {
               }
             }}
           >
+            <span className="text-2xl">💰</span>
             <Shuffle
-              text="Expense Tracker"
+              text="EXPENSE TRACKER"
               shuffleDirection="right"
               duration={0.5}
               animationMode="evenodd"
@@ -71,11 +72,12 @@ const Navbar = () => {
               triggerOnHover={true}
               respectReducedMotion={true}
               tag="span"
-              className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-500 select-none"
+              className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-black text-gray-900 group-hover:text-eco-cyan transition-colors duration-300 select-none uppercase tracking-tight"
               style={{
-                fontFamily: "IBM Plex Sans Condensed, sans-serif",
-                fontWeight: "700",
-                letterSpacing: "-0.03em",
+                fontFamily: "Space Grotesk, Montserrat, sans-serif",
+                fontWeight: "900",
+                letterSpacing: "-0.02em",
+                textShadow: "2px 2px 0px rgba(0, 217, 255, 0.3)",
                 WebkitTapHighlightColor: "transparent",
                 WebkitTouchCallout: "none",
                 userSelect: "none",
@@ -83,66 +85,62 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-3 lg:gap-4 xl:gap-8">
+          {/* Desktop Navigation - Brutalist Buttons */}
+          <div className="hidden lg:flex items-center gap-3 lg:gap-4">
             <button
               onClick={() => scrollToSection("add-expense")}
-              className="text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors font-light text-xs lg:text-sm xl:text-base relative group whitespace-nowrap touch-manipulation"
+              className="px-3 py-1.5 border-2 border-eco-cyan text-eco-cyan hover:bg-eco-cyan hover:text-black font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              Add Expense
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+              Add
             </button>
             <button
               onClick={() => scrollToSection("expense-list")}
-              className="text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors font-light text-xs lg:text-sm xl:text-base relative group whitespace-nowrap touch-manipulation"
+              className="px-3 py-1.5 border-2 border-eco-green text-eco-green hover:bg-eco-green hover:text-black font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-green touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              My Expenses
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+              Expenses
             </button>
             <button
               onClick={() => scrollToSection("summary")}
-              className="text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors font-light text-xs lg:text-sm xl:text-base relative group whitespace-nowrap touch-manipulation"
+              className="px-3 py-1.5 border-2 border-eco-purple text-eco-purple hover:bg-eco-purple hover:text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-purple touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
               Summary
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </button>
             <button
               onClick={() => scrollToSection("analytics")}
-              className="text-gray-700 hover:text-blue-600 active:text-blue-700 transition-colors font-light text-xs lg:text-sm xl:text-base relative group whitespace-nowrap touch-manipulation"
+              className="px-3 py-1.5 border-2 border-eco-pink text-eco-pink hover:bg-eco-pink hover:text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-neon-pink touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
               Analytics
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </button>
 
-            {/* CTA Button */}
+            {/* CTA Button - Brutalist */}
             <a
               href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-all duration-300 font-medium text-xs xl:text-sm shadow-md hover:shadow-xl hover:scale-105 active:scale-95 flex items-center gap-1.5 lg:gap-2 whitespace-nowrap touch-manipulation"
+              className="px-4 py-2 bg-eco-cyan text-black border-2 border-black font-black text-xs uppercase tracking-wider hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-sm active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2 touch-manipulation"
               style={{
-                fontWeight: "500",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
               <svg
-                className="w-3 h-3 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4"
+                className="w-4 h-4"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
@@ -160,14 +158,14 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-1.5 xs:p-2 rounded-lg text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors touch-manipulation"
+            className="lg:hidden p-2 border-2 border-eco-cyan text-eco-cyan hover:bg-eco-cyan hover:text-black transition-all touch-manipulation"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             {isMobileMenuOpen ? (
               <svg
-                className="w-5 h-5 xs:w-6 xs:h-6"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -176,13 +174,13 @@ const Navbar = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={3}
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             ) : (
               <svg
-                className="w-5 h-5 xs:w-6 xs:h-6"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -191,7 +189,7 @@ const Navbar = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={3}
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
@@ -199,71 +197,69 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Brutalist */}
         <div
           className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            isMobileMenuOpen
-              ? "max-h-96 opacity-100 pb-3 xs:pb-4"
-              : "max-h-0 opacity-0"
+            isMobileMenuOpen ? "max-h-96 opacity-100 pb-4" : "max-h-0 opacity-0"
           }`}
           style={{
             WebkitOverflowScrolling: "touch",
             overscrollBehavior: "contain",
           }}
         >
-          <div className="flex flex-col gap-2 xs:gap-3 pt-3 xs:pt-4 border-t border-gray-200/50">
+          <div className="flex flex-col gap-2 pt-4 border-t-2 border-eco-cyan/50">
             <button
               onClick={() => scrollToSection("add-expense")}
-              className="text-left px-3 xs:px-4 py-2 xs:py-2.5 text-gray-700 hover:text-blue-600 active:text-blue-700 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-all font-light text-sm xs:text-base touch-manipulation"
+              className="text-left px-4 py-3 border-2 border-eco-cyan text-eco-cyan hover:bg-eco-cyan hover:text-black font-bold text-sm uppercase tracking-wider transition-all touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              Add Expense
+              ⚡ Add Expense
             </button>
             <button
               onClick={() => scrollToSection("expense-list")}
-              className="text-left px-3 xs:px-4 py-2 xs:py-2.5 text-gray-700 hover:text-blue-600 active:text-blue-700 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-all font-light text-sm xs:text-base touch-manipulation"
+              className="text-left px-4 py-3 border-2 border-eco-green text-eco-green hover:bg-eco-green hover:text-black font-bold text-sm uppercase tracking-wider transition-all touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              My Expenses
+              💸 My Expenses
             </button>
             <button
               onClick={() => scrollToSection("summary")}
-              className="text-left px-3 xs:px-4 py-2 xs:py-2.5 text-gray-700 hover:text-blue-600 active:text-blue-700 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-all font-light text-sm xs:text-base touch-manipulation"
+              className="text-left px-4 py-3 border-2 border-eco-purple text-eco-purple hover:bg-eco-purple hover:text-white font-bold text-sm uppercase tracking-wider transition-all touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              Summary
+              📊 Summary
             </button>
             <button
               onClick={() => scrollToSection("analytics")}
-              className="text-left px-3 xs:px-4 py-2 xs:py-2.5 text-gray-700 hover:text-blue-600 active:text-blue-700 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-all font-light text-sm xs:text-base touch-manipulation"
+              className="text-left px-4 py-3 border-2 border-eco-pink text-eco-pink hover:bg-eco-pink hover:text-white font-bold text-sm uppercase tracking-wider transition-all touch-manipulation"
               style={{
-                fontWeight: "400",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              Analytics
+              📈 Analytics
             </button>
             <a
               href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 xs:mt-2 px-3 xs:px-4 py-2 xs:py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-all font-medium text-center text-sm xs:text-base flex items-center justify-center gap-1.5 xs:gap-2 touch-manipulation"
+              className="mt-2 px-4 py-3 bg-eco-cyan text-black border-2 border-black font-black text-center text-sm uppercase tracking-wider flex items-center justify-center gap-2 hover:shadow-brutal-sm transition-all touch-manipulation"
               style={{
-                fontWeight: "500",
+                fontFamily: "Space Grotesk, sans-serif",
                 WebkitTapHighlightColor: "transparent",
               }}
             >
               <svg
-                className="w-3.5 h-3.5 xs:w-4 xs:h-4"
+                className="w-4 h-4"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"

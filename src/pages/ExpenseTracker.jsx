@@ -3,7 +3,6 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import ExpenseSummary from "../components/ExpenseSummary";
 import ChartComponent from "../components/ChartComponent";
-import Shuffle from "../components/Shuffle";
 import OfflineIndicator from "../components/OfflineIndicator";
 import LightRays from "../components/LightRays";
 import Navbar from "../components/Navbar";
@@ -77,15 +76,15 @@ const ExpenseTracker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
       {/* Navbar */}
       <Navbar />
 
       {/* LightRays Background */}
-      <div className="fixed inset-0 w-full h-full z-0 bg-gray-900/10">
+      <div className="fixed inset-0 w-full h-full z-0">
         <LightRays
           raysOrigin="top-center"
-          raysColor="#2563eb"
+          raysColor="#00D9FF"
           raysSpeed={0.8}
           lightSpread={0.6}
           rayLength={1.5}
@@ -130,54 +129,60 @@ const ExpenseTracker = () => {
           <ChartComponent expensesByCategory={expensesByCategory} />
         </div>
 
-        {/* Footer */}
+        {/* Footer - Brutalist Style */}
         <footer
-          className="mt-16 sm:mt-20 border-t border-gray-200/50 backdrop-blur-sm"
-          style={{ fontFamily: "IBM Plex Sans Condensed, sans-serif" }}
+          className="mt-16 sm:mt-20 border-t-8 border-black backdrop-blur-sm"
+          style={{ fontFamily: "Space Grotesk, Montserrat, sans-serif" }}
         >
-          <div className="py-8 sm:py-10 px-4">
+          <div className="py-8 sm:py-10 px-4 bg-white border-4 border-black border-t-0">
             {/* Main Footer Content */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               {/* About Section */}
               <div className="text-center md:text-left">
                 <h3
-                  className="text-xl font-medium text-gray-900 mb-3 flex items-center justify-center md:justify-start gap-2"
-                  style={{ fontWeight: "500", letterSpacing: "-0.01em" }}
+                  className="text-xl font-black text-gray-900 mb-3 flex items-center justify-center md:justify-start gap-2 uppercase tracking-wider"
+                  style={{ fontFamily: "Space Grotesk, sans-serif" }}
                 >
                   <span className="text-2xl">💰</span>
-                  <span>Expense Tracker</span>
+                  <span
+                    className="text-eco-cyan"
+                    style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.1)" }}
+                  >
+                    Expense Tracker
+                  </span>
                 </h3>
-                <p
-                  className="text-gray-600 text-sm leading-relaxed font-light"
-                  style={{ fontWeight: "300" }}
-                >
-                  A modern expense tracking application designed to help you
-                  manage your daily finances with ease and efficiency.
+                <p className="text-gray-800 text-sm leading-relaxed font-bold">
+                  A{" "}
+                  <span className="text-eco-purple font-black uppercase">
+                    cyber-brutalist
+                  </span>{" "}
+                  expense tracking application with{" "}
+                  <span className="text-eco-green font-black uppercase">
+                    eco-friendly vibes
+                  </span>
+                  .
                 </p>
               </div>
 
               {/* Quick Links */}
               <div className="text-center">
                 <h3
-                  className="text-lg font-medium text-gray-900 mb-3"
-                  style={{ fontWeight: "500", letterSpacing: "-0.01em" }}
+                  className="text-lg font-black text-gray-900 mb-3 uppercase tracking-wider"
+                  style={{ fontFamily: "Space Grotesk, sans-serif" }}
                 >
                   Features
                 </h3>
-                <ul
-                  className="space-y-2 text-sm text-gray-600 font-light"
-                  style={{ fontWeight: "300" }}
-                >
-                  <li className="hover:text-blue-600 transition-colors cursor-default">
+                <ul className="space-y-2 text-sm text-gray-800 font-bold">
+                  <li className="hover:text-eco-cyan transition-colors cursor-default">
                     📊 Visual Analytics
                   </li>
-                  <li className="hover:text-blue-600 transition-colors cursor-default">
+                  <li className="hover:text-eco-green transition-colors cursor-default">
                     📱 Responsive Design
                   </li>
-                  <li className="hover:text-blue-600 transition-colors cursor-default">
+                  <li className="hover:text-eco-purple transition-colors cursor-default">
                     🔒 Secure & Private
                   </li>
-                  <li className="hover:text-blue-600 transition-colors cursor-default">
+                  <li className="hover:text-eco-pink transition-colors cursor-default">
                     ⚡ Real-time Updates
                   </li>
                 </ul>
@@ -186,18 +191,17 @@ const ExpenseTracker = () => {
               {/* Connect Section */}
               <div className="text-center md:text-right">
                 <h3
-                  className="text-lg font-medium text-gray-900 mb-3"
-                  style={{ fontWeight: "500", letterSpacing: "-0.01em" }}
+                  className="text-lg font-black text-gray-900 mb-3 uppercase tracking-wider"
+                  style={{ fontFamily: "Space Grotesk, sans-serif" }}
                 >
                   Connect
                 </h3>
                 <div className="flex flex-col gap-3 items-center md:items-end">
                   <a
-                    href="https://github.com/GouravSittam"
+                    href="https://github.com/GouravSittam/daily-expense-trackerXpenthara"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors text-sm group font-light"
-                    style={{ fontWeight: "400" }}
+                    className="inline-flex items-center gap-2 text-gray-900 hover:text-eco-cyan transition-colors text-sm group font-bold"
                   >
                     <svg
                       className="w-5 h-5 group-hover:scale-110 transition-transform"
@@ -216,8 +220,7 @@ const ExpenseTracker = () => {
                     href="https://www.linkedin.com/in/gouravsittam/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors text-sm group font-light"
-                    style={{ fontWeight: "400" }}
+                    className="inline-flex items-center gap-2 text-gray-900 hover:text-eco-cyan transition-colors text-sm group font-bold"
                   >
                     <svg
                       className="w-5 h-5 group-hover:scale-110 transition-transform"
@@ -232,8 +235,7 @@ const ExpenseTracker = () => {
                     href="https://x.com/Gouravv_c"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors text-sm group font-light"
-                    style={{ fontWeight: "400" }}
+                    className="inline-flex items-center gap-2 text-gray-900 hover:text-eco-cyan transition-colors text-sm group font-bold"
                   >
                     <svg
                       className="w-5 h-5 group-hover:scale-110 transition-transform"
@@ -249,18 +251,15 @@ const ExpenseTracker = () => {
             </div>
 
             {/* Divider */}
-            <div className="border-t border-gray-200/50 pt-6">
-              <div
-                className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-600 font-light"
-                style={{ fontWeight: "300" }}
-              >
+            <div className="border-t-4 border-black pt-6">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-900 font-bold">
                 <p className="text-center sm:text-left">
                   © {new Date().getFullYear()} Expense Tracker. All rights
                   reserved.
                 </p>
                 <p className="text-center sm:text-right">
                   Made with{" "}
-                  <span className="text-red-500 inline-block animate-pulse">
+                  <span className="text-eco-red inline-block animate-pulse">
                     ❤️
                   </span>{" "}
                   by{" "}
@@ -268,8 +267,7 @@ const ExpenseTracker = () => {
                     href="https://github.com/GouravSittam"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 hover:underline transition-all font-medium"
-                    style={{ fontWeight: "500" }}
+                    className="text-eco-cyan hover:text-eco-green hover:underline transition-all font-black"
                   >
                     Gourav Chaudhary
                   </a>
