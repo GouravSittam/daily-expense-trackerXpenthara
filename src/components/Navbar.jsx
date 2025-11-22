@@ -59,7 +59,7 @@ const Navbar = () => {
             }}
           >
             <Shuffle
-              text="💰 Expense Tracker 💰"
+              text="Expense Tracker"
               shuffleDirection="right"
               duration={0.5}
               animationMode="evenodd"
