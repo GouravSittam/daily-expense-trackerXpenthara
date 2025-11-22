@@ -39,11 +39,11 @@ const ChartComponent = ({ expensesByCategory }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white border border-gray-300 rounded-lg p-3 shadow-md">
-          <p className="m-0 mb-1 font-semibold text-gray-800 text-sm">
+        <div className="bg-white border-2 border-gray-300 rounded-xl p-3 sm:p-4 shadow-xl">
+          <p className="m-0 mb-1.5 font-bold text-gray-900 text-sm sm:text-base">
             {payload[0].name}
           </p>
-          <p className="m-0 text-orange-600 text-base font-bold">
+          <p className="m-0 text-orange-600 text-lg sm:text-xl font-black">
             {formatCurrency(payload[0].value)}
           </p>
         </div>
@@ -68,27 +68,38 @@ const ChartComponent = ({ expensesByCategory }) => {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-5 sm:p-7 shadow-lg border border-gray-200 mt-6">
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-5 sm:mb-7 tracking-tight">
+    <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-200 mt-6">
+      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-8 tracking-tight text-center sm:text-left">
         Expense Visualization
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-5 border border-gray-200">
-          <h3 className="mb-4 sm:mb-5 text-gray-900 text-lg sm:text-xl font-bold tracking-tight">
-            Expenses by Category (Pie Chart)
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
+        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-4 sm:p-5 lg:p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+          <h3 className="mb-3 sm:mb-4 lg:mb-5 text-gray-900 text-base sm:text-lg lg:text-xl font-bold tracking-tight text-center">
+            Category Distribution
           </h3>
-          <ResponsiveContainer width="100%" height={280} minHeight={250}>
+          <ResponsiveContainer width="100%" height={300} minHeight={250}>
             <PieChart>
               <Pie
                 data={chartData}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, percent }) =>
-                  `${name}: ${(percent * 100).toFixed(0)}%`
+                label={({ name, percent }) => {
+                  const pct = (percent * 100).toFixed(0);
+                  return window.innerWidth < 640
+                    ? `${pct}%`
+                    : `${name}: ${pct}%`;
+                }}
+                outerRadius={
+                  window.innerWidth < 640
+                    ? 70
+                    : window.innerWidth < 1024
+                    ? 85
+                    : 100
                 }
-                outerRadius={window.innerWidth < 640 ? 80 : 100}
+                innerRadius={window.innerWidth < 640 ? 0 : 40}
+                paddingAngle={2}
                 fill={
                   chartData.length > 0
                     ? getColorForCategory(chartData[0].name)
@@ -104,30 +115,61 @@ const ChartComponent = ({ expensesByCategory }) => {
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend />
+              <Legend
+                wrapperStyle={{
+                  fontSize: window.innerWidth < 640 ? "12px" : "14px",
+                }}
+                iconType="circle"
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-5 border border-gray-200">
-          <h3 className="mb-4 sm:mb-5 text-gray-900 text-lg sm:text-xl font-bold tracking-tight">
-            Expenses by Category (Bar Chart)
+        <div className="flex flex-col bg-linear-to-br from-gray-50 to-blue-50/20 rounded-2xl p-4 sm:p-5 lg:p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+          <h3 className="mb-3 sm:mb-4 lg:mb-5 text-gray-900 text-base sm:text-lg lg:text-xl font-bold tracking-tight text-center">
+            Amount Comparison
           </h3>
-          <ResponsiveContainer width="100%" height={280} minHeight={250}>
+          <ResponsiveContainer width="100%" height={300} minHeight={250}>
             <BarChart
               data={chartData}
-              margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
+              margin={{
+                top: 10,
+                right: window.innerWidth < 640 ? 5 : 15,
+                left: window.innerWidth < 640 ? -10 : 0,
+                bottom: window.innerWidth < 640 ? 80 : 60,
+              }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis
                 dataKey="name"
                 angle={window.innerWidth < 640 ? -90 : -45}
                 textAnchor="end"
-                height={window.innerWidth < 640 ? 100 : 80}
-                fontSize={window.innerWidth < 640 ? 10 : 12}
+                height={window.innerWidth < 640 ? 90 : 70}
+                fontSize={
+                  window.innerWidth < 640
+                    ? 10
+                    : window.innerWidth < 1024
+                    ? 11
+                    : 12
+                }
+                tick={{ fill: "#374151", fontWeight: 500 }}
+                interval={0}
               />
-              <YAxis fontSize={window.innerWidth < 640 ? 10 : 12} />
-              <Tooltip content={<CustomTooltip />} />
+              <YAxis
+                fontSize={
+                  window.innerWidth < 640
+                    ? 10
+                    : window.innerWidth < 1024
+                    ? 11
+                    : 12
+                }
+                tick={{ fill: "#374151", fontWeight: 500 }}
+                width={window.innerWidth < 640 ? 40 : 50}
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{ fill: "rgba(59, 130, 246, 0.1)" }}
+              />
               <Bar
                 dataKey="value"
                 fill={
@@ -136,6 +178,7 @@ const ChartComponent = ({ expensesByCategory }) => {
                     : "#6b7280"
                 }
                 radius={[8, 8, 0, 0]}
+                maxBarSize={window.innerWidth < 640 ? 40 : 60}
               >
                 {chartData.map((entry, index) => (
                   <Cell
