@@ -8,6 +8,12 @@
 
 html {
   scroll-behavior: smooth;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+  /* Better text rendering on all browsers */
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 body {
@@ -19,19 +25,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
   -webkit-tap-highlight-color: transparent;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  /* Better mobile scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent pull-to-refresh on Chrome mobile */
+  overscroll-behavior-y: contain;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
 }
 
 /* Improve touch interactions on mobile */
 button,
 input,
 select,
-textarea {
+textarea,
+a {
   -webkit-tap-highlight-color: transparent;
+  /* Better touch response */
+  touch-action: manipulation;
+}
+
+/* Ensure touch targets are at least 44x44px on mobile */
+@media screen and (max-width: 768px) {
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 /* Fix iOS input zoom */
@@ -41,6 +67,13 @@ textarea {
   input[type="date"],
   select,
   textarea {
+    font-size: 16px;
+  }
+
+  /* Prevent iOS from zooming on focus */
+  input:focus,
+  select:focus,
+  textarea:focus {
     font-size: 16px;
   }
 }
@@ -63,5 +96,76 @@ textarea {
 
   ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+  }
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+/* Better backdrop-filter support for older browsers */
+@supports not (backdrop-filter: blur(10px)) {
+  .backdrop-blur-md,
+  .backdrop-blur-lg {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
+/* Safe area support for notched devices (iPhone X+) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Prevent text selection on double-tap mobile */
+.touch-manipulation {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hardware acceleration for smooth animations */
+.will-change-transform {
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Landscape orientation adjustments for mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  body {
+    overflow-y: auto;
+  }
+
+  /* Reduce navbar height in landscape */
+  nav {
+    min-height: 48px !important;
+  }
+}
+
+/* Very small devices (Galaxy Fold, etc.) */
+@media screen and (max-width: 360px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* High DPI displays (Retina, etc.) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}
+
+/* Print styles */
+@media print {
+  nav,
+  footer {
+    display: none !important;
   }
 }
