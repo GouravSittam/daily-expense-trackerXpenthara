@@ -1,10 +1,10 @@
 <div align="center">
 
-# 💰 Expense Tracker
+# 💰 TrackWise - Brutalist Expense Tracker
 
-### _Track your finances with style and simplicity_
+### _Track your finances with cyber-brutalist style and power_
 
-A beautiful, full-stack expense tracking application with real-time sync, offline support, and stunning visualizations.
+A stunning full-stack expense tracking application featuring brutalist design, user authentication, real-time sync, offline support, and immersive 3D backgrounds.
 
 [![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -26,6 +26,7 @@ A beautiful, full-stack expense tracking application with real-time sync, offlin
 
 ### 🎯 Core Features
 
+- 🔐 **User Authentication** - Secure login & registration with JWT
 - 📝 **Smart Expense Entry** - Quick form with validation
 - 🔍 **Advanced Filtering** - By category, date range
 - 🔄 **Flexible Sorting** - Date, amount, or category
@@ -38,12 +39,15 @@ A beautiful, full-stack expense tracking application with real-time sync, offlin
 
 ### ⚡ Advanced Features
 
+- 🎨 **Brutalist Design** - Cyber-brutalist aesthetic with bold borders
+- 🌈 **3D Backgrounds** - Interactive LightRays with OGL
+- ✨ **GSAP Animations** - Smooth, professional animations
 - 🌐 **Full-Stack API** - RESTful backend with Express
 - 💾 **MongoDB Storage** - Cloud database with Atlas
 - 📡 **Offline Mode** - Works without internet
 - 🔄 **Auto-Sync** - Syncs when back online
-- 🎨 **Modern Design** - Clean, aesthetic UI
 - 🚀 **Fast Performance** - Optimized with Vite
+- 🍪 **Secure Cookies** - HTTP-only cookie authentication
 
 </td>
 </tr>
@@ -111,56 +115,76 @@ graph LR
 
 **Frontend**
 
-- ⚛️ React 19 - UI library
-- 🎨 Tailwind CSS 4 - Styling framework
-- ⚡ Vite - Build tool
-- 📊 Recharts - Chart library
-- 🎬 GSAP & Framer Motion - Animations
+- ⚛️ React 19.2 - UI library with latest features
+- 🎨 Tailwind CSS 4.1 - Modern utility-first styling
+- ⚡ Vite 7.2 - Lightning-fast build tool
+- 📊 Recharts 3.4 - Beautiful chart library
+- 🎬 GSAP 3.13 - Professional animations
+- 🌊 Framer Motion 12.23 - Smooth UI transitions
+- 🌐 React Router DOM 7.9 - Client-side routing
+- 🎭 OGL 1.0 - WebGL for 3D backgrounds
+- 💎 Radix UI - Accessible component primitives
+- 🎯 Lucide React - Beautiful icon library
 
 **Backend**
 
-- 🟢 Node.js & Express - Server framework
-- 🍃 MongoDB & Mongoose - Database
-- ✅ Express Validator - Input validation
+- 🟢 Node.js & Express 4.18 - Server framework
+- 🍃 MongoDB & Mongoose 8.0 - NoSQL database
+- 🔐 JWT & bcryptjs - Secure authentication
+- ✅ Express Validator 7.0 - Input validation
 - 🔒 CORS enabled - Cross-origin requests
+- 🍪 Cookie Parser - HTTP-only cookie handling
 
 ## 📁 Project Structure
 
 ```
 pentharaTech/
-├── 📁 frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── ExpenseForm.jsx       # 📝 Add expense form
-│   │   │   ├── ExpenseList.jsx       # 📋 List with filters
-│   │   │   ├── ExpenseSummary.jsx    # 💰 Category summary
-│   │   │   ├── ChartComponent.jsx    # 📊 Data visualization
-│   │   │   ├── OfflineIndicator.jsx  # 📡 Sync status
-│   │   │   └── Shuffle.jsx           # ✨ Animated text
-│   │   ├── pages/
-│   │   │   └── ExpenseTracker.jsx    # 🏠 Main page
-│   │   ├── services/
-│   │   │   └── ExpenseService.js     # 🔄 API & offline logic
-│   │   └── utils/
-│   │       └── constants.js          # 🛠️ Helpers & constants
-│   └── package.json
+├── 📁 src/
+│   ├── components/
+│   │   ├── ExpenseForm.jsx       # 📝 Add expense form
+│   │   ├── ExpenseList.jsx       # 📋 List with filters
+│   │   ├── ExpenseSummary.jsx    # 💰 Category summary
+│   │   ├── ChartComponent.jsx    # 📊 Data visualization
+│   │   ├── OfflineIndicator.jsx  # 📡 Sync status
+│   │   ├── LightRays.jsx         # ✨ 3D background (OGL)
+│   │   ├── Shuffle.jsx           # 🎭 Animated text effect
+│   │   ├── BrutalLoader.jsx      # ⏳ Themed loading spinner
+│   │   ├── Navbar.jsx            # 🧭 Navigation bar
+│   │   └── ui/                   # 🎨 Radix UI components
+│   ├── pages/
+│   │   ├── ExpenseTracker.jsx    # 🏠 Main expense page
+│   │   └── AuthPage.jsx          # 🔐 Login/Register page
+│   ├── context/
+│   │   └── AuthContext.jsx       # 🔑 Auth state management
+│   ├── services/
+│   │   ├── ExpenseService.js     # 💸 Expense API & offline
+│   │   └── AuthService.js        # 🔐 Auth API operations
+│   └── utils/
+│       └── constants.js          # 🛠️ Shared constants
 │
 ├── 📁 backend/
 │   ├── config/
-│   │   └── database.js               # 🔌 MongoDB connection
+│   │   └── database.js           # 🔌 MongoDB connection
 │   ├── controllers/
-│   │   └── expenseController.js      # 🎮 Business logic
+│   │   ├── expenseController.js  # 🎮 Expense logic
+│   │   └── authController.js     # 🔐 Auth logic
 │   ├── models/
-│   │   └── Expense.js                # 📐 Mongoose schema
+│   │   ├── Expense.js            # 📐 Expense schema
+│   │   └── User.js               # 👤 User schema
 │   ├── routes/
-│   │   └── expenseRoutes.js          # 🛣️ API endpoints
+│   │   ├── expenseRoutes.js      # 🛣️ Expense endpoints
+│   │   └── authRoutes.js         # 🔐 Auth endpoints
 │   ├── middleware/
-│   │   ├── errorHandler.js           # ❌ Error handling
-│   │   └── validateRequest.js        # ✅ Validation
-│   ├── server.js                     # 🚀 Entry point
-│   └── package.json
+│   │   ├── auth.js               # 🛡️ JWT verification
+│   │   ├── errorHandler.js       # ❌ Error handling
+│   │   └── validateRequest.js    # ✅ Validation
+│   ├── api/
+│   │   └── index.js              # 🚀 Vercel serverless
+│   ├── server.js                 # 🚀 Entry point
+│   └── vercel.json               # 📦 Vercel config
 │
-└── 📄 Documentation files
+├── 📁 instructions/               # 📚 Project documentation
+└── 📄 Configuration files
 ```
 
 ## 📋 Available Scripts
@@ -184,6 +208,12 @@ pentharaTech/
 
 ## 🎯 Usage Guide
 
+### 🔐 Getting Started
+
+1. **Create Account** - Register with email, password, and name
+2. **Login** - Access your personal expense dashboard
+3. **Start Tracking** - Add your first expense!
+
 ### 📝 Adding Expenses
 
 <table>
@@ -193,7 +223,7 @@ pentharaTech/
 </tr>
 <tr>
 <td><b>Step 2</b></td>
-<td>Click <b>"Add Expense"</b> - Data saves instantly!</td>
+<td>Click <b>"Add Expense"</b> - Data saves instantly to your account!</td>
 </tr>
 <tr>
 <td><b>Offline?</b></td>
@@ -202,6 +232,49 @@ pentharaTech/
 </table>
 
 ### 🔍 Filtering & Sorting
+
+### Cyber-Brutalist Aesthetic
+
+Our app embraces a bold, **cyber-brutalist** design language featuring:
+
+- **Bold Black Borders** - Thick 4-6px borders on all components
+- **Eco Color Palette** - Cyan (#00D9FF), Purple (#A855F7), Green (#10B981)
+- **Space Grotesk Font** - Modern, geometric typography
+- **Shadow Brutal** - Dramatic offset shadows
+- **3D Backgrounds** - Interactive WebGL light rays (OGL)
+- **Uppercase Text** - Strong, confident UI labels
+- **Zero Subtle** - No gradients, no soft edges, pure brutalism
+
+### Color System
+
+| Color      | Hex Code  | Usage                       |
+| ---------- | --------- | --------------------------- |
+| Eco Cyan   | `#00D9FF` | Primary actions, highlights |
+| Eco Purple | `#A855F7` | Secondary actions, accents  |
+| Eco Green  | `#10B981` | Success states, positives   |
+| Eco Red    | `#EF4444` | Errors, deletions           |
+| Black      | `#000000` | Borders, text               |
+| White      | `#FFFFFF` | Backgrounds                 |
+
+## 🔐 Authentication System
+
+### Features
+
+- **JWT Authentication** - Secure token-based auth
+- **HTTP-Only Cookies** - XSS protection
+- **Password Hashing** - bcryptjs encryption
+- **Protected Routes** - Client & server-side guards
+- **User Context** - Global auth state with React Context
+- **Auto-Login** - Persistent sessions
+- **Themed UI** - Brutalist login/register pages with 3D backgrounds
+
+### Auth Flow
+
+```
+Register → Hash Password → Create User → Generate JWT → Set Cookie → Login
+Login → Verify Credentials → Generate JWT → Set Cookie → Access Protected Routes
+Logout → Clear Cookie → Redirect to Auth Page
+```
 
 - **Filter by Category**: Select any category from dropdown
 - **Filter by Date**: Set from/to date range
@@ -259,17 +332,34 @@ All amounts displayed in **₹ Indian Rupees** with proper formatting.
 
 ## 🔌 API Endpoints
 
-| Method   | Endpoint                            | Description          |
-| -------- | ----------------------------------- | -------------------- |
-| `GET`    | `/api/expenses`                     | Get all expenses     |
-| `GET`    | `/api/expenses/:id`                 | Get expense by ID    |
-| `POST`   | `/api/expenses`                     | Create new expense   |
-| `PUT`    | `/api/expenses/:id`                 | Update expense       |
-| `DELETE` | `/api/expenses/:id`                 | Delete expense       |
-| `GET`    | `/api/expenses/stats/total`         | Get total amount     |
-| `GET`    | `/api/expenses/stats/by-category`   | Category-wise totals |
-| `GET`    | `/api/expenses/stats/by-date-range` | Date range totals    |
-| `GET`    | `/health`                           | Health check         |
+### Authentication
+
+| Method | Endpoint             | Description            |
+| ------ | -------------------- | ---------------------- |
+| `POST` | `/api/auth/register` | Create new user        |
+| `POST` | `/api/auth/login`    | Login user             |
+| `POST` | `/api/auth/logout`   | Logout user            |
+| `GET`  | `/api/auth/profile`  | Get user profile (JWT) |
+
+### Expenses
+
+| Method   | Endpoint                            | Description           |
+| -------- | ----------------------------------- | --------------------- |
+| `GET`    | `/api/expenses`                     | Get all expenses      |
+| `GET`    | `/api/expenses/:id`                 | Get expense by ID     |
+| `POST`   | `/api/expenses`                     | Create new expense    |
+| `PUT`    | `/api/expenses/:id`                 | Update expense        |
+| `DELETE` | `/api/expenses/:id`                 | Delete expense        |
+| `GET`    | `/api/expenses/stats/total`         | Get total amount      |
+| `GET`    | `/api/expenses/stats/by-category`   | Category-wise totals  |
+| `GET`    | `/api/expenses/stats/by-date-range` | Date range totals     |
+| `GET`    | `/api/expenses/summary/statistics`  | Comprehensive summary |
+
+### Health
+
+| Method | Endpoint      | Description  |
+| ------ | ------------- | ------------ |
+| `GET`  | `/api/health` | Health check |
 
 ### 📦 Request Example
 
@@ -304,11 +394,16 @@ Content-Type: application/json
 
 ## 🔒 Security Features
 
+- ✅ **JWT Authentication**: Secure token-based authentication
+- ✅ **HTTP-Only Cookies**: Protection against XSS attacks
+- ✅ **Password Hashing**: bcryptjs with salt rounds
 - ✅ **Input Validation**: Server-side validation with Express Validator
 - ✅ **MongoDB Injection Protection**: Mongoose schema validation
 - ✅ **CORS Configuration**: Controlled cross-origin requests
+- ✅ **Protected Routes**: Both client and server-side route guards
 - ✅ **Environment Variables**: Sensitive data in .env files
 - ✅ **Error Handling**: Comprehensive error middleware
+- ✅ **Token Expiration**: 30-day JWT expiration
 
 ## 🚀 Deployment
 
@@ -329,8 +424,17 @@ VITE_API_URL=https://trackwise-penthara-backend.vercel.app/api
 **Backend (Vercel/Railway/Render)**
 
 ```bash
-MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
+# MongoDB Atlas connection
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
+
+# Frontend URL (for CORS)
 CLIENT_URL=https://trackwise-penthara.vercel.app
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key
+JWT_EXPIRE=30d
+
+# Environment
 NODE_ENV=production
 ```
 
@@ -414,8 +518,17 @@ VITE_API_URL=https://trackwise-penthara-backend.vercel.app/api
 **Backend Environment:**
 
 ```bash
-MONGODB_URI=mongodb+srv://penthara:PentharaTech@pentharatech.z6kcjf8.mongodb.net/expense-tracker
+# MongoDB Atlas
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
+
+# CORS - Allow both localhost and production
 CLIENT_URL=https://trackwise-penthara.vercel.app
+
+# JWT
+JWT_SECRET=your-production-secret
+JWT_EXPIRE=30d
+
+# Environment
 NODE_ENV=production
 ```
 
@@ -479,6 +592,22 @@ Special thanks to:
 - **[MongoDB](https://www.mongodb.com/)** - For the flexible database
 - **[Recharts](https://recharts.org/)** - For beautiful charts
 - **[GSAP](https://greensock.com/gsap/)** - For smooth animations
+- **[OGL](https://github.com/oframe/ogl)** - For WebGL 3D backgrounds
+- **[Framer Motion](https://www.framer.com/motion/)** - For React animations
+- **[Radix UI](https://www.radix-ui.com/)** - For accessible components
+- **[Lucide](https://lucide.dev/)** - For beautiful icons
+
+---
+
+## 🎨 UI Components
+
+- **LightRays** - 3D animated background using WebGL (OGL)
+- **BrutalLoader** - Themed loading spinner with animations
+- **Shuffle** - Animated text effect component
+- **OfflineIndicator** - Real-time network status
+- **Navbar** - Brutalist navigation with user menu
+- **ExpenseForm** - Validated form with Radix UI components
+- **ChartComponent** - Interactive Recharts visualizations
 
 ---
 

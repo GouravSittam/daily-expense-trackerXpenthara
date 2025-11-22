@@ -1,14 +1,15 @@
 <div align="center">
 
-# 🚀 Expense Tracker - Backend API
+# 🚀 TrackWise Backend API
 
-### _Powerful RESTful API for expense management_
+### _Powerful RESTful API for expense management with authentication_
 
-A production-ready Express.js backend with MongoDB, comprehensive validation, and advanced features.
+A production-ready Express.js backend with MongoDB, JWT authentication, comprehensive validation, and advanced features.
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.18-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-8.0+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](../LICENSE)
 
 [Live API](https://trackwise-penthara-backend.vercel.app) • [API Docs](#-api-endpoints) • [Installation](#-quick-start) • [Testing](#-testing)
@@ -19,15 +20,20 @@ A production-ready Express.js backend with MongoDB, comprehensive validation, an
 
 ## ✨ Features
 
+- 🔐 **JWT Authentication** - Secure token-based user authentication
+- 🍪 **HTTP-Only Cookies** - XSS protection for auth tokens
+- 🔒 **Password Hashing** - bcryptjs with salt rounds
 - 🔌 **RESTful API** - Clean, predictable endpoints
 - 💾 **MongoDB Integration** - NoSQL database with Mongoose ODM
 - ✅ **Input Validation** - Comprehensive validation with Express Validator
 - 🛡️ **Error Handling** - Global error handling middleware
+- 👤 **User Management** - Registration, login, profile
 - 📊 **Statistics Endpoints** - Category totals, date ranges
-- 🔄 **CORS Enabled** - Cross-origin resource sharing
+- 🔄 **Multi-Origin CORS** - Supports localhost + production
 - 📝 **Request Logging** - Morgan HTTP request logger
 - 🚀 **Auto-reload** - Nodemon for development
 - 🏗️ **MVC Architecture** - Clean separation of concerns
+- ☁️ **Vercel Ready** - Serverless deployment configuration
 
 ---
 
@@ -40,7 +46,8 @@ A production-ready Express.js backend with MongoDB, comprehensive validation, an
 | 🟢 Live     | https://trackwise-penthara-backend.vercel.app                            |
 | 🟢 Health   | [Check Health](https://trackwise-penthara-backend.vercel.app/api/health) |
 | 🟢 Database | MongoDB Atlas Connected                                                  |
-| 🟢 CORS     | Configured for https://trackwise-penthara.vercel.app                     |
+| 🟢 CORS     | localhost:5173 + trackwise-penthara.vercel.app                           |
+| 🟢 Auth     | JWT with HTTP-Only Cookies                                               |
 
 ### 📡 Test Live API
 
@@ -48,8 +55,19 @@ A production-ready Express.js backend with MongoDB, comprehensive validation, an
 # Health Check
 curl https://trackwise-penthara-backend.vercel.app/api/health
 
-# Get All Expenses
-curl https://trackwise-penthara-backend.vercel.app/api/expenses
+# Register User
+curl -X POST https://trackwise-penthara-backend.vercel.app/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"test123","name":"Test User"}'
+
+# Login (saves cookie)
+curl -X POST https://trackwise-penthara-backend.vercel.app/api/auth/login \
+  -H "Content-Type: application/json" \
+  -c cookies.txt \
+  -d '{"email":"test@example.com","password":"test123"}'
+
+# Get All Expenses (with auth cookie)
+curl -b cookies.txt https://trackwise-penthara-backend.vercel.app/api/expenses
 
 # Get Statistics
 curl https://trackwise-penthara-backend.vercel.app/api/expenses/summary/statistics
@@ -71,22 +89,30 @@ curl https://trackwise-penthara-backend.vercel.app/api/expenses/summary/statisti
 
 ```
 backend/
+├── 📁 api/
+│   └── index.js                  # ☁️ Vercel serverless entry
 ├── 📁 config/
 │   └── database.js               # 🔌 MongoDB connection & config
 ├── 📁 controllers/
-│   └── expenseController.js      # 🎮 Business logic layer
+│   ├── authController.js         # 🔐 Authentication logic
+│   └── expenseController.js      # 🎮 Expense business logic
 ├── 📁 middleware/
+│   ├── auth.js                   # 🛡️ JWT verification middleware
 │   ├── errorHandler.js           # ❌ Global error handler
 │   ├── notFound.js               # 🔍 404 handler
 │   └── validateRequest.js        # ✅ Validation middleware
 ├── 📁 models/
-│   └── Expense.js                # 📐 Mongoose schema & model
+│   ├── User.js                   # 👤 User schema & methods
+│   └── Expense.js                # 📐 Expense schema & model
 ├── 📁 routes/
-│   └── expenseRoutes.js          # 🛣️ API route definitions
+│   ├── authRoutes.js             # 🔐 Auth route definitions
+│   └── expenseRoutes.js          # 🛣️ Expense route definitions
 ├── 📁 utils/
 │   └── constants.js              # 🛠️ Shared constants
+├── .env                          # 🔐 Environment variables
 ├── .env.example                  # 📝 Environment template
 ├── server.js                     # 🚀 Application entry point
+├── vercel.json                   # ☁️ Vercel deployment config
 └── package.json                  # 📦 Dependencies
 ```
 
@@ -125,9 +151,13 @@ NODE_ENV=development
 # Database
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/expense-tracker
 
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRE=30d
+
 # Frontend URL (for CORS)
-CLIENT_URL=https://trackwise-penthara.vercel.app
-# For development: http://localhost:5173
+CLIENT_URL=http://localhost:5173
+# For production: https://trackwise-penthara.vercel.app
 ```
 
 ### Start Server
@@ -152,6 +182,108 @@ Server runs on **http://localhost:5000** (Development) 🚀
 - **Development**: `http://localhost:5000/api`
 - **Production**: `https://trackwise-penthara-backend.vercel.app/api`
 
+### 🔐 Authentication Endpoints
+
+<table>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Description</th>
+<th>Auth Required</th>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/auth/register</code></td>
+<td>👤 Register new user</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/auth/login</code></td>
+<td>🔓 Login user (sets cookie)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/auth/logout</code></td>
+<td>🚪 Logout user (clears cookie)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/auth/profile</code></td>
+<td>👨‍💼 Get user profile</td>
+<td>✅</td>
+</tr>
+</table>
+
+### 💸 Expense Endpoints
+
+<table>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Description</th>
+<th>Auth Required</th>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses</code></td>
+<td>📋 Get all expenses (with filters)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/:id</code></td>
+<td>🔍 Get single expense by ID</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/expenses</code></td>
+<td>➕ Create new expense</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/expenses/:id</code></td>
+<td>✏️ Update expense</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/expenses/:id</code></td>
+<td>🗑️ Delete expense</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/stats/total</code></td>
+<td>💰 Get total expenses</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/stats/by-category</code></td>
+<td>📊 Category-wise totals</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/stats/by-date-range</code></td>
+<td>📅 Date range statistics</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/expenses/summary/statistics</code></td>
+<td>📈 Comprehensive summary</td>
+<td>❌</td>
+</tr>
+</table>
+
+### ❤️ Health Check
+
 <table>
 <tr>
 <th>Method</th>
@@ -160,57 +292,144 @@ Server runs on **http://localhost:5000** (Development) 🚀
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td><code>/expenses</code></td>
-<td>📋 Get all expenses (with filters)</td>
-</tr>
-<tr>
-<td><code>GET</code></td>
-<td><code>/expenses/:id</code></td>
-<td>🔍 Get single expense by ID</td>
-</tr>
-<tr>
-<td><code>POST</code></td>
-<td><code>/expenses</code></td>
-<td>➕ Create new expense</td>
-</tr>
-<tr>
-<td><code>PUT</code></td>
-<td><code>/expenses/:id</code></td>
-<td>✏️ Update expense</td>
-</tr>
-<tr>
-<td><code>DELETE</code></td>
-<td><code>/expenses/:id</code></td>
-<td>🗑️ Delete expense</td>
-</tr>
-<tr>
-<td><code>GET</code></td>
-<td><code>/expenses/stats/total</code></td>
-<td>💰 Get total expenses</td>
-</tr>
-<tr>
-<td><code>GET</code></td>
-<td><code>/expenses/stats/by-category</code></td>
-<td>📊 Category-wise totals</td>
-</tr>
-<tr>
-<td><code>GET</code></td>
-<td><code>/expenses/stats/by-date-range</code></td>
-<td>📅 Date range statistics</td>
-</tr>
-<tr>
-<td><code>GET</code></td>
 <td><code>/health</code></td>
-<td>❤️ Health check</td>
+<td>❤️ API health check</td>
 </tr>
 </table>
 
 ---
 
+## 🔐 Authentication API
+
+### 👤 Register User
+
+```http
+POST /api/auth/register
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123",
+  "name": "John Doe"
+}
+```
+
+**Validation Rules:**
+
+| Field      | Type   | Required | Rules              |
+| ---------- | ------ | -------- | ------------------ |
+| `email`    | string | ✅ Yes   | Valid email format |
+| `password` | string | ✅ Yes   | Min 6 characters   |
+| `name`     | string | ✅ Yes   | Min 2 characters   |
+
+**Success Response (201):**
+
+```json
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "user": {
+      "_id": "507f1f77bcf86cd799439011",
+      "email": "user@example.com",
+      "name": "John Doe"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+**Note**: JWT token is also set as HTTP-only cookie.
+
+---
+
+### 🔓 Login User
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Success Response (200):**
+
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "_id": "507f1f77bcf86cd799439011",
+      "email": "user@example.com",
+      "name": "John Doe"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+---
+
+### 🚪 Logout User
+
+```http
+POST /api/auth/logout
+Cookie: token=<jwt_token>
+```
+
+**Success Response (200):**
+
+```json
+{
+  "success": true,
+  "message": "Logout successful"
+}
+```
+
+---
+
+### 👨‍💼 Get User Profile
+
+```http
+GET /api/auth/profile
+Cookie: token=<jwt_token>
+```
+
+**Success Response (200):**
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "507f1f77bcf86cd799439011",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "createdAt": "2025-11-23T00:00:00.000Z"
+  }
+}
+```
+
+---
+
+## 💸 Expense API
+
 ### 📋 Get All Expenses
 
 ```http
 GET /api/expenses?category=Food&dateFrom=2025-11-01&limit=20
+Cookie: token=<jwt_token>
 ```
 
 **Query Parameters:**
@@ -252,6 +471,7 @@ GET /api/expenses?category=Food&dateFrom=2025-11-01&limit=20
 
 ```http
 GET /api/expenses/:id
+Cookie: token=<jwt_token>
 ```
 
 **Success Response:**
@@ -276,6 +496,7 @@ GET /api/expenses/:id
 ```http
 POST /api/expenses
 Content-Type: application/json
+Cookie: token=<jwt_token>
 ```
 
 **Request Body:**
@@ -322,6 +543,7 @@ Content-Type: application/json
 ```http
 PUT /api/expenses/:id
 Content-Type: application/json
+Cookie: token=<jwt_token>
 ```
 
 **Request Body:** (All fields optional)
@@ -339,6 +561,7 @@ Content-Type: application/json
 
 ```http
 DELETE /api/expenses/:id
+Cookie: token=<jwt_token>
 ```
 
 **Success Response:**
@@ -447,51 +670,60 @@ All errors follow this format:
 ### Using cURL
 
 ```bash
-# Create an expense
-# Development
-curl -X POST http://localhost:5000/api/expenses \
-
-# Production
-curl -X POST https://trackwise-penthara-backend.vercel.app/api/expenses \
+# Register a new user
+curl -X POST http://localhost:5000/api/auth/register \
   -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "test123",
+    "name": "Test User"
+  }'
+
+# Login (save cookie)
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -c cookies.txt \
+  -d '{
+    "email": "test@example.com",
+    "password": "test123"
+  }'
+
+# Create an expense (with auth cookie)
+curl -X POST http://localhost:5000/api/expenses \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
   -d '{
     "amount": 500,
     "category": "Food",
     "description": "Lunch",
-    "date": "2025-11-20"
+    "date": "2025-11-23"
   }'
 
-# Get all expenses
-# Development
-curl http://localhost:5000/api/expenses
+# Get all expenses (with auth cookie)
+curl -b cookies.txt http://localhost:5000/api/expenses
 
-# Production
-curl https://trackwise-penthara-backend.vercel.app/api/expenses
+# Get profile (with auth cookie)
+curl -b cookies.txt http://localhost:5000/api/auth/profile
 
-# Get by category
-# Development
-curl http://localhost:5000/api/expenses?category=Food
-
-# Production
-curl https://trackwise-penthara-backend.vercel.app/api/expenses?category=Food
-
-# Health check
-# Development
+# Health check (no auth required)
 curl http://localhost:5000/api/health
-
-# Production
-curl https://trackwise-penthara-backend.vercel.app/api/health
 ```
 
 ### Using Postman
 
-**Development:**
+**Setup:**
 
-1. Set base URL: `http://localhost:5000/api`
+1. Set base URL: `http://localhost:5000/api` (Development)
+2. Or: `https://trackwise-penthara-backend.vercel.app/api` (Production)
 
-**Production:**
+**Authentication Flow:**
 
-1. Set base URL: `https://trackwise-penthara-backend.vercel.app/api`
+1. **Register**: POST `/auth/register` with email, password, name
+2. **Login**: POST `/auth/login` - Token automatically saved in cookies
+3. **Make Requests**: Cookie automatically included in subsequent requests
+4. **Logout**: POST `/auth/logout` to clear cookie
+
+**Note**: Enable "Automatically follow redirects" and "Send cookies" in Postman settings.
 
 ---
 
@@ -502,27 +734,35 @@ curl https://trackwise-penthara-backend.vercel.app/api/health
 | Package             | Version | Purpose               |
 | ------------------- | ------- | --------------------- |
 | `express`           | ^4.18.2 | Web framework         |
-| `mongoose`          | ^8.0.0  | MongoDB ODM           |
+| `mongoose`          | ^8.0.3  | MongoDB ODM           |
 | `express-validator` | ^7.0.1  | Input validation      |
 | `cors`              | ^2.8.5  | CORS middleware       |
 | `dotenv`            | ^16.3.1 | Environment variables |
 | `morgan`            | ^1.10.0 | HTTP logger           |
+| `bcryptjs`          | ^3.0.3  | Password hashing      |
+| `jsonwebtoken`      | ^9.0.2  | JWT token generation  |
+| `cookie-parser`     | ^1.4.7  | Cookie parsing        |
 
 ### Development
 
 | Package   | Version | Purpose             |
 | --------- | ------- | ------------------- |
-| `nodemon` | ^3.0.1  | Auto-restart server |
+| `nodemon` | ^3.0.2  | Auto-restart server |
 
 ---
 
 ## 🛡️ Security Best Practices
 
+✅ **JWT Authentication** - Token-based auth with 30-day expiration  
+✅ **HTTP-Only Cookies** - Protection against XSS attacks  
+✅ **Password Hashing** - bcryptjs with salt rounds (10)  
 ✅ **Input Validation** - All requests validated with Express Validator  
 ✅ **MongoDB Injection Protection** - Mongoose sanitizes queries  
 ✅ **CORS Configuration** - Controlled cross-origin access  
 ✅ **Environment Variables** - Sensitive data in .env  
-✅ **Error Handling** - No sensitive data in error responses
+✅ **Error Handling** - No sensitive data in error responses  
+✅ **Protected Routes** - JWT middleware verification  
+✅ **User Isolation** - Users only access their own data
 
 ---
 
@@ -591,10 +831,54 @@ git push heroku main
 
 ## 📊 Database Schema
 
+### User Model
+
+```javascript
+{
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6,
+    // Hashed with bcryptjs before saving
+  },
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+**Methods:**
+
+- `comparePassword(candidatePassword)` - Compare passwords
+- Pre-save hook to hash password
+
+**Indexes:**
+
+- `email` (unique) - For fast user lookup
+
+---
+
 ### Expense Model
 
 ```javascript
 {
+  user: {
+    type: ObjectId,
+    ref: 'User',
+    required: true
+    // Links expense to user
+  },
   amount: {
     type: Number,
     required: true,
@@ -622,6 +906,7 @@ git push heroku main
 
 ### Indexes
 
+- `user` - For user-specific queries
 - `category` - For faster category filtering
 - `date` - For date range queries
 - `createdAt` - For sorting by creation time
