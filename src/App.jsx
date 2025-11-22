@@ -1,5 +1,5 @@
-import ExpenseTracker from './pages/ExpenseTracker';
-import './App.css';
+import ExpenseTracker from "./pages/ExpenseTracker";
+import "./App.css";
 
 /**
  * Main App component
