@@ -41,7 +41,7 @@ const Navbar = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside);
-    
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
@@ -51,13 +51,13 @@ const Navbar = () => {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isMobileMenuOpen]);
 
@@ -67,13 +67,14 @@ const Navbar = () => {
     if (element) {
       const headerOffset = 80; // Account for fixed navbar height
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
-      
+
       setIsMobileMenuOpen(false);
       setShowUserMenu(false);
     }
@@ -248,7 +249,9 @@ const Navbar = () => {
                         {user?.email}
                       </p>
                       {user?.name && (
-                        <p className="text-xs text-gray-600 mt-1">{user.name}</p>
+                        <p className="text-xs text-gray-600 mt-1">
+                          {user.name}
+                        </p>
                       )}
                     </div>
                     <button
