@@ -34,6 +34,18 @@ body {
   -webkit-overflow-scrolling: touch;
   /* Prevent pull-to-refresh on Chrome mobile */
   overscroll-behavior-y: contain;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Base Styles */
+.dark body,
+html.dark body {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  color: #f8fafc;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 #root {
@@ -472,4 +484,267 @@ a {
 
 .pulse-border {
   animation: pulse-border 2s ease-in-out infinite;
+}
+
+/* ==================== DARK MODE STYLES ==================== */
+/* Cool, aesthetic dark theme with cyan accents */
+
+/* Dark mode background for main container */
+html.dark .min-h-screen.bg-gray-50 {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+/* Dark mode for brutal cards - cool slate with cyan glow */
+html.dark .brutal-card {
+  background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+  border-color: #00d9ff;
+  box-shadow: 5px 5px 0px 0px rgba(0, 217, 255, 0.6),
+    0 0 25px rgba(0, 217, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+html.dark .brutal-card:hover {
+  box-shadow: 7px 7px 0px 0px rgba(0, 217, 255, 0.8),
+    0 0 35px rgba(0, 217, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translate(-2px, -2px);
+}
+
+/* Dark mode for navbar - sleek slate glass */
+html.dark nav {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.95) 0%,
+    rgba(30, 41, 59, 0.92) 100%
+  ) !important;
+  border-color: #00d9ff !important;
+  box-shadow: 0 4px 30px rgba(0, 217, 255, 0.25);
+}
+
+/* Dark mode text colors - crisp and readable */
+html.dark .text-gray-900 {
+  color: #f8fafc;
+}
+
+html.dark .text-gray-800 {
+  color: #f1f5f9;
+}
+
+html.dark .text-gray-700 {
+  color: #e2e8f0;
+}
+
+html.dark .text-gray-600 {
+  color: #cbd5e1;
+}
+
+html.dark .text-gray-500 {
+  color: #94a3b8;
+}
+
+/* Dark mode backgrounds - slate tones */
+html.dark .bg-white {
+  background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+}
+
+html.dark .bg-gray-50 {
+  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+}
+
+html.dark .bg-gray-100 {
+  background: linear-gradient(145deg, #334155 0%, #475569 100%);
+}
+
+/* Dark mode for inputs and forms - cool with cyan accent */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #00d9ff;
+  background: linear-gradient(145deg, #1e293b 0%, #2d3a4f 100%);
+  box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.25),
+    0 0 20px rgba(0, 217, 255, 0.15);
+}
+
+html.dark input::placeholder {
+  color: #64748b;
+}
+
+/* Dark mode for borders - vibrant cyan */
+html.dark .border-black {
+  border-color: #00d9ff;
+}
+
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: #475569;
+}
+
+/* Dark mode for dropdowns and menus */
+html.dark .bg-white.border-4.border-black {
+  background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+  border-color: #00d9ff;
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+}
+
+/* Dark mode for mobile menu - cool gradient */
+html.dark .bg-white.border-l-4.border-eco-cyan {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+/* Dark mode for colored backgrounds - vibrant accents */
+html.dark .bg-eco-cyan\/10 {
+  background: rgba(0, 217, 255, 0.2);
+  box-shadow: inset 0 0 25px rgba(0, 217, 255, 0.15);
+}
+
+html.dark .bg-eco-purple\/10 {
+  background: rgba(139, 92, 246, 0.2);
+  box-shadow: inset 0 0 25px rgba(139, 92, 246, 0.15);
+}
+
+html.dark .bg-eco-gold\/10 {
+  background: rgba(255, 215, 0, 0.2);
+  box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.15);
+}
+
+/* Dark mode scrollbar - cyan accent */
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #475569, #64748b);
+  border-radius: 5px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00d9ff, #22c55e);
+}
+
+html.dark * {
+  scrollbar-color: #64748b #0f172a;
+}
+
+/* Dark mode for expense list items */
+html.dark .hover\:bg-gray-50:hover {
+  background: linear-gradient(145deg, #334155 0%, #475569 100%);
+}
+
+/* Dark mode for summary cards - vibrant glows */
+html.dark .bg-eco-cyan\/5 {
+  background: rgba(0, 217, 255, 0.15);
+  box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.1);
+}
+
+html.dark .bg-eco-green\/5 {
+  background: rgba(34, 197, 94, 0.15);
+  box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+html.dark .bg-eco-purple\/5 {
+  background: rgba(139, 92, 246, 0.15);
+  box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+html.dark .bg-eco-pink\/5 {
+  background: rgba(236, 72, 153, 0.15);
+  box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.1);
+}
+
+/* Dark mode for charts */
+html.dark .recharts-cartesian-grid-horizontal line,
+html.dark .recharts-cartesian-grid-vertical line {
+  stroke: #475569;
+}
+
+html.dark .recharts-text {
+  fill: #cbd5e1;
+}
+
+/* Dark mode brutal button - cyan glow */
+html.dark .brutal-button {
+  box-shadow: 4px 4px 0px 0px rgba(0, 217, 255, 0.7),
+    0 0 20px rgba(0, 217, 255, 0.25);
+}
+
+html.dark .brutal-button:hover {
+  box-shadow: 6px 6px 0px 0px rgba(0, 217, 255, 0.9),
+    0 0 30px rgba(0, 217, 255, 0.4);
+}
+
+/* Dark mode eco badge */
+html.dark .eco-badge {
+  border-color: #00d9ff;
+  box-shadow: 4px 4px 0px 0px rgba(0, 217, 255, 0.6),
+    0 0 15px rgba(0, 217, 255, 0.2);
+}
+
+/* Dark mode dashed borders */
+html.dark .border-dashed {
+  border-color: #64748b;
+}
+
+/* Dark mode shadow adjustments - cyan glow */
+html.dark .shadow-brutal {
+  box-shadow: 5px 5px 0px 0px rgba(0, 217, 255, 0.6),
+    0 0 25px rgba(0, 217, 255, 0.2);
+}
+
+html.dark .shadow-brutal-sm {
+  box-shadow: 4px 4px 0px 0px rgba(0, 217, 255, 0.6),
+    0 0 15px rgba(0, 217, 255, 0.15);
+}
+
+html.dark .shadow-brutal-lg {
+  box-shadow: 8px 8px 0px 0px rgba(0, 217, 255, 0.6),
+    0 0 35px rgba(0, 217, 255, 0.25);
+}
+
+/* Dark mode enhanced neon effects */
+html.dark .neon-glow {
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.7), 0 0 50px rgba(0, 217, 255, 0.4),
+    0 0 75px rgba(34, 197, 94, 0.2);
+}
+
+html.dark .neon-text {
+  text-shadow: 0 0 15px rgba(0, 217, 255, 0.9), 0 0 30px rgba(0, 217, 255, 0.6),
+    0 0 45px rgba(34, 197, 94, 0.3);
+}
+
+/* Dark mode for backdrop blur - glass effect */
+@supports (backdrop-filter: blur(10px)) {
+  html.dark .backdrop-blur-md,
+  html.dark .backdrop-blur-lg {
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.88) 0%,
+      rgba(30, 41, 59, 0.85) 100%
+    ) !important;
+  }
+}
+
+/* Dark mode red/danger colors */
+html.dark .bg-red-500 {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+html.dark .text-red-500 {
+  color: #fca5a5;
+}
+
+/* Dark mode hover states for buttons */
+html.dark button:hover {
+  filter: brightness(1.15);
+}
+
+/* Dark mode transition */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.2s ease, box-shadow 0.3s ease;
 }

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import Shuffle from "./Shuffle";
+import ThemeToggle from "./ThemeToggle";
 
 /**
  * Cyber-Brutalist Navbar component
@@ -16,6 +18,7 @@ const Navbar = () => {
   const userMenuRef = useRef(null);
 
   const { user, logout } = useAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
 
   // Handle scroll effect
@@ -96,11 +99,7 @@ const Navbar = () => {
     <>
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-lg border-b-4 border-eco-cyan shadow-lg"
-            : "bg-white/90 backdrop-blur-md border-b-4 border-eco-cyan/50"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b-4 border-eco-cyan`}
         style={{
           fontFamily: "Space Grotesk, Montserrat, sans-serif",
           WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(12px)",
@@ -108,6 +107,20 @@ const Navbar = () => {
           willChange: "transform",
           WebkitTransform: "translateZ(0)",
           transform: "translateZ(0)",
+          background: isDark
+            ? isScrolled
+              ? "linear-gradient(180deg, rgba(15, 23, 42, 0.97) 0%, rgba(30, 41, 59, 0.95) 100%)"
+              : "linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 100%)"
+            : isScrolled
+            ? "rgba(255, 255, 255, 0.95)"
+            : "rgba(255, 255, 255, 0.90)",
+          boxShadow: isDark
+            ? isScrolled
+              ? "0 4px 30px rgba(0, 217, 255, 0.3), 0 0 40px rgba(34, 197, 94, 0.1)"
+              : "0 2px 20px rgba(0, 217, 255, 0.15)"
+            : isScrolled
+            ? "0 4px 20px rgba(0, 0, 0, 0.1)"
+            : "none",
         }}
       >
         <div className="max-w-[1400px] mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
@@ -138,12 +151,16 @@ const Navbar = () => {
                 triggerOnHover={true}
                 respectReducedMotion={true}
                 tag="span"
-                className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-black text-gray-900 group-hover:text-eco-cyan transition-colors duration-300 select-none uppercase tracking-tight whitespace-nowrap"
+                className={`text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-black group-hover:text-eco-cyan transition-colors duration-300 select-none uppercase tracking-tight whitespace-nowrap ${
+                  isDark ? "text-white" : "text-gray-900"
+                }`}
                 style={{
                   fontFamily: "Space Grotesk, Montserrat, sans-serif",
                   fontWeight: "900",
                   letterSpacing: "-0.02em",
-                  textShadow: "2px 2px 0px rgba(0, 217, 255, 0.3)",
+                  textShadow: isDark
+                    ? "0 0 20px rgba(0, 217, 255, 0.5), 2px 2px 0px rgba(0, 217, 255, 0.3)"
+                    : "2px 2px 0px rgba(0, 217, 255, 0.3)",
                   WebkitTapHighlightColor: "transparent",
                   WebkitTouchCallout: "none",
                   userSelect: "none",
@@ -193,6 +210,9 @@ const Navbar = () => {
               >
                 Analytics
               </button>
+
+              {/* Theme Toggle - Brutalist */}
+              <ThemeToggle />
 
               {/* CTA Button - Brutalist */}
               <a
@@ -326,12 +346,18 @@ const Navbar = () => {
 
       {/* Mobile Menu - Slide-in Panel */}
       <div
-        className={`fixed top-14 xs:top-16 sm:top-18 md:top-20 right-0 bottom-0 w-full max-w-sm bg-white border-l-4 border-eco-cyan shadow-brutal-lg z-40 lg:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-14 xs:top-16 sm:top-18 md:top-20 right-0 bottom-0 w-full max-w-sm border-l-4 border-eco-cyan z-40 lg:hidden transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
           WebkitOverflowScrolling: "touch",
           overscrollBehavior: "contain",
+          background: isDark
+            ? "linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)"
+            : "white",
+          boxShadow: isDark
+            ? "-4px 0 30px rgba(0, 217, 255, 0.3), -4px 0 60px rgba(34, 197, 94, 0.1)"
+            : "-4px 0 20px rgba(0, 0, 0, 0.1)",
         }}
       >
         <div className="h-full overflow-y-auto">
@@ -378,6 +404,17 @@ const Navbar = () => {
               >
                 📈 Analytics
               </button>
+            </div>
+
+            {/* Theme Toggle - Mobile */}
+            <div className="flex items-center justify-between px-4 py-3 border-2 border-eco-gold bg-eco-gold/10 mt-2">
+              <span
+                className="font-bold text-sm uppercase tracking-wider text-gray-900 dark:text-white"
+                style={{ fontFamily: "Space Grotesk, sans-serif" }}
+              >
+                {isDark ? "🌙 Dark Mode" : "☀️ Light Mode"}
+              </span>
+              <ThemeToggle />
             </div>
 
             {/* GitHub Link */}

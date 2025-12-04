@@ -6,6 +6,7 @@ import ChartComponent from "../components/ChartComponent";
 import OfflineIndicator from "../components/OfflineIndicator";
 import LightRays from "../components/LightRays";
 import Navbar from "../components/Navbar";
+import { useTheme } from "../context/ThemeContext";
 import {
   getExpenses,
   addExpense as addExpenseService,
@@ -22,6 +23,7 @@ const ExpenseTracker = () => {
   const [expenses, setExpenses] = useState([]);
   const [expensesByCategory, setExpensesByCategory] = useState({});
   const [totalExpenses, setTotalExpenses] = useState(0);
+  const { isDark } = useTheme();
 
   /**
    * Loads expenses from service and updates state
@@ -76,7 +78,14 @@ const ExpenseTracker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+    <div
+      className={`min-h-screen relative overflow-hidden transition-all duration-500`}
+      style={{
+        background: isDark
+          ? "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%)"
+          : "#f9fafb",
+      }}
+    >
       {/* Navbar */}
       <Navbar />
 
@@ -84,16 +93,16 @@ const ExpenseTracker = () => {
       <div className="fixed inset-0 w-full h-full z-0">
         <LightRays
           raysOrigin="top-center"
-          raysColor="#00D9FF"
-          raysSpeed={0.8}
-          lightSpread={0.6}
-          rayLength={1.5}
+          raysColor={isDark ? "#00d9ff" : "#00D9FF"}
+          raysSpeed={isDark ? 0.7 : 0.8}
+          lightSpread={isDark ? 0.6 : 0.6}
+          rayLength={isDark ? 1.6 : 1.5}
           followMouse={true}
-          mouseInfluence={0.05}
+          mouseInfluence={isDark ? 0.06 : 0.05}
           noiseAmount={0.08}
           distortion={0.02}
-          fadeDistance={1.2}
-          saturation={0.5}
+          fadeDistance={isDark ? 1.1 : 1.2}
+          saturation={isDark ? 0.7 : 0.5}
         />
       </div>
 

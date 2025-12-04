@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import LightRays from "../components/LightRays";
 import BrutalLoader from "../components/BrutalLoader";
+import ThemeToggle from "../components/ThemeToggle";
 
 /**
  * Authentication Page Component
@@ -20,6 +22,7 @@ const AuthPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login, register } = useAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
 
   /**
@@ -76,11 +79,31 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
+    <div
+      className="min-h-screen relative overflow-hidden flex items-center justify-center transition-all duration-500"
+      style={{
+        background: isDark
+          ? "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%)"
+          : "#f9fafb",
+      }}
+    >
+      {/* Theme Toggle - Fixed Position */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+
       {/* Full Screen Loader Overlay */}
       {isSubmitting && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-white border-6 border-black p-8 shadow-brutal-lg">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div
+            className="border-6 p-8 shadow-brutal-lg"
+            style={{
+              background: isDark
+                ? "linear-gradient(145deg, #1e293b 0%, #334155 100%)"
+                : "white",
+              borderColor: isDark ? "#00d9ff" : "black",
+            }}
+          >
             <BrutalLoader
               size="lg"
               text={isLogin ? "LOGGING IN..." : "CREATING ACCOUNT..."}
@@ -93,25 +116,41 @@ const AuthPage = () => {
       <div className="fixed inset-0 w-full h-full z-0">
         <LightRays
           raysOrigin="top-center"
-          raysColor="#00D9FF"
-          raysSpeed={0.8}
-          lightSpread={0.6}
-          rayLength={1.5}
+          raysColor={isDark ? "#00d9ff" : "#00D9FF"}
+          raysSpeed={isDark ? 0.7 : 0.8}
+          lightSpread={isDark ? 0.6 : 0.6}
+          rayLength={isDark ? 1.6 : 1.5}
           followMouse={true}
-          mouseInfluence={0.05}
+          mouseInfluence={isDark ? 0.06 : 0.05}
           noiseAmount={0.08}
           distortion={0.02}
-          fadeDistance={1.2}
-          saturation={0.5}
+          fadeDistance={isDark ? 1.1 : 1.2}
+          saturation={isDark ? 0.7 : 0.5}
         />
       </div>
 
       {/* Auth Container */}
       <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="brutal-card bg-white p-6 sm:p-8 border-6 border-black relative overflow-hidden">
+        <div
+          className="brutal-card p-6 sm:p-8 border-6 relative overflow-hidden"
+          style={{
+            background: isDark
+              ? "linear-gradient(145deg, #1e293b 0%, #334155 100%)"
+              : "white",
+            borderColor: isDark ? "#00d9ff" : "black",
+          }}
+        >
           {/* Electric corner accents */}
-          <div className="absolute top-0 right-0 w-20 h-20 bg-eco-cyan opacity-20 blur-xl"></div>
-          <div className="absolute bottom-0 left-0 w-20 h-20 bg-eco-purple opacity-20 blur-xl"></div>
+          <div
+            className={`absolute top-0 right-0 w-24 h-24 opacity-30 blur-2xl ${
+              isDark ? "bg-cyan-400" : "bg-eco-cyan"
+            }`}
+          ></div>
+          <div
+            className={`absolute bottom-0 left-0 w-24 h-24 opacity-30 blur-2xl ${
+              isDark ? "bg-green-400" : "bg-eco-purple"
+            }`}
+          ></div>
 
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8 relative">

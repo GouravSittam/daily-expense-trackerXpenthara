@@ -61,10 +61,6 @@ const ChartComponent = ({ expensesByCategory }) => {
   if (chartData.length === 0) {
     return (
       <div className="brutal-card bg-white p-5 sm:p-7 border-6 border-black mt-6">
-        <div
-          className="electric-border"
-          style={{ borderColor: "#00D9FF" }}
-        ></div>
         <div className="flex items-center gap-3 mb-5 sm:mb-7">
           <div className="w-12 h-12 sm:w-14 sm:h-14 bg-eco-cyan border-4 border-black flex items-center justify-center shadow-brutal-sm">
             <span className="text-2xl sm:text-3xl">📊</span>
@@ -87,7 +83,6 @@ const ChartComponent = ({ expensesByCategory }) => {
 
   return (
     <div className="brutal-card bg-white p-4 sm:p-6 lg:p-8 border-6 border-black mt-6">
-      <div className="electric-border" style={{ borderColor: "#00D9FF" }}></div>
       <div className="flex items-center gap-3 mb-4 sm:mb-6 lg:mb-8">
         <div className="w-12 h-12 sm:w-14 sm:h-14 bg-eco-cyan border-4 border-black flex items-center justify-center shadow-brutal-sm">
           <span className="text-2xl sm:text-3xl">📊</span>
